@@ -1,0 +1,2 @@
+1mm aviatik plywood: speed 50, power 100, passes 3
+4mm shitty plywood: speed 25, power 100, passes 1
