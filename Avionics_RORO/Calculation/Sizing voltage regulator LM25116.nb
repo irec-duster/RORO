@@ -1,0 +1,241 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 10.2' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[      6936,        232]
+NotebookOptionsPosition[      5853,        191]
+NotebookOutlinePosition[      6226,        207]
+CellTagsIndexPosition[      6183,        204]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", 
+   RowBox[{"caracteristics", " ", "of", " ", "the", " ", "DCDC", " ", 
+    RowBox[{"converter", ":"}]}], "*)"}], 
+  RowBox[{
+   RowBox[{
+    RowBox[{"Vout", "=", "5"}], 
+    RowBox[{"(*", "V", "*)"}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"Iout", "=", "15"}], 
+    RowBox[{"(*", "A", "*)"}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"Vinmin", "=", "6"}], 
+    RowBox[{"(*", "V", "*)"}], ";", 
+    RowBox[{"Vinmax", "=", "17"}], 
+    RowBox[{"(*", "V", "*)"}], ";", 
+    RowBox[{"fsw", "=", 
+     RowBox[{"175", "*", 
+      SuperscriptBox["10", "3"]}]}], 
+    RowBox[{"(*", "Hz", "*)"}], ";"}], "\[IndentingNewLine]", 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"Vcsth", "=", "0.11"}], 
+    RowBox[{"(*", "V", "*)"}], ";"}], "\[IndentingNewLine]"}]}]], "Input",
+ CellChangeTimes->{{3.694930534514017*^9, 3.6949305407834682`*^9}, {
+  3.694930625168379*^9, 3.694930626381241*^9}, {3.6949307630262537`*^9, 
+  3.694930823873476*^9}, {3.6949310482817774`*^9, 3.694931065124736*^9}, {
+  3.6949326602682705`*^9, 3.694932715321332*^9}, {3.694932931994159*^9, 
+  3.6949330293432755`*^9}, {3.694933123408086*^9, 3.694933129229191*^9}}],
+
+Cell[BoxData[
+ StyleBox[
+  RowBox[{"Timing", " ", "Resistor"}], "Subsubsection"]], "Input",
+ CellChangeTimes->{{3.6949332729912863`*^9, 3.6949333095432167`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Rt", "=", 
+  RowBox[{
+   FractionBox[
+    RowBox[{
+     FractionBox["1", "fsw"], "-", 
+     RowBox[{"450", "*", 
+      SuperscriptBox["10", 
+       RowBox[{"-", "9"}]]}]}], 
+    RowBox[{"284", "*", 
+     SuperscriptBox["10", 
+      RowBox[{"-", "12"}]]}]], "//", "N"}]}]], "Input",
+ CellChangeTimes->{{3.6949305552087097`*^9, 3.6949306189339533`*^9}, {
+  3.69493081196402*^9, 3.694930812287221*^9}}],
+
+Cell[BoxData["18536.217303822938`"], "Output",
+ CellChangeTimes->{{3.6949308097274313`*^9, 3.6949308272068205`*^9}, {
+  3.694931052650872*^9, 3.6949310679877615`*^9}}]
+}, Open  ]],
+
+Cell[BoxData[
+ StyleBox[
+  RowBox[{" ", 
+   RowBox[{"Output", " ", "Inductor"}]}], "Subsubsection"]], "Input",
+ CellChangeTimes->{{3.6949332518873034`*^9, 3.6949332575343122`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"Ipp", "=", 
+   RowBox[{"Iout", "*", "0.4"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{"L", "=", 
+  RowBox[{
+   FractionBox["Vout", 
+    RowBox[{"Ipp", "*", "fsw"}]], "*", 
+   RowBox[{"(", 
+    RowBox[{"1", "-", 
+     FractionBox["Vout", "Vinmax"]}], ")"}]}]}]}], "Input",
+ CellChangeTimes->{{3.6949325929544516`*^9, 3.694932647445166*^9}, {
+  3.6949327370607634`*^9, 3.694932745130492*^9}}],
+
+Cell[BoxData["3.361344537815126`*^-6"], "Output",
+ CellChangeTimes->{3.6949327558171067`*^9}]
+}, Open  ]],
+
+Cell[BoxData[
+ StyleBox[
+  RowBox[{"Current", " ", "Sense", " ", "Resistor"}], 
+  "Subsubsection"]], "Input",
+ CellChangeTimes->{{3.694933210173687*^9, 3.694933210211715*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Rs", "=", 
+  FractionBox["Vcsth", 
+   RowBox[{"Iout", "+", 
+    RowBox[{
+     FractionBox["Vout", 
+      RowBox[{"2", "*", "L", "*", "fsw"}]], "*", 
+     RowBox[{"(", 
+      RowBox[{"1", "+", 
+       FractionBox["Vout", "Vinmin"]}], ")"}]}]}]], 
+  RowBox[{"(*", 
+   RowBox[{
+   "Rs", " ", "must", " ", "be", " ", "smaller", " ", "than", " ", "this", 
+    " ", "value"}], "*)"}]}]], "Input",
+ CellChangeTimes->{{3.6949330496267037`*^9, 3.6949331172036533`*^9}, {
+  3.6949331849908075`*^9, 3.6949331969262824`*^9}}],
+
+Cell[BoxData["0.004826325411334553`"], "Output",
+ CellChangeTimes->{3.6949331356467752`*^9}]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"Rs", "=", "0.003"}], ";"}]], "Input",
+ CellChangeTimes->{{3.6949331541128855`*^9, 3.694933182314885*^9}}],
+
+Cell[BoxData[
+ StyleBox[
+  RowBox[{"Ramp", " ", "Capacitor"}], "Subsubsection"]], "Input",
+ CellChangeTimes->{{3.6949335025202446`*^9, 3.694933502572262*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Cramp", "=", 
+  RowBox[{
+   FractionBox[
+    RowBox[{"5", "*", 
+     SuperscriptBox["10", 
+      RowBox[{"-", "6"}]], "*", "L"}], 
+    RowBox[{"10", "*", "Rs"}]], "//", "N"}]}]], "Input",
+ CellChangeTimes->{{3.6949324088347597`*^9, 3.6949324566106787`*^9}, {
+  3.6949325357718534`*^9, 3.6949325489372277`*^9}}],
+
+Cell[BoxData["5.602240896358544`*^-10"], "Output",
+ CellChangeTimes->{3.6949333428288493`*^9}]
+}, Open  ]],
+
+Cell[BoxData[
+ StyleBox[
+  RowBox[{"Output", " ", "Voltage", " ", "Divider"}], 
+  "Subsubsection"]], "Input",
+ CellChangeTimes->{{3.6949344269885902`*^9, 3.694934427025589*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"Rfb2", "=", "6190"}], 
+  RowBox[{"(*", "Ohm", "*)"}], ";"}]], "Input",
+ CellChangeTimes->{{3.6949347775544553`*^9, 3.694934801902746*^9}, {
+  3.694934838769916*^9, 3.6949348460791335`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Rfb1", "=", 
+  RowBox[{
+   SuperscriptBox[
+    RowBox[{"(", 
+     RowBox[{
+      FractionBox["Vout", "1.215"], "-", "1"}], ")"}], 
+    RowBox[{"-", "1"}]], "*", "Rfb2"}]}]], "Input",
+ CellChangeTimes->{{3.6949347224463577`*^9, 3.694934771895465*^9}, 
+   3.694934849554572*^9, {3.694934898680451*^9, 3.694934913739142*^9}}],
+
+Cell[BoxData["1987.0145310435933`"], "Output",
+ CellChangeTimes->{
+  3.6949348075257616`*^9, {3.694934914218483*^9, 3.69493492225819*^9}}]
+}, Open  ]]
+},
+WindowSize->{775, 659},
+WindowMargins->{{Automatic, 316}, {35, Automatic}},
+Magnification:>1.5 Inherited,
+FrontEndVersion->"10.2 for Microsoft Windows (64-bit) (July 29, 2015)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[558, 20, 1204, 29, 279, "Input"],
+Cell[1765, 51, 161, 3, 62, "Input"],
+Cell[CellGroupData[{
+Cell[1951, 58, 423, 13, 76, "Input"],
+Cell[2377, 73, 167, 2, 44, "Output"]
+}, Open  ]],
+Cell[2559, 78, 180, 4, 62, "Input"],
+Cell[CellGroupData[{
+Cell[2764, 86, 427, 12, 98, "Input"],
+Cell[3194, 100, 93, 1, 46, "Output"]
+}, Open  ]],
+Cell[3302, 104, 175, 4, 62, "Input"],
+Cell[CellGroupData[{
+Cell[3502, 112, 537, 15, 110, "Input"],
+Cell[4042, 129, 92, 1, 44, "Output"]
+}, Open  ]],
+Cell[4149, 133, 140, 3, 45, "Input"],
+Cell[4292, 138, 158, 3, 62, "Input"],
+Cell[CellGroupData[{
+Cell[4475, 145, 334, 9, 69, "Input"],
+Cell[4812, 156, 94, 1, 46, "Output"]
+}, Open  ]],
+Cell[4921, 160, 177, 4, 62, "Input"],
+Cell[5101, 166, 224, 5, 45, "Input"],
+Cell[CellGroupData[{
+Cell[5350, 175, 346, 9, 63, "Input"],
+Cell[5699, 186, 138, 2, 77, "Output"]
+}, Open  ]]
+}
+]
+*)
+
+(* End of internal cache information *)

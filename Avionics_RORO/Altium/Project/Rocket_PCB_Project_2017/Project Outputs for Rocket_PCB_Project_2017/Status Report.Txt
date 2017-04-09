@@ -1,0 +1,24 @@
+Output: Gerber Files
+Type  : Gerber
+From  : PCB Document [PCB_Rocket_panelized.PcbDoc]
+   Generated File[PCB_Rocket_panelized.GTL]
+   Generated File[PCB_Rocket_panelized.G1]
+   Generated File[PCB_Rocket_panelized.G2]
+   Generated File[PCB_Rocket_panelized.GBL]
+   Generated File[PCB_Rocket_panelized.GTO]
+   Generated File[PCB_Rocket_panelized.GTP]
+   Generated File[PCB_Rocket_panelized.GTS]
+   Generated File[PCB_Rocket_panelized.GBS]
+   Generated File[PCB_Rocket_panelized.GBO]
+   Generated File[PCB_Rocket_panelized.GM3]
+   Generated File[PCB_Rocket_panelized.GM4]
+   Generated File[PCB_Rocket_panelized.GM5]
+   Generated File[PCB_Rocket_panelized.RUL]
+   Generated File[PCB_Rocket_panelized.EXTREP]
+   Generated File[PCB_Rocket_panelized.REP]
+
+
+Files Generated   : 15
+Documents Printed : 0
+
+Finished Output Generation At 22:14:39 On 27.03.2017

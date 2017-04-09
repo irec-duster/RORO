@@ -1,0 +1,65 @@
+*****************************************************************
+      SolidWorks Corporation - Compte-rendu d'état du Processeur IGES
+*****************************************************************
+=================================================================
+Informations générales
+=================================================================
+Envoi de l'identification du produit système en cours  : SMA6251A1-015-3GT50G-50_ASM
+Réception de l'identification du produit système en cours: SMA6251A1-015-3GT50G-50_ASM
+Nom de fichier                    : 132291.igs
+Envoi du système en cours               : Pro/ENGINEER by Parametric Technology Corporation
+Version du préprocesseur         : 2008010
+Date de création du fichier           : 20100325.094927
+Date de création du modèle          : 20100325.094927
+Unités                        : MM
+Echelle de l'espace modèle            : 1
+Auteur                       : kj-42
+Organisation                 : Unknown
+
+
+=================================================================
+Informations sur le traitement des entités
+=================================================================
+
+
+=================================================================
+Analyse de précision d'un fichier IGES:
+=================================================================
+  Nombre le plus répandu de chiffres significatifs:               3
+  Nombre le plus grand de chiffres significatifs:                     13
+  Nombre moyen de chiffres significatifs :                5.59208
+  Distance maximale jusqu'à l'origine:                          6.11686
+  Distance minimale jusqu'à l'origine:                                0
+  Nombre effectif de chiffres significatifs:                   13
+
+
+=================================================================
+Récapitulatif des entités
+=================================================================
+-----------------------------------------------------------------
+Nom de type                                         Nombre converti
+---- ----                                         ----- ---------
+102  Composite curve                                291       291
+110  Line                                           937       937
+126  Rational B-spline curve                        449       449
+128  Rational B-spline surface                      269       269
+142  Curve on a parametric surface                  291       291
+144  Trimmed parametric surface                     269       269
+314  Color definition                                 8         8
+402  Associativity instance                           7         7
+406  Property                                         7         7
+_________________________________________________________________
+
+
+=================================================================
+Récapitulatif des résultats
+=================================================================
+Type de fonction SolidWorks                Nombre
+-----------------------                -----
+Fonction(s) volumique(s)                       7
+Fonction(s) surfacique(s)                     0
+Fonction(s) de courbe/d'esquisse                0
+--------------------------------------------
+Heure de début: dimanche, mars 05, 2017 10:30:17
+Heure de fin: dimanche, mars 05, 2017 10:30:40
+Durée de traitement: 0 days, 00 hours, 00 mins, 23 secs

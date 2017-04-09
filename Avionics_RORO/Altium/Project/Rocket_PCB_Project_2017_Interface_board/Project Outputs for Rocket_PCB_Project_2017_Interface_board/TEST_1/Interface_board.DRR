@@ -1,0 +1,32 @@
+----------------------------------------------------------------------------------------------------------------------------------
+NCDrill File Report For: Interface_board.PcbDoc   22.03.2017  23:04:44
+----------------------------------------------------------------------------------------------------------------------------------
+
+Layer Pair : Component Side to Solder Side
+ASCII Plated RoundHoles File : Interface_board-RoundHoles-Plated.TXT
+ASCII Non-Plated RoundHoles File : Interface_board-RoundHoles-NonPlated.TXT
+ASCII Non-Plated SlotHoles File : Interface_board-SlotHoles-NonPlated.TXT
+
+Tool       Hole Size               Hole Tolerance               Hole Type       Hole Count   Plated         Tool Travel
+----------------------------------------------------------------------------------------------------------------------------------
+T1      0.25mm (10mil)                                            Round             694       PTH        3023.44mm (119.03inch)
+T2      0.3mm (12mil)                                             Round             1         PTH        0.00mm (0.00inch)
+T3      0.35mm (14mil)                                            Round             9         PTH        6.50mm (0.26inch)
+T4      0.406mm (16mil)                                           Round             2         PTH        3.00mm (0.12inch)
+T5      0.5mm (20mil)                                             Round             179       PTH        741.25mm (29.18inch)
+T6      0.711mm (28mil)                                           Round             1         PTH        0.00mm (0.00inch)
+T7      0.8mm (31mil)                                             Round             20        PTH        78.00mm (3.07inch)
+T8      0.9mm (35mil)                                             Round             42        PTH        297.95mm (11.73inch)
+T9      0.95mm (37mil)                                            Round             4         PTH        7.00mm (0.28inch)
+T10     1mm (39mil)                                               Round             29        PTH        393.48mm (15.49inch)
+T11     1.7mm (67mil)                                             Round             15        PTH        91.93mm (3.62inch)
+T12     2.3mm (91mil)                                             Round             2         PTH        13.14mm (0.52inch)
+T13     3.2mm (126mil)                                            Round             18        PTH        732.15mm (28.82inch)
+T14     0.8mm (31mil)                                             Round             1         NPTH       0.00mm (0.00inch)
+T15     0.9mm (35mil)                                             Round             4         NPTH       11.13mm (0.44inch)
+T16     1.2mm (47mil)                                             Round             1         NPTH       0.00mm (0.00inch)
+T17     2mm (79mil)             +/-0.05mm (2mil)                  Slot              10        NPTH       361.70mm (14.24inch)
+----------------------------------------------------------------------------------------------------------------------------------
+Totals                                                                              1032
+
+Total Processing Time (hh:mm:ss) : 00:00:02

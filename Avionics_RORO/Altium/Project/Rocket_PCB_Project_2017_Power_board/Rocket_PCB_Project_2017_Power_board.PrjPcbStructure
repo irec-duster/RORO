@@ -1,0 +1,4 @@
+Record=TopLevelDocument|FileName=1.3.0_Power_board.SchDoc
+Record=SheetSymbol|SourceDocument=1.3.0_Power_board.SchDoc|Designator=U_1|SchDesignator=U_1|FileName=1.3.2_Power_board_BAT3&BAT4.SchDoc|SymbolType=Normal|RawFileName=1.3.2_Power_board_BAT3&BAT4.SchDoc|DesignItemId= |SourceLibraryName= |ObjectKind=Sheet Symbol|RevisionGUID= |ItemGUID= |VaultGUID= 
+Record=SheetSymbol|SourceDocument=1.3.0_Power_board.SchDoc|Designator=U_1|SchDesignator=U_1|FileName=1.3.1_Power_board_BAT1&BAT2.SchDoc|SymbolType=Normal|RawFileName=1.3.1_Power_board_BAT1&BAT2.SchDoc|DesignItemId= |SourceLibraryName= |ObjectKind=Sheet Symbol|RevisionGUID= |ItemGUID= |VaultGUID= 
+Record=SheetSymbol|SourceDocument=1.3.0_Power_board.SchDoc|Designator=U_1|SchDesignator=U_1|FileName=1.3.3_Power_board_Servos.SchDoc|SymbolType=Normal|RawFileName=1.3.3_Power_board_Servos.SchDoc|DesignItemId= |SourceLibraryName= |ObjectKind=Sheet Symbol|RevisionGUID= |ItemGUID= |VaultGUID= 

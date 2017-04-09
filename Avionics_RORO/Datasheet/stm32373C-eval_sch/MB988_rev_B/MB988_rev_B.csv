@@ -1,0 +1,148 @@
+Board :MB988 ;;BOM rev :;B02;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;
+Applies filter on row 7;" in column ""variant"" select ""base"" OR ""development"" as needed";;;;;;;;;;;;;;;
+"With only ""base"" you will have the MB964 BOM";" with ""base"" and ""development"" selected you will obtain the MB988/WS BOM";;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;
+Part Number (ST or sub co);Quantity;Description (fonction, value, ..);Reference (topologic number);Version;Package;Manufacturer 1;Part#1;Manufacturer 2 second source;Part#2 Second source;Distributor;Order code;Fitted or not fitted;Supplied by (ST or Sub Co);ROHS Compliant;Comments;Variant
+;1;RESET;B1;;PB10;Wealth Metal Factory Ltd (www.wealthmetal.com);TD0341X-G01(black);;;;;;Sub Co;lead free;;base
+;1;WKUP;B2;;PB10;Wealth Metal Factory Ltd (www.wealthmetal.com);TD0341X-G01(blue);;;;;;Sub Co;lead free;;base
+;1;USER;B3;;PB11;Wealth Metal Factory Ltd (www.wealthmetal.com);TD0341X-G01(blue);;;;;;Sub Co;lead free;;base
+;1;CR1220 holder;BT1;;LI1220_1;BEIJING XCF TECHNOLOGY Ltd.(www.xcfbattery.com);CR1220(for battery) and XCF-12(for holder);;;;;;Sub Co;lead free;;base
+;47;do not fit;R98,R95,R93,R9,R80,R58,R57,R54,R238,R231,R230,R228,R227,R226,R225,R224,R223,R192,R191,R189,R186,R183,R155,R145,R102,RV1,C83,C79,C41,C38,C35,C26,C21,C118,CN6,D6,D3,D5,C129,R129,R236,R71,R81,R96,,R117,U21,U30;;;do not fit;;;;;;do not fit;Sub Co;lead free;;base
+;1;220nF;C123;;603;www.fenghua-advanced.com;0603B224K500NT;;;;;;Sub Co;lead free;;base
+;57;100nF;C99,C97,C93,C90,C89,C78,C77,C76,C69,C68,C63,C62,C61,C60,C6,C59,C57,C47,C44,C43,C4,C36,C30,C27,C23,C20,C2,C17,C16,C15,C14,C134,C133,C132,C131,C130,C13,C128,C127,C126,C125,C124,C122,C121,C120,C12,C119,C115,C113,C112,C111,C110,C107,C105,C103,C102,C100;;603;www.fenghua-advanced.com;0603B104K500NT;;;;;;Sub Co;lead free;;base
+ ;2;22nF;C55, C56;;603;www.fenghua-advanced.com;0603B223K500NT;;;;;;Sub Co;lead free;;base
+;5;10nF;C88,C87,C86,C84,C85;;603;www.fenghua-advanced.com;0603B103K500NT;;;;;;Sub Co;lead free;;base
+;1;15nF;C98;;603;www.fenghua-advanced.com;0603B153K500NT;;;;;;Sub Co;lead free;;base
+;1;4.7nF;C29;;603;www.fenghua-advanced.com;0603B472K500NT;;;;;;Sub Co;lead free;;base
+;1;47nF;C91;;603;www.fenghua-advanced.com;0603B473K500NT;;;;;;Sub Co;lead free;;base
+;1;47nF;C7;;1206;MURATA;GRM31M5C1H473JA01L;;;;;;Sub Co;lead free;;base
+;1;4.7UF;C54;;603;www.fenghua-advanced.com;;;;;;;Sub Co;lead free;;base
+;2;10PF;C24, C25;;603;www.fenghua-advanced.com;0603B6R8K500NT;;;;;;Sub Co;lead free;;base
+;1;47pF;C135;;603;www.fenghua-advanced.com;0603B470K500NT;;;;;;Sub Co;lead free;;base
+;4;20pF;C18, C19?C73?C74;;603;www.fenghua-advanced.com;0603B200K500NT;;;;;;Sub Co;lead free;;base
+;2;150PF(COG);C45, C46;;603;www.fenghua-advanced.com;0603CG151J500NT;;;;;;Sub Co;lead free;;base
+;1;180pF;C72;;603;www.fenghua-advanced.com;0603B181K500NT;;;;;;Sub Co;lead free;;base
+;8;1UF;C33,C50,C52,C51,C53,C101,C104,C92;;603;www.fenghua-advanced.com;0603B105K500NT;;;;;;Sub Co;lead free;;base
+;10;10uF;C5,C49,C58,C39,C82,C11,C67,C9,C10,C114;;TAN-A;AVC;TAJA106K016RNJ;;;;;;Sub Co;lead free;;base
+;9;4.7UF;C1,C42,C40,C71,C80,C28,C22,C3,C94;;TAN-A;AVC;TAJA475K016RNJ;;;;;;Sub Co;lead free;;base
+;8;1UF;C32,C8,C108,C116,C117,C109,C106,C95;;TAN-A;AVC;TAJA105K016RNJ;;;;;;Sub Co;lead free;;base
+;3;10UF;C31,C37?C96;;805;www.fenghua-advanced.com;0805B106K500NT;;;;;;Sub Co;lead free;;base
+;1;2.2UF;C81;;805;www.fenghua-advanced.com;0805B225K500NT;;;;;;Sub Co;lead free;;base
+;1;47uF;C48;;C200M;SAMYOUNG;MVK16VC476KBPDTP;;;;;;Sub Co;lead free;;base
+;1;220uF;C34;;C310M;SAMYOUNG;MVK16VC227KBPDTP;;;;;;Sub Co;lead free;;base
+;2;DB9-male CAN connector;CN5,CN12;;DB9/M;SHANGHAI HUGE ELECTERICAL UNITED DEVELOPMENT CO.,LTD (www.chinahuge.com);5504F1C9P;;;;;;Sub Co;lead free;;base
+;2;USB-B connector;CN16,CN22;;USB-B;SHANGHAI HUGE ELECTERICAL UNITED DEVELOPMENT CO.,LTD (www.chinahuge.com);5075BR-04;;;;;;Sub Co;lead free;;base
+;1;FTSH-110-01-L-DV;CN15;;FTSH-110-01-L-DV;SAMTEC;FTSH-110-01-L-DV;;;;;;Sub Co;lead free;;base
+;1;SSM-104-L-SH;CN3;;;SAMTEC;SSM-104-L-SH;;;;;;Sub Co;lead free;;base
+;2;HDMI;CN1,CN2;;;MOLEX;47151-0051;;;;;;Sub Co;lead free;;base
+;1;PJS008-2003-1;CN7;;MSD(PJS008);Yamaichi;PJS008-2003-1;;;;;;Sub Co;lead free;;base
+;1;Audio Jack;CN21;;ST-212-02V;Wealth Metal Factory Ltd (www.wealthmetal.com);ST-212-02V;;;;;;Sub Co;lead free;;base
+;1;DC-10B;CN18;;DC10B;Wealth Metal Factory Ltd (www.wealthmetal.com);DC-10B;;;;;;Sub Co;lead free;;base
+;1;JTAG;CN17;;IDC20S;SHANGHAI HUGE ELECTERICAL UNITED DEVELOPMENT CO.,LTD (www.chinahuge.com);2316S-20G;;;;;;Sub Co;lead free;;base
+9151097;3;BAT60JFILM;D1, D2, D4;;SOD-323;ST;BAT60JFILM;;;;;;ST;lead free;;base
+;1;;SW1;;SIP3;EAO;09.03290.01;RS;204-7865;;;;Sub Co;lead free;;base
+;11;;JP9,JP8,JP2,JP17,JP16,JP15,JP14,JP1,CN9,CN11,CN10;;SIP2;SHANGHAI HUGE ELECTERICAL UNITED DEVELOPMENT CO.,LTD (www.chinahuge.com);2211S-2G;;;;;;Sub Co;lead free;;base
+;9;;JP3,JP11,JP13,JP12,JP5,JP4,JP7,JP6,JP18;;SIP3;SHANGHAI HUGE ELECTERICAL UNITED DEVELOPMENT CO.,LTD (www.chinahuge.com);2211S-3G;;;;;;Sub Co;lead free;;base
+;28;;SB1, SB2, SB3, SB4, SB5, SB6, SB7, SB8, SB9, SB10, SB11, SB12, SB13, SB14, SB15?SB16, SB17, SB18, SB19, SB20, SB21, SB22, SB23, SB24, SB25, SB26, SB27, SB28;;JP2_SMD;;open;;;;;;Sub Co;lead free;;base
+;1;Header  2*4;CN20;;2*4;SHANGHAI HUGE ELECTERICAL UNITED DEVELOPMENT CO.,LTD (www.chinahuge.com);2214S-8SG-85;;;;;;Sub Co;lead free;;base
+;1;JTAG;CN19;;2*3P;SHANGHAI HUGE ELECTERICAL UNITED DEVELOPMENT CO.,LTD (www.chinahuge.com);2213S-6G;;;;;;Sub Co;lead free;;base
+;1;;JP10;;2*4P;SHANGHAI HUGE ELECTERICAL UNITED DEVELOPMENT CO.,LTD (www.chinahuge.com);2213S-8G;;;;;;Sub Co;lead free;;base
+;2;;CN13, CN14;;2*258;SHANGHAI HUGE ELECTERICAL UNITED DEVELOPMENT CO.,LTD (www.chinahuge.com);2213S-50G;;;;;;Sub Co;lead free;;base
+;5;BEAD 600ohm/100Mhz ;L1,L2,L3,L4,L5;;603;ati-tech advanced electronics(s)pte ltd;FCM1608KF-601T03 ;;;;;;Sub Co;lead free;;base
+;3;red;LD3, LD6,LD8;;603;EVERLIGHT(www.everlight.com);19-21SDRC/S530-A2/TR8;;;;;;Sub Co;lead free;;base
+;3;Green;LD1,LD5,LD9;;603;EVERLIGHT(www.everlight.com);19-21SYGC/S530-E1/TR8;;;;;;Sub Co;lead free;;base
+;1;Orange;LD2;;603;EVERLIGHT(www.everlight.com);19-217/S2C-AM2N2VY/3T;;;;;;Sub Co;lead free;;base
+;1;Blue;LD4;;603;EVERLIGHT(www.everlight.com);19-217/BHC-ZL1M2RY/3T;;;;;;Sub Co;lead free;;base
+;1;SFH409-2(with socket);LD10;;D0.1L;SIEMENS;SFH409-2;;;;;;Sub Co;lead free;;base
+;1;Bi-color;LD7;;LED2-28*32;AVAGO;HSMF-A201-A00J1;;;;;;Sub Co;lead free;;base
+;5;5.6V;D7,D8,D9,D10,D11;;SOT-23;NXP;BZX84-C5.6V;;;;;;Sub Co;lead free;;base
+;79;0;R94,R92,R91,R90,R89,R88,R87,R85,R83,R82,R70,R8,R78,R77,R75,R74,R73,R72,R69,R68,R67,R64,R62,R61,R60,R56,R55,R52,R51,R45,R43,R42,R40,R39,R38,R37,R36,R35,R32,R29,R25,R249,R248,R247,R243,R242,R241,R240,R24,R237,R235,R222,R220,R218,R217,R215,R212,R210,R201,R199,R196,R195,R190,R19,R187,R185,R174,R163,R160,R159,R153,R148,R142,R14,R139,R135,R130,R113,R10;;603;www.passivecomponent.com;WR06000JTL;;;;;;Sub Co;lead free;1/16W,5%;base
+;1;PT100;R30;;805;IST;P0K1.0805.1FC.B;;;;;;Sub Co;lead free;;base
+;1;5.1;R48;;603;www.passivecomponent.com;WR065R1JTL;;;;;;Sub Co;lead free;1/16W,5%;base
+;1;22;R125;;603;www.passivecomponent.com;WR06220JTL;;;;;;Sub Co;lead free;1/16W,5%;base
+;2;47;R49,R197;;603;www.passivecomponent.com;WR06470JTL;;;;;;Sub Co;lead free;1/16W,5%;base
+;2;51;R115,R116;;603;www.passivecomponent.com;WR06510JTL;;;;;;Sub Co;lead free;1/16W,5%;base
+;12;100;R26,R23,R21,R165,R162,R158,R152,R149,R143,R119,R118,R109;;603;www.passivecomponent.com;WR06101JTL;;;;;;Sub Co;lead free;1/16W,5%;base
+;1;120;R7;;603;www.passivecomponent.com;WR06121JTL;;;;;;Sub Co;lead free;1/16W,5%;base
+;3;220;R16?R34, R136;;603;www.passivecomponent.com;WR06221JTL;;;;;;Sub Co;lead free;1/16W,5%;base
+;1;330;R150;;603;www.passivecomponent.com;WR06331JTL;;;;;;Sub Co;lead free;1/16W,5%;base
+;5;510;R144,R154,R147,R211,R206;;603;www.passivecomponent.com;WR06511JTL;;;;;;Sub Co;lead free;1/16W,5%;base
+;4;680;R156,R146,R157,R140;;603;www.passivecomponent.com;WR06681JTL;;;;;;Sub Co;lead free;1/16W,5%;base
+;2;820;R18,R203;;603;www.passivecomponent.com;WR06821JTL;;;;;;Sub Co;lead free;1/16W,5%;base
+;6;1K;R53,R123,R100,R245,R120,R22;;603;www.passivecomponent.com;WR06102JTL;;;;;;Sub Co;lead free;1/16W,5%;base
+;2;1K(1%);R194,R244;;603;www.fenghua-advanced.com;RS-03K102FT;;;;;;Sub Co;lead free;1/10W,1%;base
+;2;1K5;R84, R128;;603;www.passivecomponent.com;WR06152JTL;;;;;;Sub Co;lead free;1/16W,5%;base
+;4;1K8;R104, R105, R213, R221;;603;www.passivecomponent.com;WR06182JTL;;;;;;Sub Co;lead free;1/16W,5%;base
+;8;1K8(1%);R41,R44,R33,R27,R207,R209,R208,R204;;603;www.fenghua-advanced.com;RS-03K182FT;;;;;;Sub Co;lead free;1/10W,1%;base
+;4;2K2;R31?R122?R164, R17;;603;www.passivecomponent.com;WR06222JTL;;;;;;Sub Co;lead free;1/16W,5%;base
+;1;2.67K(1%)R246;;;603;www.asj.com.cg;CR16-2671-FL;;;;;;Sub Co;lead free;1/10W,1%;base
+;1;3K3;R179;;603;www.passivecomponent.com;WR06332JTL;;;;;;Sub Co;lead free;1/16W,5%;base
+;11;4K7;R97,R50,R5,R214,R188,R180,R167,R138,R134,R112,R108;;603;www.passivecomponent.com;WR06472JTL;;;;;;Sub Co;lead free;1/16W,5%;base
+;1;8K2;R59;;603;www.passivecomponent.com;WR06822JTL;;;;;;Sub Co;lead free;1/16W,5%;base
+;1;59K(1%);R106;;603;www.asj.com.cg;CR16-5902-FL;;;;;;Sub Co;lead free;1/10W,1%;base
+;2;31.6K(1%);R107,R111;;603;www.asj.com.cg;CR16-3162-FL;;;;;;Sub Co;lead free;1/10W,1%;base
+;1;15K(1%);R114;;603;www.asj.com.cg;CR16-1502-FL;;;;;;Sub Co;lead free;1/10W,1%;base
+;2;15K;R171, R181;;603;www.passivecomponent.com;WR06153JTL;;;;;;Sub Co;lead free;1/16W,5%;base
+;1;18K;R170;;603;www.fenghua-advanced.com;RS03K183FT;;;;;;Sub Co;lead free;1/16W,5%;base
+;2;22K(1%);R193, R200;;603;www.asj.com.cg;CR16-2202-FL;;;;;;Sub Co;lead free;1/10W,1%;base
+;1;27K;R2;;603;www.fenghua-advanced.com;RS03K273FT;;;;;;Sub Co;lead free;1/16W,5%;base
+;2;36K;R66, R132;;603;www.fenghua-advanced.com;RS03K363FT;;;;;;Sub Co;lead free;1/16W,5%;base
+;1;82K;R141;;603;www.fenghua-advanced.com;RS03K823FT;;;;;;Sub Co;lead free;1/16W,5%;base
+;4;47K;R65, R166, R172, R173;;603;www.fenghua-advanced.com;RS03K473JT;;;;;;Sub Co;lead free;1/16W,5%;base
+;9;100K;R168,R46,R47,R169,R126,R133,R127,R233,R184;;603;www.fenghua-advanced.com;RS03K104JT;;;;;;Sub Co;lead free;1/16W,5%;base
+;2;100K(0.1%);R4, R20;;603;VIKING TECH CORPORATION;AR03BTDY1003N;;;;;;Sub Co;lead free;50PPM,0.1%;base
+;1;100(0.1%);R121;;603;VIKING TECH CORPORATION;AR03BTDY1000N;;;;;;Sub Co;lead free;50PPM,0.1%;base
+;1;220K;R151;;603;www.fenghua-advanced.com;RS03K224JT;;;;;;Sub Co;lead free;1/16W,5%;base
+;2;220K(1%);R198, R205;;603;www.asj.com.cg;CR16-2203-FL;;;;;;Sub Co;lead free;1/10W,1%;base
+;4;1M;R3, R15, R76, R175;;603;www.passivecomponent.com;WR06105JTL;;;;;;Sub Co;lead free;1/16W,5%;base
+;20;10K;R99,R86,R6,R28,R234,R232,R229,R219,R216,R182,R176,R137,R131,R13,R124,R12,R110,R11,R101,R1;;603;www.passivecomponent.com;WR06103JTL;;;;;;Sub Co;lead free;1/16W,5%;base
+;2;2M(0.1%);R177, R178;;603;VIKING TECH CORPORATION;AR03BTDY2005N;;;;;;Sub Co;lead free;50PPM,0.1%;base
+;1;249K(1%);R79;;603;www.asj.com.cg;CR16-2493-FL;;;;;;Sub Co;lead free;1/10W,1%;base
+;1;576K(1%);R103;;603;www.asj.com.cg;CR16-5763-FL;;;;;;Sub Co;lead free;1/10W,1%;base
+;1;22;RS1;;RES8B;www.fenghua-advanced.com;RCMT08W220JT;;;;;;Sub Co;lead free;1/16W,5%;base
+;1;10K;RV3;;3386;www.szhancheng.com;3386P-103;;;;;;Sub Co;lead free;10%;base
+;1;50K;RV2(5%);;3386;www.szhancheng.com;3386P-503H(5%);;;;;;Sub Co;lead free;5%;base
+;1;light dependent resistor;R63;;;perkinelmer;VT9ON1;;;;;;Sub Co;lead free;;base
+9184132;1;Socket;U9;;TQFP100;YAMAICHI;IC149-100-025-B5;;;;;;Sub Co;lead free;;development
+9175715;1;MCU;U9;cut 2.0;TQFP100;ST;STM32F373VCT6;"CP= STM32F373VCT6 Goldfish 256KB flash LQFP100, FG=32F373VCT6$x2 Cut 2.0 marking ""B""";;;;;ST;lead free;;base
+9176312;1;ST3241EBPR ;U10;;SSOP28;ST;ST3241EBPR ;;;;;;ST;lead free;;base
+9159003;1;STMPS2141STR@54;U1;;SOT-23-5L;ST;STMPS2141STR@54;;;;;;ST;lead free;;base
+9176141;1;LD1117S25TR;U24;;SOT-223;ST;LD1117S25TR;;;;;;ST;lead free;;base
+9177005;1;STLM75M2E;U14;;SO8;ST;STLM75M2E;;;;;;ST;lead free;;base
+9176205;1;3.3V linear regulator;U25;;D2PAK/A;ST;LD1086D2M33TR;;;;;;ST;lead free;;base
+9176239;2;ST1L05BPUR;U16, U17;;DFN6(3*3);ST;ST1L05BPUR;;;;;;ST;lead free;;base
+;1;TFDU6300;U12;;IR_VISHAY3;VISHAY;TFDU6300;;;;;;Sub Co;lead free;;base
+;1;INA333;U2;;MSOP8;;INA333AIDGKT;;;;;;Sub Co;lead free;;base
+9188007;1;MPXM2102AS;U5;;MPAK;Freescale;MPXM2102AS;Freescale;MPXM2102AST1;;;;ST;lead free;;base
+9177438;1;TSV624AIPT;U3;;TSSOP14;ST;TSV624AIPT;;;;;;ST;lead free;;base
+9177439;1;TSV632AIDT;U6;;SO8;ST;TSV632AIDT;;;;;;ST;lead free;;base
+9177440;2;TSV631AILT;U7, U8;;SOT-23-5L;ST;TSV631AICT;;;;;;ST;lead free;;base
+;1;IR receiver;U22;;;VISHAY;TSOP34836;;;;;;Sub Co;lead free;;base
+;1;CS43L22;U19;;QFN40;CIRRUS;CS43L22-CNZ;;;;;;Sub Co;lead free;;base
+;1;ZEN056V130A24LS;U26;;polyzen;TYCO;ZEN056V130A24LS;;;;;;Sub Co;lead free;;base
+;3;SN74LVC2T45DCUR;U11,U15,U23;;VSSOP8;TI;SN74LVC2T45DCUR;;;;;;Sub Co;lead free;;base
+;1;SN65HVD230;U4;;SO8;TI;SN65HVD230D;;;;;;Sub Co;lead free;;base
+  ;1;BNX002-01;U20;;BNX001;MURATA;BNX002-01;;;;;;Sub Co;lead free;;base
+9175981;1;STM32F103C8T6;U27;;LQFP48;ST;STM32F103C8T6;;;;;;ST;lead free;;base
+9177421;1;TS461CLT;U32;;SOT-23-5L;ST;TS461CLT;;;;;;ST;lead free;;base
+9177424;1;TS3702IPT;U33;;TSSOP8(6.4);ST;TS3702IPT;;;;;;ST;lead free;;base
+9151057;2;USBLC6-2P6;U13, U29;;SOT-666;ST;USBLC6-2P6;;;;;;ST;lead free;;base
+9175620;1;M24M01-HRMN6T;U18;;SO8;ST;M24M01-HRMN6T;;;;;;ST;lead free;;base
+;1;MT008-A(With button);U34;;JOY;Wealth Metal Factory Ltd (www.wealthmetal.com);MT008-A;;;;;;Sub Co;lead free;;base
+;1;8MHz(with socket) ;X2;;XTAL_socket;www.hosonic.com.cn;ESA8.0000F20D25F;;;;;;Sub Co;lead free;;base
+;1;32KHz oscillator;X1;;SM8;CITIZEN;CM200C32.768KDZF;;;;;;Sub Co;lead free;;base
+;1;8MHz;X3;;XTAL;www.hosonic.com.cn;ESMA8.0000F20D22F;;;;;;Sub Co;lead free;;base
+9151107;1;TRANSIL;Z1;;1R1C;ST;SMAJ5.0A-TR;;;;;;ST;lead free;;base
+;1;KECG2740TBL;U28;;;KINGSTATE (www.kingstate.com.tw);KECG2740TBL;;;;;;Sub Co;lead free;;base
+;1;MOSFET;T2;;SOT-23;NXP;2N7002;;;;;;Sub Co;lead free;;base
+;1;BSN20;TR3;;SOT-23;NXP;BSN20;;;;;;Sub Co;lead free;;base
+;2;MOSFET;TR1,TR2;;SOT-23;FAIRCHILD;FDN327N;;;;;;Sub Co;lead free;;base
+;1;MicroSD card;;;;KINGMAX;KINGMAX 2G or 4G card;;;;;;Sub Co;lead free;;base
+;2;Socket8MHz oscillator;X2;;ICSO-01;KWANGHWA(www.cpu.com.tw/kh/conn/ics/icso.html);ICSO-01;;;;;;Sub Co;lead free;;base
+;1;Acrylic plastic cover;S1;;for touch sensing TS1 & TS2;;52x11.5x0.8mm ;;;;;;Sub Co;lead free;;base
+;6;NPN transistor;T3,T7,T6,T8,T4,T5;;SOT-23;JCST;9013;;;;;;Sub Co;lead free;;base
+;1;PNP transistor;T1;;SOT-23;JCST;9012;;;;;;Sub Co;lead free;;base
+;4;spherical plastic;;;;;?10mm*6mm;;;;;;Sub Co;lead free;;base
+;1;Joystick Button;U34;;;www.nbtaipu.com;PB-504;;;;;;Sub Co;lead free;;base

@@ -1,0 +1,4 @@
+Layer Pairs Export File for PCB: F:\EPFL\0_IREC\Electronic\Altium\Project\Rocket_PCB_Project_2017_Interface_board\Interface_board.PcbDoc
+LayersSetName=Top_Bot_Plated_Thru_Holes|DrillFile=interface_board-roundholes-plated.txt|DrillLayers=gtl,g1,g2,gbl
+LayersSetName=Top_Bot_NonPlated_Thru_Holes|DrillFile=interface_board-roundholes-nonplated.txt|DrillLayers=gtl,g1,g2,gbl
+LayersSetName=Top_Bot_NonPlated_Slot_Holes|DrillFile=interface_board-slotholes-nonplated.txt|DrillLayers=gtl,g1,g2,gbl

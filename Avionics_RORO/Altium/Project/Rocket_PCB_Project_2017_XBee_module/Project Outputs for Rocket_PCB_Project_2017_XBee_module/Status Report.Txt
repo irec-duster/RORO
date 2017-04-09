@@ -1,0 +1,21 @@
+Output: Gerber Files
+Type  : Gerber
+From  : PCB Document [XBee_module.PcbDoc]
+   Generated File[XBee_module.GTL]
+   Generated File[XBee_module.GBL]
+   Generated File[XBee_module.GTO]
+   Generated File[XBee_module.GTP]
+   Generated File[XBee_module.GTS]
+   Generated File[XBee_module.GBS]
+   Generated File[XBee_module.GBP]
+   Generated File[XBee_module.GBO]
+   Generated File[XBee_module.GM4]
+   Generated File[XBee_module.RUL]
+   Generated File[XBee_module.EXTREP]
+   Generated File[XBee_module.REP]
+
+
+Files Generated   : 12
+Documents Printed : 0
+
+Finished Output Generation At 00:06:07 On 23.03.2017

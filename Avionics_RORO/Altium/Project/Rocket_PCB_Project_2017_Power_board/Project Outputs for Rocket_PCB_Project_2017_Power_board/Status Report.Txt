@@ -1,0 +1,23 @@
+Output: Gerber Files
+Type  : Gerber
+From  : PCB Document [Power_board.PcbDoc]
+   Generated File[Power_board.GTL]
+   Generated File[Power_board.G1]
+   Generated File[Power_board.G2]
+   Generated File[Power_board.GBL]
+   Generated File[Power_board.GTO]
+   Generated File[Power_board.GTP]
+   Generated File[Power_board.GTS]
+   Generated File[Power_board.GBS]
+   Generated File[Power_board.GBP]
+   Generated File[Power_board.GBO]
+   Generated File[Power_board.GM4]
+   Generated File[Power_board.RUL]
+   Generated File[Power_board.EXTREP]
+   Generated File[Power_board.REP]
+
+
+Files Generated   : 14
+Documents Printed : 0
+
+Finished Output Generation At 23:59:50 On 22.03.2017

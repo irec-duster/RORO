@@ -1,0 +1,21 @@
+------------------------------------------------------------------------------------------
+Gerber File Extension Report For: PCB_Rocket_panelized.GBR   27.03.2017  22:14:13
+------------------------------------------------------------------------------------------
+
+
+------------------------------------------------------------------------------------------
+Layer Extension     Layer Description                      
+------------------------------------------------------------------------------------------
+.GTL                Component Side                          
+.G1                 GND                                     
+.G2                 Power plane                             
+.GBL                Solder Side                             
+.GTO                Top Overlay                             
+.GTP                Top Paste                               
+.GTS                Top Solder                              
+.GBS                Bottom Solder                           
+.GBO                Bottom Overlay                          
+.GM3                Board cutout                            
+.GM4                Dimensions                              
+.GM5                Routing tool                            
+------------------------------------------------------------------------------------------

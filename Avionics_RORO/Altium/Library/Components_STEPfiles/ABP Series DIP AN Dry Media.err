@@ -1,0 +1,18 @@
+
+
+
+          SolidWorks Corporation - STEP Processor Error Log
+          ______________________________________________________
+
+                       STEP Post Processor
+                       ___________________
+
+
+STEP File Name: F:\EPFL\0_IREC\Electronic\Altium\Library\Components_STEPfiles\ABP Series DIP AN Dry Media.stp
+
+
+
+Error: Fichier incomplet
+STEP: entrée n'a pas été terminée correctement.
+Context: Record ending on line number 1
+         OR one of its fields.
