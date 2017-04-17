@@ -1,3 +1,6 @@
+NOTE!
+For our report use file RORO_Report.tex. References go in bibtex_database.bib. I will later delete all unnecessary files. The word file is the official template from the competition, latex template is the AIAA paper template which is very similar but we will have to change few things later!
+
 This is the file `README', which is part of the `aiaa' distribution.
 
 Run 'latex aiaa.ins' to produce the files aiaa-tc.cls and aiaa.bst.
@@ -17,3 +20,4 @@ For further details, such as installation instructions or how to get
 support, please read the Users Manual (aiaa.pdf).
 
 - Release $Name:  $ -
+
