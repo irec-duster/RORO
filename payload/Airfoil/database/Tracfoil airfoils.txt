@@ -1,0 +1,271 @@
+http://airfoils.sont-la.com/ - http://fly.to/tracfoil Profils de ma page WEB
+----------------------
+
+A           Ashok Gopalarathnam/Selig "New"KR2S Airfoil 3 Airfoils (3 Ko)
+AS5046      16.00% The AS5046 will work on stock spars
+AS5048      18.00% I'd highly recommand using AS5048 at the root
+AS5045      15.00% while using the AS5045 (16%) at the tip
+
+AZ-2002            3 Profils pour aile volante A-Z 2002 Conception Alain Zutter
+Abrial17    10.03%
+
+            
+C           
+Cap21       15.00% Profil du CAP 21
+CJ25209     09.50%  ??
+Cristal     15.69%  **
+
+            
+D           Mark Drela
+Allegro            Airfoils for Allegro 2m
+          ag16, ag17, ag18, ag19, ht08, ht12
+ApogeeHLG          7Airfoils for ApogeeHLG
+          ag03, ag04, ag08, ag09, ag10, ag11, ht05
+Supergee          5 Airfoils for Supergee
+          ag45c-03, ag46c-03, ag47c-03, ht22, ht23
+New Supergee      6 Airfoils for New Supergee
+      ag47ct-02r, ag46ct-02r, ag455ct-02r, ag12, ag13, ag14
+Bubble Dancer     4 Airfoils
+       ag24, ag25, ag26, ag27
+
+
+D            Delft University
+dd928416    08.40% Delft sailplane
+du86 137 25 13.70% for horizontal tail Y=0
+
+            
+E           Eppler
+EB 380      10.00% Hybride étudié à partir des E 374 et E387
+E193g.U-K24 10.00% Modifié pour intrados plat etudié pour volet à 24%
+
+E            EH by John Yost
+EH 19-17    07.00% Pour aile volante
+Elina       09.50%  ??
+                                                          
+
+F           
+F4FRAS15    15.00% Dessiné pour le Pou du ciel par (c) R Fraser
+
+
+H
+Handsel     09.19%
+
+               
+HD           Hannes Delago Team Ariane   11 Airfoils (12 Ko)
+HD45        07.50% For fast models (F5B, F5D, slope)
+HD 46       07.00% For fast models (F5B, F5D, slope)
+HD 47       06.50% For fast models (. F5B, F5D), Ariane V10 wing airfoil
+HD48        08.00% Optimized for F3B
+HD 48A      08.50% Optimized for F3B
+HD 48B      09.00% Optimized for F3B
+HD 50       08.00% Special purpose F5B airfoil, Ariane V5 and V6
+HD 53       07.50% Special purpose F5B airfoil,  for the Ariane V7
+HD 54       07.00% Special purpose S8E rocket glider airfoil, Ariane RAK2
+HD 800      08.00% General purpose tail airfoil
+HD 801      07.00% General purpose tail airfoil, used on every Ariane plane
+
+
+HN             Norbert Habe      99 Airfoils HN (103Ko)
+HLG          HN-419  HN-979  HN-979D  HN-997A  HN-997B  HN-998  HN-999  HN-1027
+             HN-1029 HN-1033 HN-1033A HN-1070
+
+F3B          HN-033  HN-034  HN-035  HN-163  HN-163TA  HN-163TB  HN-184  HN-211
+             HN-216  HN-216TA  HN-327  HN-350  HN-354  HN-354E   HN-380  HN-785
+             HN981   HN-989  HN-990 
+
+F3F          HN-032 HN-036 HN-038 HN-211 HN-321 HN-326 HN-352 HN-354ES NH-354SR
+             HN-436 HN-446  HN-462 HN-785SR HN-805 HN-1038
+
+F3J          HN-217  HN-227  HN-239  HN-333  HN-350M01  HN-350M02
+             HN-354OC  HN-354SM  HN-360  HN-417  HN-465 HN-973
+
+Basic        HN-354A HN-801
+
+Planeur>3.5m HN-003  HN-188  HN-203  HN-304  HN-304TA HN-309 HN-319 HN-409
+             HN-411  HN-808  HN-832  HN-832TA  HN-951 HN-956 HN-971 HN-972
+             HN-974   HN-975  HN-975TA  HN-980  HN-1023
+
+Aile volante HN-153S HN-274S HN-275S HN-276SA HN-311S HN-312S
+             HN-315S HN-316S  HN-961SA HN-976S
+
+Planeur      HN-184M HN-418 HN-424 HN-450 HN-450S HN-464 HN-1036 HN-1051 HN-1054
+
+H            Horten
+Standard    13.00% D'après M. Mag N° 489 Juin 1992 Mini Horten de B. Jarril
+Tropfen II  10.00% Sans dérive avec vrillage en bout d'aile 10°
+
+HS            Hartmut Siegmann   10 Airfoils (6Ko)
+                   for Tailless
+emx07       09.91% airfoil designed by Martin Lichte (see)
+hs2080      08.00% (see)
+hs3080      08.00% For HLG Tailless models (see)
+hs3090      08.00% Thermal and light slope soaring (see)
+hs3512      12.00% for large tailless projects (see)
+hs510       08.80%
+hs602       10.21%
+phoenix     08.20% (see)
+S5020-2087  08.85%
+sipkill1710 09.93% Just to be better than ZAGI section (see)
+
+HQ            Helmut Quabeck  54 Airfoils (34Ko)
+
+HQ/W-0/6   HQ/W-0/7   HQ/W-0/8   HQ/W-0/9   HQ/W-0/10
+HQ/W-0/11  HQ/W-0/12  HQ/W-0/13  HQ/W-0/14  HQ/W-0/15
+
+
+HQ/W-1/8   HQ/W-1/9   HQ/W-1/10
+HQ/W-1/11  HQ/W-1/12  HQ/W-1/14
+
+HQ/W-2/7.5
+HQ/W-2/8   08.00% Utilisé sur le F3B de Ph. Genvrin/F. Legou
+HQ/W-2/8.5   HQ/W-2/9   HQ/W-2/10
+HQ/W-2/11    HQ/W-2/12  HQ/W-2/13   HQ/W-2/14   HQ/W-2/15
+
+HQ/W-2.5/7.5   HQ/W-2.5/8   HQ/W-2.5/8.5   HQ/W-2.5/9   HQ/W-2.5/10
+HQ/W-2.5/11    HQ/W-2.5/12  HQ/W-2.5/13    HQ/W-2.5/14  HQ/W-2.5/15
+
+HQ/W-3/8   HQ/W-3/8.5   HQ/W-3/9
+HQ/W-3/10    10.00% Profil utilisé sur le Soarmaster de GRAUPNER
+HQ/W-3/11
+HQ/W-3/12   HQ/W-3/13   HQ/W-3/14   HQ/W-3/15   HQ/W-3/16
+
+HQ/W-3.5/8   HQ/W-3.5/9   HQ/W-3.5/10   HQ/W-3.5/11
+HQ/W-3.5/12  HQ/W-3.5/13  HQ/W-3.5/14   HQ/W-3.5/15
+                                                      
+
+J           Jedelsky
+EJ 1        13.00%
+EJ 85       see
+            
+MG           Marcel Guwang  Pour les planeurs de voltige d'AEROMOD
+            
+MG05        09.00%  L'aile et le stab du Voltij, le stab du Miraj
+MG06        07.40% Utilisé sur le Prodij et sur l'aile du Miraj
+MG08        08.70% Utilisé sur l'Avantaj et de l'Essoraj
+
+MS            Matthieu Scherrer  Les profils MS            
+MS1,9/8,7i  08.79%  f3i, f3b, f3f à volet
+MS2/9,5i    09.50% f3i, f3b, f3f à volet
+MS3,3/15GP  15.00% Grande plume (emplanture)
+MS3,3/11GP  11.00% Grande plume
+MS3,3/11GPT 11.00% Grande plume (saumon)
+
+MH            Martin Hepperle   17 Airfoils (13Ko)
+MH18B       11.80% for pylon racing model aircraft (Quickie 500)
+MH23        08.01% for pylon racing model aircraft (FAI class F3D)
+MH24        09.01% for pylon racing model aircraft (FAI class F3D)
+MH25        09.98%  for pylon racing model aircraft (FAI class F3D)
+MH26        10.99% for pylon racing model aircraft (FAI class F3D)
+MH27        11.99% for pylon racing model aircraft (FAI class F3D)
+MH31        07.99% for electric powered pylon racing and for F5B models
+MH33        07.28% for electric powered pylon racing, also for F3B and F3J
+MH34        08.51% for electric powered pylon racing and for F5B models
+MH44        09.66% for allround RC-gliders ), used on the sailplane Wizard
+MH46        11.40% Low moment coefficient for tailless model aircraft
+MH49        10.50% Low moment coefficient for tailless model aircraft
+MH64        08.61% Low moment coefficient for tailless model aircraft
+MH78        14.40% Low moment coefficient for tailless model aircraft
+MH91        15.00% for man carrying hang gliders
+MH92        15.50% for man carrying hang gliders
+MH93        16.00% for man carrying hang gliders
+                                                       Top
+M              E. Molfino             11 Airfoils (19Ko)
+F5B fast      MB714  MB7136  MC813 MD814  MD8135  Mjp712  Msa812
+F3B           Mve8516  Mve8516flap 80% +3°
+Flying Wing   Mjz1211  Mjp711flap 75% -3°
+                                                       
+
+
+N           NACA Symétriques   9 Airfoils (6Ko)
+Naca0007    07.00%
+Naca0008    08.00%
+Naca0009    09.00%
+Naca0010    10.00%
+Naca0011    11.00%
+Naca0012    12.00%
+Naca0013    13.00%
+Naca0014    14.00%
+Naca0015    15.00%
+
+ N           NACA
+ For generate NACA use NACA Generation (143 Ko) V 4.5 © 1998 David Lednicer
+Nacak6e     14.92% les 3 profils de l'aile du K6E MPX
+Nacak6m     13.47% NACA 63618/63615 modifiés pour le modèle réduit.
+Nacak6s     11.54% Attention sur les fuseaux MPX
+                      le calage du stab est faux 1°5 à 2° maxi de Vé
+
+Naca1410    10.00%
+Naca23009   09.00%
+Naca23015   15.00%
+Naca2412    12.00%
+Naca2413    13.00%
+Naca2415    15.00%
+Naca4412    12.00%
+Naca4415    15.00%
+Naca6409    09.00%
+Naca64A410  10.00%
+Naca63A612  12.00%
+Prised'air         Prise d'air Naca                                                        
+            
+R          Ralf Kornmann  
+RK40        08.50%
+
+R           Ritz
+Ritz1-30-10 10.00%
+Ritz1-30-12 12.00%
+Ritz2-30-10 10.00%
+Ritz2-30-12 12.00%
+Ritz3-30-10 10.00%
+Ritz3-30-12 12.00%
+Ritz3-30-15 15.00%
+RS           Reinhard Sielemann      8 Airfoils (5Ko)
+RS001      09.84%
+RS001m50   09.92%
+RS001m60   09.93%
+RS001m75   09.96%
+RS001t     09.84%
+RS001T10   10.00%
+RS004a     09.00%
+RS004at    10.00%
+            
+            
+SSB           Serge Barth   20 Airfoils(15 Ko)
+SBC3        11.20% Spécial pour des ailes non coffrées ou tout juste
+SB9511.5/2  11.50% Ces 3 profils utilisés
+SB9510.5/2  10.50%  en évolution
+SB959.5/2   09.50% de l'emplanture vers le saumon
+SB96LM      08.00% Gratteur, pénétrant, assez facile à faire en structure
+SB96MU      08.50% Très bon en F3F, gratte facilement avec 2° de volets
+SB96V       09.35% Profil d'emplanture pour planeur de voltige
+SB96VS      09.75% Profil de saumon pour planeur de voltige
+SB9612.7/3  12.70% Cette évolution se caractérise
+SB9611.6/3  11.60%  par un Cz maxi très élevé
+SB9610.5    10.50% tout en conservant une bonne finesse
+SB97EP      09.20% Alternative au RG12A, excelle en gratte et vitesse
+SB97FW      08.83% Cm0 pratiquement nul et bon Cz max
+SB978/1.25  08.00% Adapté aux racers motorisés.
+SB97EPW     08.00% Pour le 60", aussi sur des 4m. Bon en gratte et vitesse
+SB98F3J     08.00%  Pour le plaisir de gratter avec un planeur fin
+SB98VR5     12.00% Emplanture Pour planeur de voltige
+SB98VM5     10.95% Milieu   (utilisés sur l'AIR 100 d'Eric Poulain)
+SB98VS5     10.00% Saumon
+SB99F3J     09.00% Nouveau profil de Serge Barth (Looping Déc-Janv 2000)
+Pour l'ASW22 de Michel Clavier Modélisme (E= 7.33m) voir RCM 08/2001
+SB99A22CO   17.52% Emplanture
+SB99A22C4   13.00% Saumon
+                                                     
+
+S           Sergey Sobakin ("Mr Avionik")
+Ms8016m     08.00% For F5B
+Ms8516m     08.50% For F5B
+
+
+-           Other
+2032C       08.00%
+Borge-b3    11.72%
+Pegase      17.36%
+Uplink      07.01% DLG by Dick Barker
+
+Commentaires, suggestions et nouveaux profils appréciés.
+Questions, suggestions and new airfoils are welcome.
+jean-claude@etiemble.com
