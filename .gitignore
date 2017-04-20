@@ -1,1 +1,9 @@
 ~$*
+.bbl
+.blg
+.dvi
+.fdb_latexmk
+.fls
+.glo
+.log
+.DS_Store
