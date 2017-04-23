@@ -1,0 +1,8 @@
+xflr5 v6.32
+
+Plane name :        Plane Name
+Polar name :        T2-VLM2-proj_area
+
+   alpha      Beta       CL          CDi        CDv        CD         CY         Cl         Cm         Cn        Cni       QInf        XCP
+
+
