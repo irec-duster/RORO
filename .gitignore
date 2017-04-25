@@ -7,3 +7,6 @@
 .glo
 .log
 .DS_Store
+payload/FlightStack_Glider/HIL
+payload/FlightStack_Glider/px4
+payload/FlightStack_Glider/mavlink
