@@ -1,0 +1,2 @@
+CBRK_AIRSPD_CHK set to max value (not to look for airspeed)
+
