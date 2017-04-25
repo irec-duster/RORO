@@ -1,2 +1,9 @@
 CBRK_AIRSPD_CHK set to max value (not to look for airspeed)
+CBRK_USB_CHK set to max value
+CBRK_IO_SAFETY set to max value to disable the safety switch for arming
+
+
+Building the JSBSIM xml model of the plane
+
+http://jsbsim.sourceforge.net/aeromatic2.html
 
