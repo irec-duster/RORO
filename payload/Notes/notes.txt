@@ -7,3 +7,29 @@ Building the JSBSIM xml model of the plane
 
 http://jsbsim.sourceforge.net/aeromatic2.html
 
+
+
+
+Carbon Fibre lamination test
+
+1) Sample 1 - soacking 4 times with absorber sheet
+Initial conditions:
+
+
+After lamination:
+
+
+
+2) Sample 2 - soaking 2 times with absorber sheet
+
+
+Initial Conditions
+layer 0.3
+perimeter 2
+top 3
+bottom 3
+inflill 10%
+weight 25.6 g
+
+
+After lamination
