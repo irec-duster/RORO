@@ -327,7 +327,7 @@
                                      PIN_PUPDR_PULLUP(GPIOB_PIN5) | \
                                      PIN_PUPDR_FLOATING(GPIOB_USART1_TX) | \
                                      PIN_PUPDR_PULLUP(GPIOB_USART1_RX) | \
-                                     PIN_PUPDR_PULLUP(GPIOB_GPS_TIMEPULSE) | \
+                                     PIN_PUPDR_PULLDOWN(GPIOB_GPS_TIMEPULSE) | \
                                      PIN_PUPDR_PULLUP(GPIOB_IMU_INT0) | \
                                      PIN_PUPDR_FLOATING(GPIOB_I2C2_SCL) | \
                                      PIN_PUPDR_FLOATING(GPIOB_I2C2_SDA) | \
