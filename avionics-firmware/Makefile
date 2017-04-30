@@ -71,7 +71,7 @@ endif
 
 # Enables the use of FPU on Cortex-M4 (no, softfp, hard).
 ifeq ($(USE_FPU),)
-  USE_FPU = no
+  USE_FPU = hard
 endif
 
 #
@@ -111,6 +111,7 @@ CSRC = $(STARTUPSRC) \
        $(HALSRC) \
        $(PLATFORMSRC) \
        $(TESTSRC) \
+       $(CHIBIOS)/os/hal/lib/streams/chprintf.c \
        src/board.c \
        src/main.c
 
@@ -143,7 +144,9 @@ ASMSRC = $(STARTUPASM) $(PORTASM) $(OSALASM)
 
 INCDIR = $(STARTUPINC) $(KERNINC) $(PORTINC) $(OSALINC) \
          $(HALINC) $(PLATFORMINC) $(BOARDINC) $(TESTINC) \
-         $(CHIBIOS)/os/various src
+         $(CHIBIOS)/os/various $(CHIBIOS)/os/hal/lib/streams \
+         src
+
 
 #
 # Project, sources and paths
@@ -193,7 +196,7 @@ CPPWARN = -Wall -Wextra -Wundef
 #
 
 # List all user C define here, like -D_DEBUG=1
-UDEFS =
+UDEFS = -DCHPRINTF_USE_FLOAT=1
 
 # Define ASM defines here
 UADEFS =
