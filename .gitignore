@@ -6,6 +6,8 @@
 .fls
 .glo
 .log
+.aux
+.pdf
 .DS_Store
 payload/FlightStack_Glider/HIL
 payload/FlightStack_Glider/px4
