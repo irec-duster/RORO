@@ -9,63 +9,74 @@ classdef rocket <handle
       fin_h
       fin_base
       fin_top
-      fin_angle
+      fin_sweep
       fin_t
       Mass
       Ibody
+      motorname
+      motordata
       
       % Current State Vector with Initial values f
-      X = [0 0 0];    % Position x, y, z   
+      time = 0;         %time
+      X = [0; 0; 0];    % Position x, y, z   
       Q = [0 ,0, 0, 0]; % Angle in quarternions  
-      P = [0 0 0];      % Linear Momentum  
-      L = [0 0 0];      % Angular momentum
-      Xdot = [0 0 0];    % Velocity xdot, ydot, zdot 
+      P = [0; 0; 0];      % Linear Momentum  
+      L = [0; 0; 0];      % Angular momentum
+      Xdot = [0; 0; 0];    % Velocity xdot, ydot, zdot 
       Qdot = [0 ,0, 0, 0];% Angular rates
-      Pdot = [0 0 0];   % Linear Momentum rates = applied force
-      Ldot = [0 0 0];   % Angular Momentum rates= applied torques
+      Pdot = [0; 0; 0];   % Linear Momentum rates = applied force
+      Ldot = [0; 0; 0];   % Angular Momentum rates= applied torques
       alpha = 0;      
           
      
    end
    methods
        %Constructor takes data from rocket property file
-       function obj = rocket(val) 
+       function obj = rocket(val,val2) %Val is the table of properties val2 motor data
           if nargin > 0
+              prop=table2array(val(1:end-1,2));
+              motorname=table2array(val(end,1));
              %if isnumeric(val)
-                obj.Length = val(1);
-                obj.D = val(2);
-                obj.Cone_L = val(3);
-                obj.fin_n = val(4);
-                obj.fin_h = val(5);
-                obj.fin_base = val(6);
-                obj.fin_top = val(7);
-                obj.fin_angle = deg2rad(val(8));
-                obj.fin_t = val(9);
-                obj.Mass = val(10);
-                obj.Ibody= [val(11), 0 ,0; 0 , val(12), 0; 0, 0, val(13)];
+                obj.Length = prop(1);
+                obj.Cone_L = prop(2);
+                obj.D = prop(3);
+                obj.fin_n = prop(4);
+                obj.fin_h = prop(5);
+                obj.fin_base = prop(6);
+                obj.fin_top = prop(7);
+                obj.fin_sweep = deg2rad(prop(8));
+                obj.fin_t = prop(9);
+                obj.Mass = prop(10);
+                obj.Ibody= [prop(11), 0 ,0; 0 , prop(12), 0; 0, 0, prop(13)];
+                obj.motorname=motorname;
              %else
                 %error('Value must be numeric')
              %end
           end
        end
        %Fuctions to calcualte various properties
-%        function set.x(obj,value)
-%          if (value > 0)
-%             obj.x = value;
-%          else
-%             error('Property value must be positive')
-%          end 
-%        end
+
        function Cd = Cd(obj) % Drag in axial direction
-           Cd = 0.1; % Cd_calc(Re, alpha, M)           
+           Cd = Cd_mandell(obj);
+           if (isinf(Cd))
+               Cd =100;
+           end
        end
        function CnXcp = CnXcp(obj) % Drag in axial direction
-           Cn_alpha = 0.1;
-           Xcp = 1.7;%Cd_cal(Re, alpha, M) 
+           [Cn_alpha Xcp]=Cn_alphaXcp(roro) ;
            CnXcp = [Cn_alpha*obj.alpha Xcp];
        end
-       function a = a(obj) % test
-            obj.alpha = 2;
+       function T = T(obj) % Thrust curve
+           M = obj.motordata;
+           T = interp1(M(:,1),M(:,2),obj.time,'spline');
+           if ( obj.time > M(end,1))
+               T = 0;
+           end
+       end
+       function Re = Re(obj) % Re of rocket
+           global env
+           Re = env.rho*norm(obj.Xdot)*obj.Length/env.mu;
+           
        end
 
    end

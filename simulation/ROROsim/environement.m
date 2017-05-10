@@ -38,12 +38,12 @@ classdef environement<handle
 
       function g = g(obj)% Calculates g at current altitude
           global roro
-          g = obj.G*obj.Earth_M/(obj.Earth_R+ roro.z + obj.h_g)^2;
+          g = obj.G*obj.Earth_M/(obj.Earth_R+ roro.X(3) + obj.h_g)^2;
       end
 
       function Temp = Temp(obj) % Calculates temperature at current altitude
           global roro
-          Temp = -obj.Temp_grad*(roro.z)+obj.Temp_g();
+          Temp = -obj.Temp_grad*(roro.X(3))+obj.Temp_g();
       end
       function mu = mu(obj) % Calculates mu at current altitude
           mu = obj.Ref_Dyn_viscosity*(obj.Sutherlands_c + obj.Ref_Temp)/...
@@ -58,6 +58,9 @@ classdef environement<handle
       function rho = rho(obj) % Calculates air density at current altitude
           n = (obj.g/(obj.Temp_grad*obj.R))-1;
           rho = obj.rho_g*(obj.Temp/obj.Temp_g)^n;
+      end
+      function C = C(obj) % Calculates speed of sound at current altitude
+          C = sqrt(obj.gamma*obj.R*obj.Temp);
       end
 
    end

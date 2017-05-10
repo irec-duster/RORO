@@ -1,6 +1,7 @@
-function [ prop ] = init_rocket(  )
+function prop = init_rocket()
 
-prop = readtable('rocket_prop.txt','Format','%s%f');
-prop=table2array(prop(:,2));
+    prop = readtable('rocket_prop.txt','Format','%s%f');
+%     motorname=char(table2array(prop(end,1)));
+%     motordata = rocketmotor(motorname);
 end
 
