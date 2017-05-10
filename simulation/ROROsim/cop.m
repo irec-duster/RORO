@@ -3,17 +3,17 @@ clc; clear;
 w = length(0:0.5:5);
 alphatab = [0:0.5:5];
 
-v0tab= [10:10:250];
+v0tab= [0:10:250];
 h= length(v0tab);
 Cn = zeros(h,w);
 Xcppos= zeros(w,1);
 %% CP  calculator from openrocket
-for i=1:h
+%for i=1:h
 L = 2.646; %characteristic length
 rho =  1.225; % density 
 mu =  1.7894e-5;  % dynamic viscosity 
 C = 340.3; %speed of sound dry air 15C sea level
-v0 = v0tab(i);   %ms-1 characteristic velocity
+v0 = v0tab(1);   %ms-1 characteristic velocity
 M = v0/C;
 Re  = rho*v0*L/mu;
 
@@ -78,8 +78,8 @@ fin.sweepc = atan2((fin.basechord/2 + (x2-fin.topchord/2)),fin.h);
 %clear temp fun fun2
 
 %% Center of presure
-for j=1:w
-alpha =deg2rad(alphatab(j));
+%for j=1:w
+alpha =deg2rad(alphatab(1));
 
 %% Cone 
 % Cn_alpha 
@@ -121,11 +121,11 @@ fin.Xcp = fin.X_b + (Xt/3*(fin.basechord +  2*fin.topchord) + 1/6*(fin.basechord
 
 Xcp = (fin.Cn_alpha*fin.Xcp + cone.Cn_alpha*cone.Xcp +  cyl.Xcp*cyl.Cn_alpha)/(fin.Cn_alpha+cone.Cn_alpha+cyl.Cn_alpha)
 %% Roll damping 
-omega = deg2rad(140);
-Cn_alpha0 = 2*pi/beta; % from potential flow over a thin foil. 
-
-temp = (fin.basechord+fin.topchord)*R_cyl^2*fin.h/2 + (fin.basechord+2*fin.topchord)*R_cyl*fin.h^2/3  + (fin.basechord+3*fin.topchord)*fin.h^3/12; 
-Cld = fin.n*Cn_alpha0/(A_ref*v0*D_cyl) * omega * temp;
+% omega = deg2rad(140);
+% Cn_alpha0 = 2*pi/beta; % from potential flow over a thin foil. 
+% 
+% temp = (fin.basechord+fin.topchord)*R_cyl^2*fin.h/2 + (fin.basechord+2*fin.topchord)*R_cyl*fin.h^2/3  + (fin.basechord+3*fin.topchord)*fin.h^3/12; 
+% Cld = fin.n*Cn_alpha0/(A_ref*v0*D_cyl) * omega * temp;
 
 
 %% Cn_alpha
@@ -133,18 +133,18 @@ Cn_alpha = fin.Cn_alpha + cyl.Cn_alpha + cone.Cn_alpha;
 
 F_n = 0.5* v0^2* rho* A_ref * Cn_alpha*alpha;
 
-Cn(i,j) = Cn_alpha*alpha;
-Xcppos(j) = Xcp; 
-end
-end
-
-surf(alphatab',v0tab',Cn)
-xlabel('alpha (deg)')
-ylabel('V0 (m/s)')
-zlabel('Cn')
-
-%%
-
+% Cn(i,j) = Cn_alpha*alpha;
+% Xcppos(j) = Xcp; 
+% %end
+% %end
+% 
+% surf(alphatab',v0tab',Cn)
+% xlabel('alpha (deg)')
+% ylabel('V0 (m/s)')
+% zlabel('Cn')
+% 
+% %%
+% 
 % plot(alphatab,Xcppos)
 % xlabel('alpha (deg)');
 % ylabel('Xcp (m)');

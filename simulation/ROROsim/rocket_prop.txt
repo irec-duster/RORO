@@ -1,13 +1,15 @@
-Lenght, 	2.626
+Lenght,         2.626
 Cone Lenght, 	0.61
-Diameter, 	0.158
+Diameter,       0.158
 Number of Fins, 3
 Fin height, 	11.5e-2
 Fin base length,21e-2
 Fin top length,	11.5e-2
 Fin Sweep angle,45
 Fin thickness, 	1e-2
-Mass, 		23
-Ixx,		10
-Iyy,		10
-Izz,		10
+Mass,           23
+Ixx,            10
+Iyy,            10
+Izz,            10
+Xcm,            1.5
+AeroTech_M2400.eng, 0
