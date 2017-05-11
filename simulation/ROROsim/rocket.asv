@@ -19,7 +19,7 @@ classdef rocket <handle
       A_ref %Clean this up?
       Mass_propellent
       Mass_motor
-      Motor_impulse
+      motorImpulse
       
       % Current State Vector with Initial values f
       time = 0;         %time
@@ -85,13 +85,8 @@ classdef rocket <handle
            Re = env.rho*norm(obj.Xdot)*obj.Length/env.mu;
            
        end
-       function Mass = Mass(obj) % Current mass of rocket
-           M = obj.motordata;
-           if ( obj.time > M(end,1)); % To assure it goes to zero incase of integartion error
-               obj.Mass_propellent =0;
-           end
-           Mass= obj.Mass_dry + obj.Mass_motor + ...
-               obj.Mass_propellent*(obj.Motor_impulse-burn_data(obj));
+       function Mass = Mass(obj) % Re of rocket
+           Mass= obj.Mass_dry + obj.Mass_motor + obj.Mass_propellent;
            
        end
    end
