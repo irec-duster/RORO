@@ -1,25 +1,22 @@
-function  state = accent_calc( roro )
+function  accent_calc( roro )
 %Function calculates the assent phase of the rocket
     global env;
 
    
     state_0 = [roro.X; roro.Q; roro.P; roro.L];
-    tspan = [0,6];
+    tspan = [0 12];
 
 
     
     % Solve flight using ODE45
-    [t, state]= ode45(@flight,tspan,state_0);
+    %[t, state]= ode45(@flight,tspan,state_0);
 
     % --------------------------------------------------------------------------
     %% Equations of motion discribed to be sloved in ode45 
-    function state_dot = flight(t,state)
+    %function state_dot = flight(t,state)
         
         
-        X= state(1:3);
-        Q= state(4:7);
-        P= state(8:10);
-        L= state(11:13);
+        
         % Rotation matrix for transforming body coord to ground coord
         Rmatrix= quat2rotm(roro.Q');
         
@@ -31,13 +28,13 @@ function  state = accent_calc( roro )
         Cn= CnXcp(1);
         Xcp= CnXcp(2);
         %% -------Velocity-------
-        Xdot=P./roro.Mass;
+        Xdot=roro.P./roro.Mass;
         
         %% -------Angular velocity--------- in quarternians 
         invIbody = roro.Ibody\eye(3); %inv(roro.Ibody); inverting matrix
-        omega = Rmatrix*invIbody*Rmatrix'*L;
-        s = Q(1);
-        v =[Q(1); Q(2); Q(3)];
+        omega = Rmatrix*invIbody*Rmatrix'*roro.L;
+        s = roro.Q(1);
+        v =[roro.Q(1); roro.Q(2); roro.Q(3)];
         sdot = 0.5*(dot(omega,v));
         vdot = 0.5*(s*omega + cross(omega,v));
         Qdot = [sdot; vdot];
@@ -89,9 +86,9 @@ function  state = accent_calc( roro )
         Trq = Trqn;
         
         
-        state_dot =[Xdot; Qdot; Ftot;Trq];
+        state_dot =[Xdot; Qdot; Ftot;Trq]
         
         
-    end
+    %end
 end
  

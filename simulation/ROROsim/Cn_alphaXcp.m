@@ -78,7 +78,7 @@ alpha = roro.alpha;
 % Cone 
 
 if (alpha ==0)
-    alpha = 0.00001,
+    alpha = 0.00001;
 end
 K=1.1;
 cone.Cn_correction = K * cone.A_plan/A_ref*sin(alpha)^2;

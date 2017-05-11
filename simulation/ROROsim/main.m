@@ -18,6 +18,6 @@ env = environement();
 
 %%
 % Phase: Accent
-accent_calc()
+accent_calc(roro)
 
 
