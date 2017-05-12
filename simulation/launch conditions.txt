@@ -1,0 +1,20 @@
+launch conditions:
+
+altitude:
+1,401 m
+32.9904° N
+
+target altitude: 3048m (10000ft)
+
+Weather: TBC
+temperature: 24deg
+pressure: 101600Pa
+wind: 10m/s
+source: https://www.ventusky.com/?p=31.91;-106.72;9&l=pressure&t=20160620/12&m=icon
+
+Launch rail:
+length: 5.5m
+elevation: 84deg +-1deg
+source: http://www.soundingrocket.org/uploads/9/0/6/4/9064598/sa_cup_irec-design_test___evaluation_guide_20170217__baseline_.pdf
+
+

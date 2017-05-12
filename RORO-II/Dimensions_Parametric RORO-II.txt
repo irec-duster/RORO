@@ -1,0 +1,13 @@
+﻿"d_i_tube"= 150mm'Inner Rocket Body Composite Tube Diameter
+"t_tube"= 1.182mm'Thickness of Rocket Body Composite Tube
+"l_upper_body_tube"= 1190mm'Upper Rocket Body Composite Tube length
+"l_lower_body_tube"= 896mm'Lower Rocket Body Composite Tube Length
+"d_a_NC"= 154mm'Outer Diameter of Nosecone base
+"d_i_phenolic_tube"= 152.3mm'Inner Phenolic Tube Diameter
+"t_phenolic_tube"= 2mm'Thickness of Phenolic Body Tube
+"l_fin_cut"= 220mm'Length of fin on Motor Retainer
+"t_SW-Panel"= 11.482mm'Thickness of Sandwich-Panel
+"l_motor_tube"=650mm'Length of phenolic motor tube
+"d_i_motor_tube"=99.06mm'Inner diameter of phenolic motor tube
+"t_motor_tube"=1.58mm'Thicknes of phenolic motor tube
+"l_cut_fin_centering"=13mm'Length of cut for fin alignement on fin centering rings
