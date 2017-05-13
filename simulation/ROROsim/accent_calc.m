@@ -16,7 +16,7 @@ function  [t, state] = accent_calc( roro,tend )
     function state_dot = flight(t,state)
         %TODO: put condition on burn data so it does not excecute after
         %bunout
-        t
+        
         if (t>0)
             roro.deltat = t - roro.time;
             roro.time = t;
@@ -72,10 +72,10 @@ function  [t, state] = accent_calc( roro,tend )
         Vmag = norm(V);
         Vnorm = normalize(V);
         alpha = acos(dot(Vnorm,RA));
-        
+        roro.alpha = alpha;
         %% Forces = rate of change of Momentums
 
-        Fthrust = roro.T*RA
+        Fthrust = roro.T*RA;
         
         mg = roro.Mass*env.g;
         Fg = [0, 0, -mg]';
