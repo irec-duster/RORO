@@ -5,11 +5,12 @@ function  [t, state] = accent_calc( roro,tend )
    
     state_0 = [roro.X; roro.Q; roro.P; roro.L];
     tspan = [0,tend];
-
-
+    
+    % Event function to stop at max height
+    options = odeset('Events',@event_function);
     
     % Solve flight using ODE45
-    [t, state]= ode45(@flight,tspan,state_0);
+    [t, state]= ode45(@flight,tspan,state_0,options);
 
     % --------------------------------------------------------------------------
     %% Equations of motion discribed to be sloved in ode45 
@@ -59,9 +60,9 @@ function  [t, state] = accent_calc( roro,tend )
         % To Do : windmodel in env, 
         Vcm = Xdot  + env.W;
         Xstab = Xcp- roro.Xcm;
-        if(Xstab < 0)
-            warning('Rocket unstable');
-        end
+%         if(Xstab < 0)
+%             warning('Rocket unstable');
+%         end
         omega_norm = normalize(omega); %normalized
         Xprep =Xstab*sin(acos(dot(RA,omega_norm))); % Prependicular distance between omaga and RA
         
@@ -115,10 +116,21 @@ function  [t, state] = accent_calc( roro,tend )
         roro.Pdot= Ftot;
         roro.Ldot= Trq;
             
-        
+        logData(Xcp,roro.Xcm,t);
         state_dot =[Xdot; Qdot; Ftot;Trq];
         
-
+        
+    end
+    
+    function [value,isterminal,direction] = event_function(t,state)
+    %% stops ode integration when the max height is reached 
+        if (t > 1 && state(10) <= 0) % Linear momentum in z direction is zero
+            value = 0; % when value = 0, an event is triggered
+        else
+            value =1;
+        end
+        isterminal = 1; % terminate after the first event
+        direction = 0;  % get all the zeros
     end
 end
  

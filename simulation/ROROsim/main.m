@@ -3,7 +3,8 @@ clear all; clc;
 
 % Global varialbes
 global roro
-global env 
+global env
+global log
 % Create rocket class
 
 roro = rocket(init_rocket());% creates class with the initial values
@@ -33,5 +34,24 @@ ylabel('y (m)')
 zlabel('Height (m)')
 axis([-500 500 -500 500 0 4000])
 
-
+h_max=max(state(:,3))
 %%
+clog = clean_log(t);
+%%
+figure(3)
+plot(clog(:,3),clog(:,1))
+hold on
+plot(clog(:,3),clog(:,2))
+hold off
+xlabel('Time')
+ylabel('Xcp,Xcm')
+
+figure(4);
+plot(state(:,2),state(:,3))
+xlabel('y (m)')
+ylabel('Height (m)')
+
+figure(5);
+plot(state(:,1),state(:,3))
+xlabel('x (m)')
+ylabel('Height (m)')
