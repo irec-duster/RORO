@@ -17,7 +17,7 @@ classdef environement<handle
         PA0 = [0, 1, 0];
         RA0 = [0, 0, 1];
         h_g = 0;                % Ground height above sealevel (m)
-        Pressure_g = 1.01325e5  % Ground Pressure (Default:sealevel)
+        Pressure_g = 1.01325e5; % Ground Pressure (Default:sealevel)
         Temp_g = 288.16;        % Ground temp (Default:sealevel (15C)) (K)
         rho_g = 1.225;
         

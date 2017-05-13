@@ -1,4 +1,4 @@
-gamma, 			1.4
+'gamma', 			1.4
 R, 			287
 Ref Temp(K), 		291.15
 Ref Dynamic viscosity,	1.827e-7

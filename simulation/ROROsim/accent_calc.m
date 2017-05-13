@@ -1,4 +1,4 @@
-function  state = accent_calc( roro )
+function  [t, state] = accent_calc( roro )
 %Function calculates the assent phase of the rocket
     global env;
 
@@ -14,8 +14,14 @@ function  state = accent_calc( roro )
     % --------------------------------------------------------------------------
     %% Equations of motion discribed to be sloved in ode45 
     function state_dot = flight(t,state)
-        
-        
+        %TODO: put condition on burn data so it does not excecute after
+        %bunout
+        t
+        if (t>0)
+            roro.deltat = t - roro.time;
+            roro.time = t;
+            burn_data(roro); % runs each cycle to update motor stats 
+        end
         X= state(1:3);
         Q= state(4:7);
         P= state(8:10);
@@ -50,7 +56,7 @@ function  state = accent_calc( roro )
         if(Xstab < 0)
             warning('Rocket unstable');
         end
-        omega_norm = omega/norm(omega); %normalized
+        omega_norm = normalize(omega); %normalized
         Xprep =Xstab*sin(acos(dot(RA,omega_norm))); % Prependicular distance between omaga and RA
         
         Vomega = Xprep *cross(RA,omega);
@@ -58,7 +64,7 @@ function  state = accent_calc( roro )
         V = Vcm + Vomega; % approxamating the velocity of the cop        
         
         Vmag = norm(V);
-        Vnorm = V/Vmag;
+        Vnorm = normalize(V);
         alpha = acos(dot(Vnorm,RA));
         
         %% Forces = rate of change of Momentums
@@ -91,7 +97,7 @@ function  state = accent_calc( roro )
         
         state_dot =[Xdot; Qdot; Ftot;Trq];
         
-        
+
     end
 end
  
