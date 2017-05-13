@@ -18,20 +18,23 @@ env = environement();
 
 %%
 % Phase: Accent
-tend=30;
+tend=15;
 [t, state] = accent_calc(roro,tend);
-
-figure(1);
+figure;
 plot(t,state(:,3))
+plot3(state(:,1),state(:,2),state(:,3))
 xlabel('Time(s)')
 ylabel('Height (m)')
 
-figure(2);
-plot3(state(:,1),state(:,2),state(:,3))
+
 xlabel('x(m)')
 ylabel('y (m)')
 zlabel('Height (m)')
-axis([-500 500 -500 500 0 4000])
+axis([-500 500 -500 500])
 
 
-%%
+%%%
+%moving cg of the prop 
+%Inertia of the Prop
+%combine the 2 
+%

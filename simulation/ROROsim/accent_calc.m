@@ -1,10 +1,10 @@
-function  [t, state] = accent_calc( roro )
+function  [t, state] = accent_calc( roro,tend )
 %Function calculates the assent phase of the rocket
     global env;
 
    
     state_0 = [roro.X; roro.Q; roro.P; roro.L];
-    tspan = [0,6];
+    tspan = [0,tend];
 
 
     
@@ -21,11 +21,17 @@ function  [t, state] = accent_calc( roro )
             roro.deltat = t - roro.time;
             roro.time = t;
             burn_data(roro); % runs each cycle to update motor stats 
+            
         end
         X= state(1:3);
         Q= state(4:7);
         P= state(8:10);
         L= state(11:13);
+
+        roro.X= state(1:3);
+        roro.Q= state(4:7);
+        roro.P= state(8:10);
+        roro.L= state(11:13);
         % Rotation matrix for transforming body coord to ground coord
         Rmatrix= quat2rotm(roro.Q');
         
@@ -44,7 +50,7 @@ function  [t, state] = accent_calc( roro )
         omega = Rmatrix*invIbody*Rmatrix'*L;
         s = Q(1);
         v =[Q(1); Q(2); Q(3)];
-        sdot = 0.5*(dot(omega,v));
+        sdot = -0.5*(dot(omega,v));
         vdot = 0.5*(s*omega + cross(omega,v));
         Qdot = [sdot; vdot];
         
@@ -68,10 +74,11 @@ function  [t, state] = accent_calc( roro )
         alpha = acos(dot(Vnorm,RA));
         
         %% Forces = rate of change of Momentums
+
+        Fthrust = roro.T*RA
         
-        Fthrust = -roro.T*RA;
-        
-        Fg = [0 0 -roro.Mass*env.g]';
+        mg = roro.Mass*env.g;
+        Fg = [0, 0, -mg]';
         
         % Axial Forces
         Famag = 0.5*env.rho*Vmag^2*roro.A_ref*roro.Cd; % To DO: make axial 
@@ -84,16 +91,30 @@ function  [t, state] = accent_calc( roro )
         RA_Vplane = cross(RA,Vnorm);
         Fn = Fnmag*(cross(RA,RA_Vplane));
         
-        Ftot = Fthrust + Fg + Fa + Fn;
+        if (roro.T< mg && X(3)< 0.1)
+            Ftot = [0, 0, 0]';
+        else
+            Ftot = Fthrust + Fg + Fa + Fn;
+        end
         %% Torque
         Trqn = Fnmag*Xstab*(RA_Vplane); 
         
         %Tqm=(Cda1*omega)*omegaax2; rotational torque by motor
-%         r_f = %TODO
-%         Trmag = 0.5*env.rho*V^2*roro.A_ref*roro.Cld*r_f;
-%         Tr = Trmag*RA;
-        Trq = Trqn;
+%        r_f = %TODO
+%        Trmag = 0.5*env.rho*V^2*roro.A_ref*roro.Cld*r_f;
+%        Tr = Trmag*RA;
+        if(norm(X) < roro.Rail)
+            Trq = [0, 0, 0]';
+        else
+            Trq = Trqn;
+        end
         
+        %update rocket state
+        roro.Xdot= Xdot;
+        roro.Qdot= Qdot;
+        roro.Pdot= Ftot;
+        roro.Ldot= Trq;
+            
         
         state_dot =[Xdot; Qdot; Ftot;Trq];
         

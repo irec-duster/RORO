@@ -16,7 +16,7 @@ classdef rocket <handle
       Mass_dry          %Rocket and motor housing no prop
       Ibody_dry         %Rocket and motor housing no prop
       Xcm_dry           %Rocket and motor housing no prop
-
+      Rail = 1.5;
       A_ref %Clean this up?
       
       %Motor Characteristics: Updated in each itteration fh the accent_calc     
