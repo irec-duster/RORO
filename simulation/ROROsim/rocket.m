@@ -17,6 +17,8 @@ classdef rocket <handle
       Ibody_dry         %Rocket and motor housing no prop
       Xcm_dry           %Rocket and motor housing no prop
       Rail = 5.5;
+      L_pinDia
+      L_pinH
       A_ref %Clean this up?
       
       %Motor Characteristics: Updated in each itteration fh the accent_calc     
@@ -71,6 +73,8 @@ classdef rocket <handle
                 obj.Mass_dry = prop(10);
                 obj.Ibody_dry = [prop(11), 0 ,0; 0 , prop(12), 0; 0, 0, prop(13)];
                 obj.Xcm_dry = prop(14);
+                obj.L_pinDia = prop(15);
+                obj.L_pinH = prop(16);
                 obj.motorname=motorname;
                 obj.A_ref = (pi*obj.D^2/4);
                 % test heading 84deg
@@ -86,8 +90,8 @@ classdef rocket <handle
 
        function Cd = Cd(obj) % Drag in axial direction
            Cd = Cd_mandell(obj);
-           if (isinf(Cd) || Cd > 0.5)
-               Cd =0.5;
+           if (isinf(Cd) || Cd > 1)
+               Cd =1;
            end
        end
        

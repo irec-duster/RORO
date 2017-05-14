@@ -14,7 +14,9 @@ motor_init( roro ); %loads rocket motor
 % Initilize Environmental variables 
 %To Do: read to do doc
 
-env = environement();
+
+% optional argument: Elevation(m) Temperature(C)and Pressure(Pa)
+env = environement(1400, 25, 85900 );
 
 
 %%
@@ -26,13 +28,13 @@ figure(1);
 plot(t,state(:,3))
 xlabel('Time(s)')
 ylabel('Height (m)')
-% 
-% figure(2);
-% plot3(state(:,1),state(:,2),state(:,3))
-% xlabel('x(m)')
-% ylabel('y (m)')
-% zlabel('Height (m)')
-% axis([-500 500 -500 500 0 4000])
+
+figure(2);
+plot3(state(:,1),state(:,2),state(:,3))
+xlabel('x(m)')
+ylabel('y (m)')
+zlabel('Height (m)')
+axis([-500 500 -500 500 0 4000])
 
 h_max=max(state(:,3))
 %%
@@ -45,8 +47,8 @@ plot(clog(:,3),clog(:,2))
 % hold off
 xlabel('Time')
 ylabel('Value1, Value2')
-axis([0 20 0.25 0.5])
-
+axis([0 20 0.25 1])
+% 
 figure(4)
 plot(clog(:,3),clog(:,1))
 % hold on
@@ -55,7 +57,7 @@ plot(clog(:,3),clog(:,1))
 xlabel('Time')
 ylabel('Value1, Value2')
 %axis([0 20 0.25 0.4])
-
+% 
 % figure(5);
 % plot(state(:,2),state(:,3))
 % xlabel('y (m)')

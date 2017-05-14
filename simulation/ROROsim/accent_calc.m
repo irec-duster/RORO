@@ -58,8 +58,14 @@ function  [t, state] = accent_calc( roro,tend )
         
         %% -------Angle of attack------- 
         % Angle between velocity vector of the CoP to the roll axis, given in the ground coord        
-        % To Do : windmodel in env, 
-        Vcm = Xdot  + env.W;
+        % To Do : windmodel in env, Model gives errors 
+        if(norm(X) < roro.Rail)
+            W = [0, 0, 0]';
+        else
+            W = env.W;
+        end
+        
+        Vcm = Xdot  + W;
         Xstab = Xcp- roro.Xcm;
 %         if(Xstab < 0)
 %             warning('Rocket unstable');
@@ -105,7 +111,7 @@ function  [t, state] = accent_calc( roro,tend )
         invR = Rmatrix';
         Trq_da = -Cda*Rmatrix*m*invR*omega;
         %Tqm=(Cda1*omega)*omegaax2; rotational torque by motor
-%        r_f = %TODO
+%        r_f = %TODO roll damping 
 %        Trmag = 0.5*env.rho*V^2*roro.A_ref*roro.Cld*r_f;
 %        Tr = Trmag*RA;
         if(norm(X) < roro.Rail)
@@ -120,7 +126,7 @@ function  [t, state] = accent_calc( roro,tend )
         roro.Pdot= Ftot;
         roro.Ldot= Trq;
             
-        logData(Cda,roro.Cd,t); % Eg roro.Cd for drag norm(Xdot)/env.C
+        logData(roro.T,roro.Cd,t); % Eg roro.Cd for drag norm(Xdot)/env.C
         state_dot =[Xdot; Qdot; Ftot;Trq];
         
         
