@@ -16,7 +16,7 @@ classdef rocket <handle
       Mass_dry          %Rocket and motor housing no prop
       Ibody_dry         %Rocket and motor housing no prop
       Xcm_dry           %Rocket and motor housing no prop
-      Rail = 1.5;
+      Rail = 5.5;
       A_ref %Clean this up?
       
       %Motor Characteristics: Updated in each itteration fh the accent_calc     
@@ -33,10 +33,10 @@ classdef rocket <handle
       prop_density
       
       deltat                    % Size of time step calcualted in accent_calc
-      deltaMass
+      deltaMass = 0;            % initally zero
       impulseGen                % Impulse generated upto that point 
       propM_current             % Remaning prop mass
-      propM_prev                % Mass for previous time step to calcualte deltaMass
+      propM_prev = 0;           % Mass for previous time step to calcualte deltaMass
            
       % Current State Vector with Initial values, Updated in accent_calc
       time = 0;         %time
@@ -73,8 +73,8 @@ classdef rocket <handle
                 obj.Xcm_dry = prop(14);
                 obj.motorname=motorname;
                 obj.A_ref = (pi*obj.D^2/4);
-                % test heading
-                Ra = -0.1;                
+                % test heading 84deg
+                Ra = -0.1047;                
                 Rax = [0.1684;    0.985;         0];
                 obj.Q=[cos(Ra/2) sin(Ra/2)*Rax(1) sin(Ra/2)*Rax(2) sin(Ra/2)*Rax(3)]';
              %else
@@ -86,14 +86,14 @@ classdef rocket <handle
 
        function Cd = Cd(obj) % Drag in axial direction
            Cd = Cd_mandell(obj);
-           if (isinf(Cd) || Cd > 10)
-               Cd =10;
+           if (isinf(Cd) || Cd > 0.5)
+               Cd =0.5;
            end
        end
        
        function CnXcp = CnXcp(obj) % Normal force and Cop location
-           [Cn_alpha, Xcp]=Cn_alphaXcp(obj);
-           CnXcp = [Cn_alpha*obj.alpha Xcp];
+           [Cn_alpha, Xcp, Cda]=Cn_alphaXcp(obj);
+           CnXcp = [Cn_alpha*obj.alpha, Xcp, Cda];
        end
        
        function T = T(obj) % Thrust curve

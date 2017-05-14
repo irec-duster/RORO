@@ -15,7 +15,7 @@ L = 2.646; %characteristic length
 rho =  1.225; % density 
 mu =  1.7894e-5;  % dynamic viscosity 
 C = 340.3; %speed of sound dry air 15C sea level
-v0 = 150;%v0tab(1); %150;   %ms-1 characteristic velocity
+v0 = 50;%v0tab(1); %150;   %ms-1 characteristic velocity
 M = v0/C;
 Re  = rho*v0*L/mu;
 
@@ -103,7 +103,7 @@ else
 end
 %
 
-Cd_fb = (1 + 60/(l_TR/d_b^3)+0.0025*l_b/d_b)*(2.7*l_n/d_b +4*l_b/d_b + 2*(1-d_d/d_b)*l_c/d_b)*Cf;
+Cd_fb = (1 + 60/(l_TR/d_b)^3+0.0025*l_b/d_b)*(2.7*l_n/d_b +4*l_b/d_b + 2*(1-d_d/d_b)*l_c/d_b)*Cf;
 
 Cd_b = 0.029*(d_d/d_b)^3/sqrt(Cd_fb);
 

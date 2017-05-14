@@ -100,10 +100,7 @@ function  [t, state] = accent_calc( roro,tend )
         end
         %% Torque
         Trqn = Fnmag*Xstab*(RA_Vplane); 
-        
-        m=diag([1, 1, 0]);
-        invR = Rmatrix';
-        Trq_da = -Cda*Rmatrix*m*invR*omega;
+        Trq_da = 
         %Tqm=(Cda1*omega)*omegaax2; rotational torque by motor
 %        r_f = %TODO
 %        Trmag = 0.5*env.rho*V^2*roro.A_ref*roro.Cld*r_f;
@@ -111,16 +108,16 @@ function  [t, state] = accent_calc( roro,tend )
         if(norm(X) < roro.Rail)
             Trq = [0, 0, 0]';
         else
-            Trq = Trqn+Trq_da;
+            Trq = Trqn;
         end
         
-        %update rocket state derivatives 
+        %update rocket state
         roro.Xdot= Xdot;
         roro.Qdot= Qdot;
         roro.Pdot= Ftot;
         roro.Ldot= Trq;
             
-        logData(Cda,roro.Cd,t); % Eg roro.Cd for drag norm(Xdot)/env.C
+        logData(env.mu,roro.Cd,t); % Eg roro.Cd for drag norm(Xdot)/env.C
         state_dot =[Xdot; Qdot; Ftot;Trq];
         
         

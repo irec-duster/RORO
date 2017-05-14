@@ -1,6 +1,5 @@
-function [Cn_alpha, Xcp, Cda]=Cn_alphaXcp(roro) 
-    % Takes rocket handle and environment  to calculate Cn, location of cop
-    
+function [Cn_alpha, Xcp]=Cn_alphaXcp(roro) 
+    % Takes rocket and environment handles to calculate Cn and location of cop
     % using barrowman implemented in OpenRocket
     global env
 
@@ -94,8 +93,7 @@ function [Cn_alpha, Xcp, Cda]=Cn_alphaXcp(roro)
     % Fins 
 
 
-    fin.Cn1_alpha = ((2*pi*fin.h^2)/ A_ref)/...
-        (1 + sqrt(1 + (beta*fin.h^2/(fin.area*cos(fin.sweepc)))^2));
+    fin.Cn1_alpha = ((2*pi*fin.h^2)/ A_ref)/(1 + sqrt(1 + (beta*fin.h^2/(fin.area*cos(fin.sweepc)))^2));
 
     % N fins corrected for body interference n >= 3
     fin.Cn_alpha = (1 + (R_cyl)/(R_cyl+ fin.h))*(fin.Cn1_alpha * fin.n/2*1);
@@ -123,17 +121,9 @@ function [Cn_alpha, Xcp, Cda]=Cn_alphaXcp(roro)
     % % temp = (fin.basechord+fin.topchord)*R_cyl^2*fin.h/2 + (fin.basechord+2*fin.topchord)*R_cyl*fin.h^2/3  + (fin.basechord+3*fin.topchord)*fin.h^3/12; 
     % % Cld = fin.n*Cn_alpha0/(A_ref*v0*D_cyl) * omega * temp;
 
-    %% Pitch Damping  [Nm/s]
-    % Jet damping
-    lcn = roro.Length - roro.Xcm;
-    lcc = roro.Xcm_prop -roro.Xcm;
-    Cda_jet = roro.deltaMass *(lcn^2 - lcc^2);
-    
-    Cda_l = 0.5*rho* V * A_ref *( fin.Cn_alpha*(fin.Xcp-roro.Xcm)^2+...
-        cone.Cn_alpha*(cone.Xcp - roro.Xcm)^2 + cyl.Cn_alpha*(cyl.Xcp - roro.Xcm)^2);
-    
-    Cda = Cda_l + Cda_jet;
-    
+    %% Pitch Damping
+    lcn = roro.Length - roro.
+    Cda = roro.deltaMass *()
     %% Cn_alpha
     Cn_alpha = fin.Cn_alpha + cyl.Cn_alpha + cone.Cn_alpha;
 

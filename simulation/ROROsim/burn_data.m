@@ -14,7 +14,11 @@ function burn_data( roro )
     
     propM_used = roro.propM_tot/roro.Motor_impulse*roro.impulseGen;
     roro.propM_current = roro.propM_tot  - propM_used; % Remaining prop mass
-    roro.deltaMass = (roro.propM_current - roro.propM_prev)/ 0.05;roro.deltat;
+    if(roro.deltat == 0)
+        roro.deltaMass =0 ;
+    else
+        roro.deltaMass = (roro.propM_current - roro.propM_prev)/ roro.deltat;
+    end
     roro.propM_prev = roro.propM_current;
     
     % New Inertias at time step

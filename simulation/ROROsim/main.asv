@@ -8,7 +8,7 @@ global log
 % Create rocket class
 
 roro = rocket(init_rocket());% creates class with the initial values
-
+%%
 motor_init( roro ); %loads rocket motor
 
 % Initilize Environmental variables 

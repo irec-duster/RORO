@@ -4,7 +4,7 @@ Diameter,       0.158
 Number of Fins, 3
 Fin height, 	11.5e-2
 Fin base length,21e-2
-Fin top length,	11.5e-2
+Fin top length,	7e-2
 Fin Sweep angle,45
 Fin thickness, 	1e-2
 Mass,           23.34
