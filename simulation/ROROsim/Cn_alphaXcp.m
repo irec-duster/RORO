@@ -49,8 +49,8 @@ function [Cn_alpha, Xcp, Cda]=Cn_alphaXcp(roro)
     cone.A_plan = 2*(R_ogive^2*temp_theta/2-((R_ogive-R_cyl)*L_cone)/2);
 
     cyl.A_plan = D_cyl* L_cyl;
+    
     %Fin Geometry
-
     fin.n=roro.fin_n;
     fin.sweep = roro.fin_sweep;
     fin.h = roro.fin_h;
@@ -116,27 +116,34 @@ function [Cn_alpha, Xcp, Cda]=Cn_alphaXcp(roro)
 
 
     Xcp = (fin.Cn_alpha*fin.Xcp + cone.Cn_alpha*cone.Xcp +  cyl.Xcp*cyl.Cn_alpha)/(fin.Cn_alpha+cone.Cn_alpha+cyl.Cn_alpha);
-    %% Roll damping 
+
+    %% Cn_alpha
+    Cn_alpha = fin.Cn_alpha + cyl.Cn_alpha + cone.Cn_alpha;
+
+        %% Roll damping 
     % % omega = deg2rad(140);
     % % Cn_alpha0 = 2*pi/beta; % from potential flow over a thin foil. 
     % % 
     % % temp = (fin.basechord+fin.topchord)*R_cyl^2*fin.h/2 + (fin.basechord+2*fin.topchord)*R_cyl*fin.h^2/3  + (fin.basechord+3*fin.topchord)*fin.h^3/12; 
     % % Cld = fin.n*Cn_alpha0/(A_ref*v0*D_cyl) * omega * temp;
+%% Pitch Damping  [Nm/s]
 
-    %% Pitch Damping  [Nm/s]
-    % Jet damping
-    lcn = roro.Length - roro.Xcm;
-    lcc = roro.Xcm_prop -roro.Xcm;
-    Cda_jet = roro.deltaMass *(lcn^2 - lcc^2);
-    
-    Cda_l = 0.5*rho* V * A_ref *( fin.Cn_alpha*(fin.Xcp-roro.Xcm)^2+...
-        cone.Cn_alpha*(cone.Xcp - roro.Xcm)^2 + cyl.Cn_alpha*(cyl.Xcp - roro.Xcm)^2);
-    
-    Cda = 0;% = Cda_l + Cda_jet;
-    
-    %% Cn_alpha
-    Cn_alpha = fin.Cn_alpha + cyl.Cn_alpha + cone.Cn_alpha;
+    % Corrective moment coefficient c1
+    % (ApogeeRockets newsletter 193, p3)
+    c1 = (rho/2 * V^2 * roro.A_ref * Cn_alpha) * (Xcp-roro.Xcm);
 
+    % Damping moment coefficient c2
+    % (AR newsletter 195, p2-4)
+    % Aerodynamic damping moment coeff
+    c2_a = (rho/2 * V * roro.A_ref) * ((cone.Cn_alpha*(cone.Xcp - roro.Xcm)^2)+(cyl.Cn_alpha*(cyl.Xcp - roro.Xcm)^2)+(fin.Cn_alpha*(fin.Xcp - roro.Xcm)^2));
+    % Jet damping moment coeff
+    c2_r = roro.deltaMass * (roro.Length - roro.Xcm)^2;
+    
+    c2 = c2_a + c2_r;
 
+    % Damping ratio 
+    % (AR newsletter 197, p2)
+    Cda = c2/(2*sqrt(c1*roro.Iyy));
+    
 end
 

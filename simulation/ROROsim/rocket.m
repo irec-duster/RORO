@@ -29,6 +29,7 @@ classdef rocket <handle
       propM_tot             % Total mass of prop
       Iprop                 % Inertia matrix of prop wrt Cg
       Xcm_prop              % Center of mass of the prop
+      Iyy                   % Longitudinal (Pitch) Moment of inertia around Cg
       prop_OD
       prop_ID
       prop_h
@@ -73,6 +74,7 @@ classdef rocket <handle
                 obj.Mass_dry = prop(10);
                 obj.Ibody_dry = [prop(11), 0 ,0; 0 , prop(12), 0; 0, 0, prop(13)];
                 obj.Xcm_dry = prop(14);
+                obj.Iyy = prop(12);
                 obj.L_pinDia = prop(15);
                 obj.L_pinH = prop(16);
                 obj.motorname=motorname;

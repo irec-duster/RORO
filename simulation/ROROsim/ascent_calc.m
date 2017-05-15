@@ -22,8 +22,8 @@ function  [t, state] = ascent_calc( roro,tend )
             roro.deltat = t - roro.time;
             roro.time = t;
             burn_data(roro); % runs each cycle to update motor stats 
-            
         end
+        
         X= state(1:3);
         Q= state(4:7);
         P= state(8:10);
@@ -33,6 +33,7 @@ function  [t, state] = ascent_calc( roro,tend )
         roro.Q= state(4:7);
         roro.P= state(8:10);
         roro.L= state(11:13);
+        
         % Rotation matrix for transforming body coord to ground coord
         Rmatrix= quat2rotm(roro.Q');
         
@@ -40,13 +41,13 @@ function  [t, state] = ascent_calc( roro,tend )
         YA = Rmatrix*env.YA0'; 
         PA = Rmatrix*env.PA0'; 
         RA = Rmatrix*env.RA0'; 
+        
         CnXcp = roro.CnXcp;
-        Cn= CnXcp(1);
-        Xcp= CnXcp(2);
+        Cn= CnXcp(1); % Normal force coeff
+        Xcp= CnXcp(2); % Center of Pressure location
         Cda = CnXcp(3); % Damping coefficient
         %% -------Velocity-------
         Xdot=P./roro.Mass;
-        
         %% -------Angular velocity--------- in quarternians 
         invIbody = roro.Ibody\eye(3); %inv(roro.Ibody); inverting matrix
         omega = Rmatrix*invIbody*Rmatrix'*L;
@@ -67,9 +68,7 @@ function  [t, state] = ascent_calc( roro,tend )
         
         Vcm = Xdot  + W;
         Xstab = Xcp- roro.Xcm;
-%         if(Xstab < 0)
-%             warning('Rocket unstable');
-%         end
+        
         omega_norm = normalize(omega); %normalized
         Xprep =Xstab*sin(acos(dot(RA,omega_norm))); % Prependicular distance between omaga and RA
         
@@ -80,7 +79,12 @@ function  [t, state] = ascent_calc( roro,tend )
         Vmag = norm(V);
         Vnorm = normalize(V);
         alpha = acos(dot(Vnorm,RA));
+       
         roro.alpha = alpha;
+        
+        %% -----Static Stability Margin ----
+        StabilityMargin = (Xcp-roro.Xcm)/roro.D;
+        
         %% Forces = rate of change of Momentums
 
         Fthrust = roro.T*RA;
@@ -104,6 +108,7 @@ function  [t, state] = ascent_calc( roro,tend )
         else
             Ftot = Fthrust + Fg + Fa + Fn;
         end
+        
         %% Torque
         Trqn = Fnmag*Xstab*(RA_Vplane); 
         
@@ -120,15 +125,15 @@ function  [t, state] = ascent_calc( roro,tend )
             Trq = Trqn+Trq_da;
         end
         
-        %update rocket state derivatives 
+        %% Update rocket state derivatives 
         roro.Xdot= Xdot;
         roro.Qdot= Qdot;
         roro.Pdot= Ftot;
         roro.Ldot= Trq;
-            
-        logData(roro.T,roro.Cd,t); % Eg roro.Cd for drag norm(Xdot)/env.C
+        
         state_dot =[Xdot; Qdot; Ftot;Trq];
         
+        logData(roro.Xcm,Xcp,StabilityMargin,Cda,Vmag,t); % Eg roro.Cd for drag norm(Xdot)/env.C     
         
     end
     
