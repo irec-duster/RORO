@@ -21,7 +21,7 @@ classdef rocket <handle
       L_pinH
       A_ref %Clean this up?
       
-      %Motor Characteristics: Updated in each itteration fh the accent_calc     
+      %Motor Characteristics: Updated in each itteration fh the ascent_calc     
       motorname
       motordata
       Mass_motor
@@ -34,13 +34,13 @@ classdef rocket <handle
       prop_h
       prop_density
       
-      deltat                    % Size of time step calcualted in accent_calc
+      deltat                    % Size of time step calcualted in ascent_calc
       deltaMass = 0;            % initally zero
       impulseGen                % Impulse generated upto that point 
       propM_current             % Remaning prop mass
       propM_prev = 0;           % Mass for previous time step to calcualte deltaMass
            
-      % Current State Vector with Initial values, Updated in accent_calc
+      % Current State Vector with Initial values, Updated in ascent_calc
       time = 0;         %time
       X = [0; 0; 0];    % Position x, y, z   
       Q = [1; 0; 0; 0]; % Angle in quarternions  

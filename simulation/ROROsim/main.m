@@ -9,7 +9,7 @@ global log
 
 roro = rocket(init_rocket());% creates class with the initial values
 
-motor_init( roro ); %loads rocket motor
+init_motor( roro ); %loads rocket motor
 
 % Initilize Environmental variables 
 %To Do: read to do doc
@@ -20,9 +20,9 @@ env = environement(1400, 25, 85900 );
 
 
 %%
-% Phase: Accent
+% Phase: ascent
 tend=30;
-[t, state] = accent_calc(roro,tend);
+[t, state] = ascent_calc(roro,tend);
 
 figure(1);
 plot(t,state(:,3))
