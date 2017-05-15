@@ -17,9 +17,11 @@ classdef rocket <handle
       Ibody_dry         %Rocket and motor housing no prop
       Xcm_dry           %Rocket and motor housing no prop
       Rail = 5.5;
+      L_pinDia
+      L_pinH
       A_ref %Clean this up?
       
-      %Motor Characteristics: Updated in each itteration fh the accent_calc     
+      %Motor Characteristics: Updated in each itteration fh the ascent_calc     
       motorname
       motordata
       Mass_motor
@@ -27,18 +29,19 @@ classdef rocket <handle
       propM_tot             % Total mass of prop
       Iprop                 % Inertia matrix of prop wrt Cg
       Xcm_prop              % Center of mass of the prop
+      Iyy                   % Longitudinal (Pitch) Moment of inertia around Cg
       prop_OD
       prop_ID
       prop_h
       prop_density
       
-      deltat                    % Size of time step calcualted in accent_calc
+      deltat                    % Size of time step calcualted in ascent_calc
       deltaMass = 0;            % initally zero
       impulseGen                % Impulse generated upto that point 
       propM_current             % Remaning prop mass
       propM_prev = 0;           % Mass for previous time step to calcualte deltaMass
            
-      % Current State Vector with Initial values, Updated in accent_calc
+      % Current State Vector with Initial values, Updated in ascent_calc
       time = 0;         %time
       X = [0; 0; 0];    % Position x, y, z   
       Q = [1; 0; 0; 0]; % Angle in quarternions  
@@ -71,6 +74,9 @@ classdef rocket <handle
                 obj.Mass_dry = prop(10);
                 obj.Ibody_dry = [prop(11), 0 ,0; 0 , prop(12), 0; 0, 0, prop(13)];
                 obj.Xcm_dry = prop(14);
+                obj.Iyy = prop(12);
+                obj.L_pinDia = prop(15);
+                obj.L_pinH = prop(16);
                 obj.motorname=motorname;
                 obj.A_ref = (pi*obj.D^2/4);
                 % test heading 84deg
@@ -86,8 +92,8 @@ classdef rocket <handle
 
        function Cd = Cd(obj) % Drag in axial direction
            Cd = Cd_mandell(obj);
-           if (isinf(Cd) || Cd > 0.5)
-               Cd =0.5;
+           if (isinf(Cd) || Cd > 1)
+               Cd =1;
            end
        end
        

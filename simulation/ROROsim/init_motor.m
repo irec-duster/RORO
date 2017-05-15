@@ -1,4 +1,4 @@
-function motor_init( roro )
+function init_motor( roro )
     %% data from thrustcurve.org
     % Reads the .eng thrust file of the motors and calculates the reletive 
     % the reletive properties of the motor. 

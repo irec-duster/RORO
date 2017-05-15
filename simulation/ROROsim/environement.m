@@ -25,7 +25,7 @@ classdef environement<handle
    methods
        function obj = environement(val1, val2, val3)
           if nargin > 0
-             if isnumeric(val1 && val2 && val3)
+             if (isnumeric(val1) && isnumeric(val2) && isnumeric(val3))
                 obj.h_g = val1;
                 obj.Temp_g = val2+273.15;
                 obj.Pressure_g = val3;
@@ -64,7 +64,7 @@ classdef environement<handle
       end
       function W = W(obj) % Calculates speed of sound at current altitude
           %global roro
-          W = [0 0 0]'; % Access wind model from here
+          W = [3, 0, 0]'; % Access wind model from here
       end
 
    end
