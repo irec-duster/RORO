@@ -1,5 +1,5 @@
-function  [t, state] = accent_calc( roro,tend )
-%Function calculates the assent phase of the rocket
+function  [t, state] = ascent_calc( roro,tend )
+%Function calculates the ascent phase of the rocket
     global env;
 
    
