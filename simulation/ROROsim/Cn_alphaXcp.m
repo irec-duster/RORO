@@ -1,4 +1,4 @@
-function [Cn_alpha, Xcp, Cda]=Cn_alphaXcp(roro) 
+function [Cn_alpha, Xcp, Xcp_Barrow, Cda] = Cn_alphaXcp(roro) 
     % Takes rocket handle and environment  to calculate Cn, location of cop
     
     % using barrowman implemented in OpenRocket
@@ -46,7 +46,7 @@ function [Cn_alpha, Xcp, Cda]=Cn_alphaXcp(roro)
     %A_plan
     temp_theta = atan(L_cone/(R_ogive-R_cyl));
 
-    cone.A_plan = 2*(R_ogive^2*temp_theta/2-((R_ogive-R_cyl)*L_cone)/2);
+    cone.A_plan = 2/3 * L_cone * roro.D;
 
     cyl.A_plan = D_cyl* L_cyl;
     
@@ -64,69 +64,54 @@ function [Cn_alpha, Xcp, Cda]=Cn_alphaXcp(roro)
     fin.X_b =  L - fin.basechord; % fin location
 
     % mid chord sweep
-
     x1 = fin.h*tan(fin.sweep);
-
     x2 = x1 + fin.topchord - fin.basechord;
-
     fin.sweepc = atan2((fin.basechord/2 + (x2-fin.topchord/2)),fin.h);
-
-    %clear temp fun fun2
-
-    %% Center of presure
+    fin.l_m = fin.h/cos(fin.sweepc);
+    
+    %% Cn_alpha and CoP Momentum of Planform Area
+    %Todo
+    
+    %% Cn_alpha and CoP Barrowman (According to Box S. et al, 2009)
+    % Cone
+    cone.Cn_alpha = 2;
+    cone.Xcp = 0.466 * L_cone;
+    %Fins
+    K_bf = 1+(roro.D/2)/(fin.h+roro.D/2);
+    fin.Cn_alpha = K_bf * 4 * fin.n *(fin.h/roro.D)^2 / ...
+        (1+sqrt(1+(2*fin.l_m / (fin.topchord+fin.basechord))^2));
+    fin.Xcp = fin.X_b + fin.l_m * (fin.basechord + 2*fin.topchord) / (3*(fin.basechord + fin.topchord))...
+        + (fin.basechord + fin.topchord - (fin.topchord*fin.basechord)/(fin.basechord + fin.topchord))/6;
+    
+    Cn_alpha_Barrow = cone.Cn_alpha + fin.Cn_alpha;
+    Xcp_Barrow = (fin.Cn_alpha*fin.Xcp + cone.Cn_alpha*cone.Xcp) / Cn_alpha_Barrow;
+    
+    %% Cn_alpha Extended Barrowman Body Lift correction (According to Galejs R.)
+    % Cn_alpha Extended Barrowman
     alpha = roro.alpha;
-
-    % Cone 
-
-    if (alpha ==0)
+    K=1.1;
+    if (alpha == 0)
         alpha = 0.00001;
     end
-    K=1.1;
-    cone.Cn_correction = K * cone.A_plan/A_ref*sin(alpha)^2;
-    cone.Cn_alpha = 2* (A_ref/A_ref)*sin(alpha)/ alpha + cone.Cn_correction/alpha;
-
-    % cylinder 
-    % Cn_alpha
-
-    cyl.Cn_correction = K * cyl.A_plan/A_ref*sin(alpha)^2;
-
-    cyl.Cn_alpha =  cyl.Cn_correction/alpha;
-    % Fins 
-
-
-    fin.Cn1_alpha = ((2*pi*fin.h^2)/ A_ref)/...
-        (1 + sqrt(1 + (beta*fin.h^2/(fin.area*cos(fin.sweepc)))^2));
-
-    % N fins corrected for body interference n >= 3
-    fin.Cn_alpha = (1 + (R_cyl)/(R_cyl+ fin.h))*(fin.Cn1_alpha * fin.n/2*1);
-
-    %% CoP location
-
+    
     % Cone
+    cone.Cn_correction = K * cone.A_plan/A_ref * alpha;
+    cone.Xcp_correction = 5/8 * L_cone;
+    % Cylinder
+    cyl.Cn_correction = K * cyl.A_plan/A_ref * alpha;
+    cyl.Xcp_correction = L_cone + L_cyl/2;
+    
+    Cn_alpha = cone.Cn_alpha + cone.Cn_correction + cyl.Cn_correction + fin.Cn_alpha;
+    Cn_alpha = Cn_alpha; % Correction for compressible fluid
+    Xcp = (fin.Cn_alpha*fin.Xcp + cone.Cn_alpha*cone.Xcp + cone.Cn_correction*cone.Xcp_correction + cyl.Cn_correction*cyl.Xcp_correction) / Cn_alpha;
 
-    cone.Xcp = (L_cone*(A_ref)-cone.vol)/A_ref;
-
-    % cyl
-
-    cyl.Xcp = L_cone + L_cyl/2;
-
-    %  Fins at 25% mac
-    Xt = fin.h/tan(fin.sweep);
-    fin.Xcp = fin.X_b + (Xt/3*(fin.basechord +  2*fin.topchord) + 1/6*(fin.basechord+fin.topchord)^2)/(fin.basechord+fin.topchord);
-
-
-    Xcp = (fin.Cn_alpha*fin.Xcp + cone.Cn_alpha*cone.Xcp +  cyl.Xcp*cyl.Cn_alpha)/(fin.Cn_alpha+cone.Cn_alpha+cyl.Cn_alpha);
-
-    %% Cn_alpha
-    Cn_alpha = fin.Cn_alpha + cyl.Cn_alpha + cone.Cn_alpha;
-
-        %% Roll damping 
+    %% Roll damping 
     % % omega = deg2rad(140);
     % % Cn_alpha0 = 2*pi/beta; % from potential flow over a thin foil. 
     % % 
     % % temp = (fin.basechord+fin.topchord)*R_cyl^2*fin.h/2 + (fin.basechord+2*fin.topchord)*R_cyl*fin.h^2/3  + (fin.basechord+3*fin.topchord)*fin.h^3/12; 
     % % Cld = fin.n*Cn_alpha0/(A_ref*v0*D_cyl) * omega * temp;
-%% Pitch Damping  [Nm/s]
+    %% Pitch Damping  [Nm/s]
 
     % Corrective moment coefficient c1
     % (ApogeeRockets newsletter 193, p3)
@@ -135,7 +120,7 @@ function [Cn_alpha, Xcp, Cda]=Cn_alphaXcp(roro)
     % Damping moment coefficient c2
     % (AR newsletter 195, p2-4)
     % Aerodynamic damping moment coeff
-    c2_a = (rho/2 * V * roro.A_ref) * ((cone.Cn_alpha*(cone.Xcp - roro.Xcm)^2)+(cyl.Cn_alpha*(cyl.Xcp - roro.Xcm)^2)+(fin.Cn_alpha*(fin.Xcp - roro.Xcm)^2));
+    c2_a = (rho/2 * V * roro.A_ref) * ((cone.Cn_alpha*(cone.Xcp - roro.Xcm)^2)+(fin.Cn_alpha*(fin.Xcp - roro.Xcm)^2));
     % Jet damping moment coeff
     c2_r = roro.deltaMass * (roro.Length - roro.Xcm)^2;
     

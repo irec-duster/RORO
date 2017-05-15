@@ -25,8 +25,10 @@ tend=30;
 
 clog = clean_log(t);
 h_max=max(state(:,3))
+Xcp_ExtendedBarrowman = mean(log(:,1))
+Xcp_Barrowman = mean(log(:,2))
 
-figure('Name','Flight 3D')
+figure('Name','Flight 3D','Position', [800 0 400 400])
 plot3(state(:,1),state(:,2),state(:,3))
 xlabel('x(m)')
 ylabel('y (m)')
@@ -34,7 +36,7 @@ zlabel('Height (m)')
 title('Height 3D')
 axis([-500 500 -500 500 0 3500])
 
-figure('Name','Flight information');
+figure('Name','Flight information','Position', [400 0 400 400]);
 subplot(2,1,1)
 plot(t,state(:,3))
 xlabel('Time(s)')
@@ -42,37 +44,37 @@ ylabel('Height (m)')
 title('Height 1D')
 
 subplot(2,1,2)
-plot(clog(:,6),clog(:,5))
+plot(clog(:,7),clog(:,6))
 xlabel('Time')
 ylabel('Xdot (m/s)')
 title('Velocity')
 axis([0 25 0 300])
 
 %% --- Figures Stability ---
-figure('Name','Stability Analysis')
+figure('Name','Stability Analysis', 'Position', [0 0 400 1000])
 subplot(4,1,1)
-plot(clog(:,6),clog(:,1))
+plot(clog(:,7),clog(:,1))
 xlabel('Time')
 ylabel('Xcp [m]')
 title('Xcp')
 axis([0 25 1 2])
 % 
 subplot(4,1,2)
-plot(clog(:,6),clog(:,2))
+plot(clog(:,7),clog(:,2))
 xlabel('Time')
 ylabel('Xcm [m]')
 title('Xcg')
 axis([0 25 1 2])
 %
 subplot(4,1,3)
-plot(clog(:,6),clog(:,3))
+plot(clog(:,7),clog(:,4))
 xlabel('Time')
 ylabel('Margin []')
 title('Static Stability Margin')
 axis([0 25 1 2])
 %
 subplot(4,1,4)
-plot(clog(:,6),clog(:,4))
+plot(clog(:,7),clog(:,5))
 xlabel('Time')
 ylabel('Zeta []')
 title('Damping Ratio')

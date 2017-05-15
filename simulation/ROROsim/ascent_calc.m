@@ -45,7 +45,8 @@ function  [t, state] = ascent_calc( roro,tend )
         CnXcp = roro.CnXcp;
         Cn= CnXcp(1); % Normal force coeff
         Xcp= CnXcp(2); % Center of Pressure location
-        Cda = CnXcp(3); % Damping coefficient
+        Xcp_Barrow = CnXcp(3);
+        Cda = CnXcp(4); % Damping coefficient
         %% -------Velocity-------
         Xdot=P./roro.Mass;
         %% -------Angular velocity--------- in quarternians 
@@ -78,8 +79,16 @@ function  [t, state] = ascent_calc( roro,tend )
         
         Vmag = norm(V);
         Vnorm = normalize(V);
-        alpha = acos(dot(Vnorm,RA));
-       
+        alpha = real(acos(dot(Vnorm,RA)));
+        
+        %clip angle of attack to ensure the fesibility of Barrowman
+        if(alpha>=0.35)
+            alpha=0.35;
+        end
+        if(alpha<=-0.35)
+            alpha=-0.35;
+        end
+        
         roro.alpha = alpha;
         
         %% -----Static Stability Margin ----
@@ -133,7 +142,7 @@ function  [t, state] = ascent_calc( roro,tend )
         
         state_dot =[Xdot; Qdot; Ftot;Trq];
         
-        logData(roro.Xcm,Xcp,StabilityMargin,Cda,Vmag,t); % Eg roro.Cd for drag norm(Xdot)/env.C     
+        logData(Xcp,Xcp_Barrow,roro.Xcm,StabilityMargin,Cda,Vmag,t); % Eg roro.Cd for drag norm(Xdot)/env.C     
         
     end
     
