@@ -144,6 +144,10 @@ function  [t, state] = ascent_calc( roro,tend )
         
         logData(Xcp,Xcp_Barrow,roro.Xcm,SM_ExtendedBarrow,SM_Barrow,Cda,Vmag,roro.Mass,alpha,t); % Eg roro.Cd for drag norm(Xdot)/env.C     
         
+        %% Launch rail exit Velocity
+        if((X(3)-roro.Rail) <= 0.03 && (X(3)-roro.Rail) >= -0.03)
+            V_RailExit = Vmag
+        end
     end
     
     function [value,isterminal,direction] = event_function(t,state)
