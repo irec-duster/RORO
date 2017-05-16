@@ -122,13 +122,15 @@ function [Cn_alpha, Xcp, Xcp_Barrow, Cda] = Cn_alphaXcp(roro)
     % Aerodynamic damping moment coeff
     c2_a = (rho/2 * V * roro.A_ref) * ((cone.Cn_alpha*(cone.Xcp - roro.Xcm)^2)+(fin.Cn_alpha*(fin.Xcp - roro.Xcm)^2));
     % Jet damping moment coeff
-    c2_r = roro.deltaMass * (roro.Length - roro.Xcm)^2;
+    l_cn = roro.Length - Xcp;
+    l_cc = roro.Xcm_prop - Xcp;
+    c2_r = roro.deltaMass * (l_cn^2 - l_cc^2);
     
     c2 = c2_a + c2_r;
 
     % Damping ratio 
     % (AR newsletter 197, p2)
-    Cda = c2/(2*sqrt(c1*roro.Iyy));
+    Cda = c2/(2*sqrt(c1*roro.Ibody(2,2)));
     
 end
 
