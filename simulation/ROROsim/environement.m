@@ -63,7 +63,6 @@ classdef environement<handle
           C = sqrt(obj.gamma*obj.R*obj.Temp);
       end
       function W = W(obj) % Calculates speed of sound at current altitude
-          %global roro
           W = [3, 0, 0]'; % Access wind model from here
       end
 

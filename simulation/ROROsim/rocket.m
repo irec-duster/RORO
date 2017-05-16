@@ -71,7 +71,7 @@ classdef rocket <handle
                 obj.fin_top = prop(7);
                 obj.fin_sweep = deg2rad(prop(8));
                 obj.fin_t = prop(9);
-                obj.Mass_dry = prop(10);
+                obj.Mass_dry = prop(10) + prop(17); %dry_mass + trim mass
                 obj.Ibody_dry = [prop(11), 0 ,0; 0 , prop(12), 0; 0, 0, prop(13)];
                 obj.Xcm_dry = prop(14);
                 obj.Iyy = prop(12);
@@ -98,8 +98,8 @@ classdef rocket <handle
        end
        
        function CnXcp = CnXcp(obj) % Normal force and Cop location
-           [Cn_alpha, Xcp, Cda]=Cn_alphaXcp(obj);
-           CnXcp = [Cn_alpha*obj.alpha, Xcp, Cda];
+           [Cn_alpha, Xcp, Xcp_Barrow, Cda]=Cn_alphaXcp(obj);
+           CnXcp = [Cn_alpha*obj.alpha, Xcp, Xcp_Barrow, Cda];
        end
        
        function T = T(obj) % Thrust curve
