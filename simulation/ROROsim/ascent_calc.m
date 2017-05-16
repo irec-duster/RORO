@@ -47,6 +47,7 @@ function  [t, state] = ascent_calc( roro,tend )
         Xcp= CnXcp(2); % Center of Pressure location
         Xcp_Barrow = CnXcp(3);
         Cda = CnXcp(4); % Damping coefficient
+        
         %% -------X Velocity-------
         Xdot=P./roro.Mass;
         %% -------Q Angular velocity--------- in quarternians 
@@ -142,7 +143,7 @@ function  [t, state] = ascent_calc( roro,tend )
         SM_ExtendedBarrow = (Xcp-roro.Xcm)/roro.D; %Stability margin extended Barrowman eq (Body lift)
         SM_Barrow = (Xcp_Barrow-roro.Xcm)/roro.D; %Stability margin classic Barrowman eq
         
-        logData(Xcp,Xcp_Barrow,roro.Xcm,SM_ExtendedBarrow,SM_Barrow,Cda,Vmag,roro.Mass,alpha,t); % Eg roro.Cd for drag norm(Xdot)/env.C     
+        logData(Xcp,Xcp_Barrow,roro.Xcm,SM_ExtendedBarrow,SM_Barrow,Cda,Vmag,roro.Mass,alpha,roro.Cd,t); % Eg roro.Cd for drag norm(Xdot)/env.C     
         
         %% Launch rail exit Velocity
         if((X(3)-roro.Rail) <= 0.03 && (X(3)-roro.Rail) >= -0.03)
