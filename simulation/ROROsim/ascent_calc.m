@@ -35,21 +35,22 @@ function  [t, state] = ascent_calc( roro,tend )
         roro.L= state(11:13);
         
         % Rotation matrix for transforming body coord to ground coord
-        Rmatrix= quat2rotm(roro.Q');
+        Rmatrix= quat2rotm(real(roro.Q'));
         
         % Axis wrt earth coord
-        YA = Rmatrix*env.YA0'; 
-        PA = Rmatrix*env.PA0'; 
-        RA = Rmatrix*env.RA0'; 
+        YA = Rmatrix*env.YA0';
+        PA = Rmatrix*env.PA0';
+        RA = Rmatrix*env.RA0';
         
         CnXcp = roro.CnXcp;
         Cn= CnXcp(1); % Normal force coeff
         Xcp= CnXcp(2); % Center of Pressure location
         Xcp_Barrow = CnXcp(3);
         Cda = CnXcp(4); % Damping coefficient
-        %% -------Velocity-------
+        
+        %% -------X Velocity-------
         Xdot=P./roro.Mass;
-        %% -------Angular velocity--------- in quarternians 
+        %% -------Q Angular velocity--------- in quarternians 
         invIbody = roro.Ibody\eye(3); %inv(roro.Ibody); inverting matrix
         omega = Rmatrix*invIbody*Rmatrix'*L;
         s = Q(1);
@@ -66,8 +67,7 @@ function  [t, state] = ascent_calc( roro,tend )
         else
             W = env.W;
         end
-        
-        Vcm = Xdot  + W;
+        Vcm = Xdot + W;
         Xstab = Xcp- roro.Xcm;
         
         omega_norm = normalize(omega); %normalized
@@ -79,7 +79,8 @@ function  [t, state] = ascent_calc( roro,tend )
         
         Vmag = norm(V);
         Vnorm = normalize(V);
-        alpha = real(acos(dot(Vnorm,RA)));
+        alpha = acos(dot(Vnorm,RA));
+        alpha = real(alpha);
         
         %clip angle of attack to ensure the fesibility of Barrowman
         if(alpha>=0.35)
@@ -91,10 +92,7 @@ function  [t, state] = ascent_calc( roro,tend )
         
         roro.alpha = alpha;
         
-        %% -----Static Stability Margin ----
-        StabilityMargin = (Xcp-roro.Xcm)/roro.D;
-        
-        %% Forces = rate of change of Momentums
+        %% -----P Forces = rate of change of Momentums-----
 
         Fthrust = roro.T*RA;
         
@@ -118,7 +116,7 @@ function  [t, state] = ascent_calc( roro,tend )
             Ftot = Fthrust + Fg + Fa + Fn;
         end
         
-        %% Torque
+        %% -----L Torque------
         Trqn = Fnmag*Xstab*(RA_Vplane); 
         
         m=diag([1, 1, 0]);
@@ -134,16 +132,23 @@ function  [t, state] = ascent_calc( roro,tend )
             Trq = Trqn+Trq_da;
         end
         
-        %% Update rocket state derivatives 
+        %% -----Update rocket state derivatives-----
         roro.Xdot= Xdot;
         roro.Qdot= Qdot;
         roro.Pdot= Ftot;
         roro.Ldot= Trq;
         
         state_dot =[Xdot; Qdot; Ftot;Trq];
+        %% -----Log Data for Plotting----
+        SM_ExtendedBarrow = (Xcp-roro.Xcm)/roro.D; %Stability margin extended Barrowman eq (Body lift)
+        SM_Barrow = (Xcp_Barrow-roro.Xcm)/roro.D; %Stability margin classic Barrowman eq
         
-        logData(Xcp,Xcp_Barrow,roro.Xcm,StabilityMargin,Cda,Vmag,t); % Eg roro.Cd for drag norm(Xdot)/env.C     
+        logData(Xcp,Xcp_Barrow,roro.Xcm,SM_ExtendedBarrow,SM_Barrow,Cda,Vmag,roro.Mass,alpha,roro.Cd,t); % Eg roro.Cd for drag norm(Xdot)/env.C     
         
+        %% Launch rail exit Velocity
+        if((X(3)-roro.Rail) <= 0.03 && (X(3)-roro.Rail) >= -0.03)
+            V_RailExit = Vmag
+        end
     end
     
     function [value,isterminal,direction] = event_function(t,state)
