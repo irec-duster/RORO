@@ -90,16 +90,20 @@ classdef rocket <handle
        end
        %Fuctions to calcualte various properties
 
-       function Cd = Cd(obj) % Drag in axial direction
-           Cd = Cd_mandell(obj);
+       function CaCd = CaCd(obj) % Drag in axial direction
+           [Ca, Cd] = Cd_mandell(obj);
+           if (isinf(Ca) || Ca > 1)
+               Ca =1;
+           end
            if (isinf(Cd) || Cd > 1)
                Cd =1;
            end
+           CaCd = [Ca, Cd];
        end
-       
+  
        function CnXcp = CnXcp(obj) % Normal force and Cop location
-           [Cn_alpha, Xcp, Xcp_Barrow, Cda]=Cn_alphaXcp(obj);
-           CnXcp = [Cn_alpha*obj.alpha, Xcp, Xcp_Barrow, Cda];
+           [Cn_alpha, Xcp, Xcp_Barrow, Xcp_Planform, Cda]=Cn_alphaXcp(obj);
+           CnXcp = [Cn_alpha*obj.alpha, Xcp, Xcp_Barrow, Xcp_Planform, Cda];
        end
        
        function T = T(obj) % Thrust curve
@@ -118,7 +122,7 @@ classdef rocket <handle
        
        function Mass = Mass(obj) % Current mass of rocket
            M = obj.motordata;
-           if ( obj.time > M(end,1)); % To assure it goes to zero incase of integartion error
+           if ( obj.time > M(end,1)) % To assure it goes to zero incase of integartion error
                obj.propM_current =0;
            end
            Mass= obj.Mass_dry + obj.propM_current;               
@@ -126,7 +130,7 @@ classdef rocket <handle
        
        function Xcm = Xcm(obj) % Current Center of mass of rocket
            M = obj.motordata;
-           if ( obj.time > M(end,1)); % To assure it goes to zero incase of integartion error
+           if ( obj.time > M(end,1)) % To assure it goes to zero incase of integartion error
                Xcm = obj.Xcm_dry;
            end
            Xcm= obj.Xcm_dry*obj.Mass_dry + obj.Xcm_prop*obj.propM_current; 
@@ -135,7 +139,7 @@ classdef rocket <handle
        
        function Ibody = Ibody(obj) % Current Inertia of the rocket
            M = obj.motordata;
-           if ( obj.time > M(end,1)); % To assure it goes to zero incase of integartion error
+           if ( obj.time > M(end,1)) % To assure it goes to zero incase of integartion error
                Ibody = obj.Ibody_dry;
            end
            Ibody = obj.Ibody_dry + obj.Iprop;

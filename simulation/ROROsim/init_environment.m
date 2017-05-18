@@ -1,5 +1,6 @@
-function [ env ] = init_environment(  )
-% This function is not used the values are stored directly in the class
-env = readtable('environment.txt','Format','%s%f');
+function prop = init_environment()
+    
+    prop = readtable('environment.txt','Format','%s%f');
+    
 end
 
