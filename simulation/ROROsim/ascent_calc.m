@@ -1,7 +1,9 @@
 function  [t, state] = ascent_calc( roro,tend )
 %Function calculates the ascent phase of the rocket
-    global env;
-
+    global env
+    global t_RailExit
+    global v_RailExit
+    global t_Burnout
    
     state_0 = [roro.X; roro.Q; roro.P; roro.L];
     tspan = [0,tend];
@@ -46,7 +48,11 @@ function  [t, state] = ascent_calc( roro,tend )
         Cn= CnXcp(1); % Normal force coeff
         Xcp= CnXcp(2); % Center of Pressure location
         Xcp_Barrow = CnXcp(3);
-        Cda = CnXcp(4); % Damping coefficient
+        Xcp_Planform = CnXcp(4);
+        Cda = CnXcp(5); % Damping coefficient
+        CaCd = roro.CaCd;
+        Ca = CaCd(1);
+        Cd = CaCd(2);
         
         %% -------X Velocity-------
         Xdot=P./roro.Mass;
@@ -83,11 +89,11 @@ function  [t, state] = ascent_calc( roro,tend )
         alpha = real(alpha);
         
         %clip angle of attack to ensure the fesibility of Barrowman
-        if(alpha>=0.35)
-            alpha=0.35;
+        if(alpha>=0.3)
+            alpha=0.3;
         end
-        if(alpha<=-0.35)
-            alpha=-0.35;
+        if(alpha<=-0.3)
+            alpha=-0.3;
         end
         
         roro.alpha = alpha;
@@ -100,7 +106,7 @@ function  [t, state] = ascent_calc( roro,tend )
         Fg = [0, 0, -mg]';
         
         % Axial Forces
-        Famag = 0.5*env.rho*Vmag^2*roro.A_ref*roro.Cd; % To DO: make axial 
+        Famag = 0.5*env.rho*Vmag^2*roro.A_ref*Ca;
         
         Fa = -Famag*RA;
         
@@ -143,11 +149,16 @@ function  [t, state] = ascent_calc( roro,tend )
         SM_ExtendedBarrow = (Xcp-roro.Xcm)/roro.D; %Stability margin extended Barrowman eq (Body lift)
         SM_Barrow = (Xcp_Barrow-roro.Xcm)/roro.D; %Stability margin classic Barrowman eq
         
-        logData(Xcp,Xcp_Barrow,roro.Xcm,SM_ExtendedBarrow,SM_Barrow,Cda,Vmag,roro.Mass,alpha,roro.Cd,t); % Eg roro.Cd for drag norm(Xdot)/env.C     
-        
+        logData(Xcp,Xcp_Barrow,roro.Xcm,SM_ExtendedBarrow,SM_Barrow,Cda,Vmag,roro.Mass,alpha,Ca,t); % Eg roro.cd for drag norm(Xdot)/env.C     
         %% Launch rail exit Velocity
         if((X(3)-roro.Rail) <= 0.03 && (X(3)-roro.Rail) >= -0.03)
-            V_RailExit = Vmag
+            v_RailExit = Vmag
+            t_RailExit = t
+        end
+       
+        %% Burnout time
+        if(roro.propM_current<0.01 && t_Burnout==0)
+            t_Burnout = t
         end
     end
     

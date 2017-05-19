@@ -1,7 +1,6 @@
-function [Cn_alpha, Xcp, Xcp_Barrow, Cda] = Cn_alphaXcp(roro) 
+function [Cn_alpha, Xcp, Xcp_Barrow, Xcp_Planform, Cda] = Cn_alphaXcp(roro) 
     % Takes rocket handle and environment  to calculate Cn, location of cop
     
-    % using barrowman implemented in OpenRocket
     global env
 
     rho =  env.rho; % density 
@@ -9,8 +8,9 @@ function [Cn_alpha, Xcp, Xcp_Barrow, Cda] = Cn_alphaXcp(roro)
     V = norm(roro.Xdot,2);   %ms-1 Mag of characteristic velocity at center of pressure location 
     M = V/C;
 
-    % Rocket dimentions 
-    L = roro.Length; 
+    %% Rocket Geometry
+    % Rocket dimentions
+    L = roro.Length;
     L_cone = roro.Cone_L;
     L_cyl = L - L_cone;
     D_cyl = roro.D;
@@ -18,8 +18,6 @@ function [Cn_alpha, Xcp, Xcp_Barrow, Cda] = Cn_alphaXcp(roro)
 
     %A_ref
     A_ref = pi*R_cyl^2;
-
-    %F_ratio = L / D_cyl; <-clean 
     
     %Fin Geometry
     fin.n=roro.fin_n;
@@ -27,21 +25,40 @@ function [Cn_alpha, Xcp, Xcp_Barrow, Cda] = Cn_alphaXcp(roro)
     fin.h = roro.fin_h;
     fin.topchord = roro.fin_top;
     fin.basechord = roro.fin_base;
+    fin.l_forward = tan(fin.sweep)*fin.h; % Length of forward pointing triangle
+    fin.l_backward = (fin.basechord-fin.topchord-fin.l_forward); % length of backward pointing triangle
     fin.t = roro.fin_t;
     fin.a_ref = fin.n*fin.h*fin.t;
     fin.area = (fin.topchord+fin.basechord)/2*fin.h;
     fin.a_wet = fin.n*2*fin.area;
     fin.c = (fin.topchord+fin.basechord)/2;
-    fin.X_b =  L - fin.basechord; % fin location
-
+    fin.X_b =  L-fin.basechord; % fin location
     % mid chord sweep
     x1 = fin.h*tan(fin.sweep);
     x2 = x1 + fin.topchord - fin.basechord;
     fin.sweepc = atan2((fin.basechord/2 + (x2-fin.topchord/2)),fin.h);
     fin.l_m = fin.h/cos(fin.sweepc);
+    clear x1 x2;
+    
+    %A_planform
+    cone.A_plan = 2/3 * L_cone * roro.D;
+    cyl.A_plan = D_cyl* L_cyl;
+    fin.A_plan1 = 6*(0.5 * fin.l_forward * fin.h);
+    fin.A_plan2 = 6*(fin.topchord^2);
+    fin.A_plan3 = 6*(0.5 * fin.l_backward * fin.h);
+
+    %F_ratio = L / D_cyl; <-clean 
     
     %% Cn_alpha and CoP Momentum of Planform Area
     %Todo
+    A_plan = cone.A_plan + cyl.A_plan + fin.A_plan1 + fin.A_plan2 + fin.A_plan3;
+    cone.X_plan = 5/8 * L_cone;
+    cyl.X_plan = L_cone + L_cyl/2;
+    fin.X_plan1 = fin.X_b + 2/3 * fin.l_forward;
+    fin.X_plan2 = fin.X_b + fin.l_forward + 0.5*fin.topchord;
+    fin.X_plan3 = fin.X_b * fin.basechord - 2/3 * fin.l_backward;
+    Xcp_Planform = (cone.A_plan * cone.X_plan + cyl.A_plan * cyl.X_plan...
+        + fin.A_plan1 * fin.X_plan1 + fin.A_plan2 * fin.X_plan2 + fin.A_plan3 * fin.X_plan3) / A_plan;
     
     %% Cn_alpha and CoP: Classic Barrowman (According to Box S. et al, 2009)
     % Cone (See Box S., 2009, p9-10)
@@ -65,10 +82,6 @@ function [Cn_alpha, Xcp, Xcp_Barrow, Cda] = Cn_alphaXcp(roro)
     if (alpha == 0)
         alpha = 0.00001;
     end
-    
-     %A_planform
-    cone.A_plan = 2/3 * L_cone * roro.D;
-    cyl.A_plan = D_cyl* L_cyl;
     
     % correction for compressible flow 
     beta = sqrt( 1 - M^2); % M <1
