@@ -152,13 +152,13 @@ function  [t, state] = ascent_calc( roro,tend )
         logData(Xcp,Xcp_Barrow,roro.Xcm,SM_ExtendedBarrow,SM_Barrow,Cda,Vmag,roro.Mass,alpha,Ca,t); % Eg roro.cd for drag norm(Xdot)/env.C     
         %% Launch rail exit Velocity
         if((X(3)-roro.Rail) <= 0.03 && (X(3)-roro.Rail) >= -0.03)
-            v_RailExit = Vmag
-            t_RailExit = t
+            v_RailExit = Vmag;
+            t_RailExit = t;
         end
        
         %% Burnout time
         if(roro.propM_current<0.01 && t_Burnout==0)
-            t_Burnout = t
+            t_Burnout = t;
         end
     end
     

@@ -35,7 +35,6 @@ function [Ca, Cd] = Cd_mandell(roro)
     %% Assigning to equations as discribed in mandell
     l_n = L_cone;
 
-    d_n = D_cyl;
     d_b = D_cyl;
     d_f = D_cyl;
     d_d = D_cyl;
@@ -46,11 +45,10 @@ function [Ca, Cd] = Cd_mandell(roro)
     l_TR = L;
     l_TS = D_cyl+2*fin.h;
     n=fin.n;
+    
     % mid chord sweep
-
     temp.x1 = fin.h*tan(fin.sweep);
     temp.x2 = temp.x1 + fin.topchord - fin.basechord;
-
     fin.sweepc = atan2((fin.basechord/2 + (temp.x2-fin.topchord/2)),fin.h);
     clear temp
     
@@ -69,7 +67,7 @@ function [Ca, Cd] = Cd_mandell(roro)
     
     % Viscous friction FIN Cf_f
     % Re fins (Different characteristic length than for Re Rocket)
-    Re_f  = env.rho*V*l_m/env.mu;  %Note the Re is measured at the fins and the characteristic length changes 
+    Re_f  = env.rho*V*l_m/env.mu;
     B_f = Re_c*(0.074/Re_f^(0.2) - 1.328/sqrt(Re_f)); 
     if (Re_f < Re_c)
         Cf_f =  1.328/sqrt(Re_f);
