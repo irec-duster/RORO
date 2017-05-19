@@ -35,8 +35,8 @@ function [Cn_alpha, Xcp, Xcp_Barrow, Xcp_Planform, Cda] = Cn_alphaXcp(roro)
     fin.X_b =  L-fin.basechord; % fin location
     % mid chord sweep
     x1 = fin.h*tan(fin.sweep);
-    x2 = x1 + fin.topchord - fin.basechord;
-    fin.sweepc = atan2((fin.basechord/2 + (x2-fin.topchord/2)),fin.h);
+    x2 = fin.basechord-x1-fin.topchord;
+    fin.sweepc = atan2((fin.basechord/2-x2-fin.topchord/2),fin.h);
     fin.l_m = fin.h/cos(fin.sweepc);
     clear x1 x2;
     
@@ -87,8 +87,8 @@ function [Cn_alpha, Xcp, Xcp_Barrow, Xcp_Planform, Cda] = Cn_alphaXcp(roro)
     beta = sqrt( 1 - M^2); % M <1
     
     % Cone (See Galejs R., p.1-2)
-    cone.Cn_correction = K * cone.A_plan/A_ref * alpha; 
-    cone.Xcp_correction = 5/8 * L_cone; 
+    cone.Cn_correction = K * cone.A_plan/A_ref * alpha;
+    cone.Xcp_correction = 5/8 * L_cone;
     % Cylinder (See Galejs R., p.2)
     cyl.Cn_correction = K * cyl.A_plan/A_ref * alpha;
     cyl.Xcp_correction = L_cone + L_cyl/2;
@@ -100,7 +100,8 @@ function [Cn_alpha, Xcp, Xcp_Barrow, Xcp_Planform, Cda] = Cn_alphaXcp(roro)
     % Cn_alpha according to extended Barrowman (See Galejs R., 2)
     Cn_alpha = cone.Cn_alpha + cone.Cn_correction + cyl.Cn_correction + fin.Cn_alpha + fin.Cn_correction;
     % Cn_alpha = Cn_alpha/beta; % Correction for compressible fluid
-    Xcp = (fin.Cn_alpha*fin.Xcp + cone.Cn_alpha*cone.Xcp + cone.Cn_correction*cone.Xcp_correction + cyl.Cn_correction*cyl.Xcp_correction) / Cn_alpha;
+    Xcp = (fin.Cn_alpha*fin.Xcp + cone.Cn_alpha*cone.Xcp + cone.Cn_correction*cone.Xcp_correction...
+        + cyl.Cn_correction*cyl.Xcp_correction) / Cn_alpha;
 
     %% Roll damping 
     % % omega = deg2rad(140);
