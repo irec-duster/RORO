@@ -31,18 +31,18 @@ function  [t, state] = ascent_calc( roro,tend )
         P= state(8:10);
         L= state(11:13);
 
-        roro.X= state(1:3);
-        roro.Q= state(4:7);
-        roro.P= state(8:10);
-        roro.L= state(11:13);
+        roro.X= state(1:3); % Position in world COS
+        roro.Q= state(4:7); % Orientation in world COS (quaternion)
+        roro.P= state(8:10); % Forces
+        roro.L= state(11:13); % Torques
         
         % Rotation matrix for transforming body coord to ground coord
-        Rmatrix= quat2rotm(real(roro.Q'));
+        Rmatrix= quat2rotm(roro.Q');
         
         % Axis wrt earth coord
-        YA = Rmatrix*env.YA0';
-        PA = Rmatrix*env.PA0';
-        RA = Rmatrix*env.RA0';
+        YA = Rmatrix*env.YA0'; % Yaw axis
+        PA = Rmatrix*env.PA0'; % Pitch axis
+        RA = Rmatrix*env.RA0'; % Roll axis
         
         CnXcp = roro.CnXcp;
         Cn= CnXcp(1); % Normal force coeff
@@ -73,13 +73,13 @@ function  [t, state] = ascent_calc( roro,tend )
         else
             W = env.W;
         end
+        
         Vcm = Xdot + W;
-        Xstab = Xcp- roro.Xcm;
         
         omega_norm = normalize(omega); %normalized
-        Xprep =Xstab*sin(acos(dot(RA,omega_norm))); % Prependicular distance between omaga and RA
+        Xperp =(Xcp-roro.Xcm)*sin(acos(dot(RA,omega_norm))); % Perpendicular distance between omega and RA
         
-        Vomega = Xprep *cross(RA,omega);
+        Vomega = Xperp *cross(RA,omega);
         
         V = Vcm + Vomega; % approxamating the velocity of the cop        
         
@@ -98,7 +98,7 @@ function  [t, state] = ascent_calc( roro,tend )
         
         roro.alpha = alpha;
         
-        %% -----P Forces = rate of change of Momentums-----
+        %% -----P Liner Momentum-----
 
         Fthrust = roro.T*RA;
         
@@ -122,20 +122,19 @@ function  [t, state] = ascent_calc( roro,tend )
             Ftot = Fthrust + Fg + Fa + Fn;
         end
         
-        %% -----L Torque------
-        Trqn = Fnmag*Xstab*(RA_Vplane); 
+        %% -----L Angular Momentum------
+        Trqn = Fnmag*(Xcp-roro.Xcm)*(RA_Vplane); 
         
         m=diag([1, 1, 0]);
-        invR = Rmatrix';
-        Trq_da = -Cda*Rmatrix*m*invR*omega;
+        Trq_da = -Cda*Rmatrix*m*Rmatrix'*omega;
         %Tqm=(Cda1*omega)*omegaax2; rotational torque by motor
 %        r_f = %TODO roll damping 
-%        Trmag = 0.5*env.rho*V^2*roro.A_ref*roro.Cld*r_f;
-%        Tr = Trmag*RA;
+        Trmag = 0.5*env.rho*Vmag^2*roro.A_ref*Cld;
+        Tr = Trmag*RA;
         if(norm(X) < roro.Rail)
             Trq = [0, 0, 0]';
         else
-            Trq = Trqn+Trq_da;
+            Trq = Trqn+Trq_da+Tr;
         end
         
         %% -----Update rocket state derivatives-----

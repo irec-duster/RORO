@@ -20,6 +20,7 @@ classdef environment<handle
         Pressure_g = 1.01325e5; % Ground Pressure (Default:sealevel)
         Temp_g = 288.16;        % Ground temp (Default:sealevel (15C)) (K)
         rho_g = 1.225;
+        windspeed = 0;
         
    end
    methods
@@ -30,6 +31,7 @@ classdef environment<handle
                 obj.h_g = prop(1);
                 obj.Temp_g = prop(2)+273.15;
                 obj.Pressure_g = prop(3);
+                obj.windspeed = prop(4)/3.6;
                 %obj.rho_g =  build to update rho at h_g 
              else
                 error('Enter numeric elevation(m) Temperature(C)and Pressure(Pa)')
@@ -64,7 +66,7 @@ classdef environment<handle
           C = sqrt(obj.gamma*obj.R*obj.Temp);
       end
       function W = W(obj) % Calculates speed of sound at current altitude
-          W = [3, 0, 0]'; % Access wind model from here
+          W = [obj.windspeed, 0, 0]'; % Access wind model from here
       end
 
    end
