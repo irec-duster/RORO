@@ -1,3 +1,4 @@
 Height above sea level (m),     1400
 Temperature (C),                35
 Pressure ground level (Pa),     100000
+Windspeed (km/h),               20

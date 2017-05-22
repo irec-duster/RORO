@@ -26,7 +26,7 @@ function [Cn_alpha, Xcp, Xcp_Barrow, Xcp_Planform, Cda] = Cn_alphaXcp(roro)
     fin.topchord = roro.fin_top;
     fin.basechord = roro.fin_base;
     fin.l_forward = tan(fin.sweep)*fin.h; % Length of forward pointing triangle
-    fin.l_backward = (fin.basechord-fin.topchord-fin.l_forward); % length of backward pointing triangle
+    fin.l_backward = fin.basechord-fin.topchord-fin.l_forward; % length of backward pointing triangle
     fin.t = roro.fin_t;
     fin.a_ref = fin.n*fin.h*fin.t;
     fin.area = (fin.topchord+fin.basechord)/2*fin.h;
@@ -34,11 +34,8 @@ function [Cn_alpha, Xcp, Xcp_Barrow, Xcp_Planform, Cda] = Cn_alphaXcp(roro)
     fin.c = (fin.topchord+fin.basechord)/2;
     fin.X_b =  L-fin.basechord; % fin location
     % mid chord sweep
-    x1 = fin.h*tan(fin.sweep);
-    x2 = fin.basechord-x1-fin.topchord;
-    fin.sweepc = atan2((fin.basechord/2-x2-fin.topchord/2),fin.h);
-    fin.l_m = fin.h/cos(fin.sweepc);
-    clear x1 x2;
+    fin.sweepc = atan2((fin.basechord/2-fin.l_backward-fin.topchord/2),fin.h); %midchord sweep angle 
+    fin.l_m = fin.h/cos(fin.sweepc); %midchord length
     
     %A_planform
     cone.A_plan = 2/3 * L_cone * roro.D;
