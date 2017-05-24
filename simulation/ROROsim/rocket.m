@@ -21,27 +21,26 @@ classdef rocket <handle
       L_pinH
       A_ref %Clean this up?
       
-      %Motor Characteristics: Updated in each itteration fh the ascent_calc     
+      %Motor Characteristics: Updated in each itteration fh the accent_calc     
       motorname
       motordata
       Mass_motor
-      Motor_impulse         % Total Ipulse of motor
+      Motor_impulse         % Total Impulse of motor
       propM_tot             % Total mass of prop
       Iprop                 % Inertia matrix of prop wrt Cg
       Xcm_prop              % Center of mass of the prop
-      Iyy                   % Longitudinal (Pitch) Moment of inertia around Cg
       prop_OD
       prop_ID
       prop_h
       prop_density
       
-      deltat                    % Size of time step calcualted in ascent_calc
+      deltat                    % Size of time step calcualted in accent_calc
       deltaMass = 0;            % initally zero
       impulseGen                % Impulse generated upto that point 
       propM_current             % Remaning prop mass
       propM_prev = 0;           % Mass for previous time step to calcualte deltaMass
            
-      % Current State Vector with Initial values, Updated in ascent_calc
+      % Current State Vector with Initial values, Updated in accent_calc
       time = 0;         %time
       X = [0; 0; 0];    % Position x, y, z   
       Q = [1; 0; 0; 0]; % Angle in quarternions  
@@ -71,18 +70,19 @@ classdef rocket <handle
                 obj.fin_top = prop(7);
                 obj.fin_sweep = deg2rad(prop(8));
                 obj.fin_t = prop(9);
-                obj.Mass_dry = prop(10) + prop(17); %dry_mass + trim mass
+                obj.Mass_dry = prop(10);
                 obj.Ibody_dry = [prop(11), 0 ,0; 0 , prop(12), 0; 0, 0, prop(13)];
                 obj.Xcm_dry = prop(14);
-                obj.Iyy = prop(12);
                 obj.L_pinDia = prop(15);
                 obj.L_pinH = prop(16);
-                obj.motorname=motorname;
-                obj.A_ref = (pi*obj.D^2/4);
                 % test heading 84deg
-                Ra = -0.1047;                
+                Ra = -0.1047; deg2rad(90-prop(17));                
                 Rax = [0.1684;    0.985;         0];
                 obj.Q=[cos(Ra/2) sin(Ra/2)*Rax(1) sin(Ra/2)*Rax(2) sin(Ra/2)*Rax(3)]';
+                
+                %motor
+                obj.motorname=motorname;
+                obj.A_ref = (pi*obj.D^2/4);
              %else
                 %error('Value must be numeric')
              %end
@@ -90,20 +90,16 @@ classdef rocket <handle
        end
        %Fuctions to calcualte various properties
 
-       function CaCd = CaCd(obj) % Drag in axial direction
-           [Ca, Cd] = Cd_mandell(obj);
-           if (isinf(Ca) || Ca > 1)
-               Ca =1;
-           end
+       function Cd = Cd(obj) % Drag in axial direction
+           Cd = Cd_mandell(obj);
            if (isinf(Cd) || Cd > 1)
                Cd =1;
            end
-           CaCd = [Ca, Cd];
        end
-  
+       
        function CnXcp = CnXcp(obj) % Normal force and Cop location
-           [Cn_alpha, Xcp, Xcp_Barrow, Xcp_Planform, Cda]=Cn_alphaXcp(obj);
-           CnXcp = [Cn_alpha*obj.alpha, Xcp, Xcp_Barrow, Xcp_Planform, Cda];
+           [Cn_alpha, Xcp, Cda]=Cn_alphaXcp(obj);
+           CnXcp = [Cn_alpha*obj.alpha, Xcp, Cda];
        end
        
        function T = T(obj) % Thrust curve
@@ -122,7 +118,7 @@ classdef rocket <handle
        
        function Mass = Mass(obj) % Current mass of rocket
            M = obj.motordata;
-           if ( obj.time > M(end,1)) % To assure it goes to zero incase of integartion error
+           if ( obj.time > M(end,1)); % To assure it goes to zero incase of integartion error
                obj.propM_current =0;
            end
            Mass= obj.Mass_dry + obj.propM_current;               
@@ -130,7 +126,7 @@ classdef rocket <handle
        
        function Xcm = Xcm(obj) % Current Center of mass of rocket
            M = obj.motordata;
-           if ( obj.time > M(end,1)) % To assure it goes to zero incase of integartion error
+           if ( obj.time > M(end,1)); % To assure it goes to zero incase of integartion error
                Xcm = obj.Xcm_dry;
            end
            Xcm= obj.Xcm_dry*obj.Mass_dry + obj.Xcm_prop*obj.propM_current; 
@@ -139,7 +135,7 @@ classdef rocket <handle
        
        function Ibody = Ibody(obj) % Current Inertia of the rocket
            M = obj.motordata;
-           if ( obj.time > M(end,1)) % To assure it goes to zero incase of integartion error
+           if ( obj.time > M(end,1)); % To ensure Iprop goes to zero incase of integartion error
                Ibody = obj.Ibody_dry;
            end
            Ibody = obj.Ibody_dry + obj.Iprop;

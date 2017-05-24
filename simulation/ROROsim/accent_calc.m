@@ -1,9 +1,7 @@
-function  [t, state] = ascent_calc( roro,tend )
-%Function calculates the ascent phase of the rocket
-    global env
-    global t_RailExit
-    global v_RailExit
-    global t_Burnout
+function  [t, state] = accent_calc( roro,tend )
+%Function calculates the assent phase of the rocket
+    global env;
+    global log;
    
     state_0 = [roro.X; roro.Q; roro.P; roro.L];
     tspan = [0,tend];
@@ -24,39 +22,32 @@ function  [t, state] = ascent_calc( roro,tend )
             roro.deltat = t - roro.time;
             roro.time = t;
             burn_data(roro); % runs each cycle to update motor stats 
+            
         end
-        
         X= state(1:3);
         Q= state(4:7);
         P= state(8:10);
         L= state(11:13);
 
-        roro.X= state(1:3); % Position in world COS
-        roro.Q= state(4:7); % Orientation in world COS (quaternion)
-        roro.P= state(8:10); % Forces
-        roro.L= state(11:13); % Torques
-        
+        roro.X= state(1:3);
+        roro.Q= state(4:7);
+        roro.P= state(8:10);
+        roro.L= state(11:13);
         % Rotation matrix for transforming body coord to ground coord
         Rmatrix= quat2rotm(roro.Q');
         
         % Axis wrt earth coord
-        YA = Rmatrix*env.YA0'; % Yaw axis
-        PA = Rmatrix*env.PA0'; % Pitch axis
-        RA = Rmatrix*env.RA0'; % Roll axis
-        
+        YA = Rmatrix*env.YA0'; 
+        PA = Rmatrix*env.PA0'; 
+        RA = Rmatrix*env.RA0'; 
         CnXcp = roro.CnXcp;
-        Cn= CnXcp(1); % Normal force coeff
-        Xcp= CnXcp(2); % Center of Pressure location
-        Xcp_Barrow = CnXcp(3);
-        Xcp_Planform = CnXcp(4);
-        Cda = CnXcp(5); % Damping coefficient
-        CaCd = roro.CaCd;
-        Ca = CaCd(1);
-        Cd = CaCd(2);
-        
-        %% -------X Velocity-------
+        Cn= CnXcp(1);
+        Xcp= CnXcp(2);
+        Cda = CnXcp(3); % Damping coefficient
+        %% -------Velocity-------
         Xdot=P./roro.Mass;
-        %% -------Q Angular velocity--------- in quarternians 
+        
+        %% -------Angular velocity--------- in quarternians 
         invIbody = roro.Ibody\eye(3); %inv(roro.Ibody); inverting matrix
         omega = Rmatrix*invIbody*Rmatrix'*L;
         s = Q(1);
@@ -74,31 +65,23 @@ function  [t, state] = ascent_calc( roro,tend )
             W = env.W;
         end
         
-        Vcm = Xdot + W;
-        
+        Vcm = Xdot  + W;
+        Xstab = Xcp- roro.Xcm;
+%         if(Xstab < 0)
+%             warning('Rocket unstable');
+%         end
         omega_norm = normalize(omega); %normalized
-        Xperp =(Xcp-roro.Xcm)*sin(acos(dot(RA,omega_norm))); % Perpendicular distance between omega and RA
+        Xprep =Xstab*sin(acos(dot(RA,omega_norm))); % Prependicular distance between omaga and RA
         
-        Vomega = Xperp *cross(RA,omega);
+        Vomega = Xprep *cross(RA,omega);
         
         V = Vcm + Vomega; % approxamating the velocity of the cop        
         
         Vmag = norm(V);
         Vnorm = normalize(V);
         alpha = acos(dot(Vnorm,RA));
-        alpha = real(alpha);
-        
-        %clip angle of attack to ensure the fesibility of Barrowman
-        if(alpha>=0.3)
-            alpha=0.3;
-        end
-        if(alpha<=-0.3)
-            alpha=-0.3;
-        end
-        
         roro.alpha = alpha;
-        
-        %% -----P Liner Momentum-----
+        %% Forces = rate of change of Momentums
 
         Fthrust = roro.T*RA;
         
@@ -106,7 +89,7 @@ function  [t, state] = ascent_calc( roro,tend )
         Fg = [0, 0, -mg]';
         
         % Axial Forces
-        Famag = 0.5*env.rho*Vmag^2*roro.A_ref*Ca;
+        Famag = 0.5*env.rho*Vmag^2*roro.A_ref*roro.Cd; % To DO: make axial 
         
         Fa = -Famag*RA;
         
@@ -121,44 +104,31 @@ function  [t, state] = ascent_calc( roro,tend )
         else
             Ftot = Fthrust + Fg + Fa + Fn;
         end
-        
-        %% -----L Angular Momentum------
-        Trqn = Fnmag*(Xcp-roro.Xcm)*(RA_Vplane); 
+        %% Torque
+        Trqn = Fnmag*Xstab*(RA_Vplane); 
         
         m=diag([1, 1, 0]);
-        Trq_da = -Cda*Rmatrix*m*Rmatrix'*omega;
+        invR = Rmatrix';
+        Trq_da = -Cda*Rmatrix*m*invR*omega;
         %Tqm=(Cda1*omega)*omegaax2; rotational torque by motor
 %        r_f = %TODO roll damping 
-        Trmag = 0.5*env.rho*Vmag^2*roro.A_ref*Cld;
-        Tr = Trmag*RA;
+%        Trmag = 0.5*env.rho*V^2*roro.A_ref*roro.Cld*r_f;
+%        Tr = Trmag*RA;
         if(norm(X) < roro.Rail)
             Trq = [0, 0, 0]';
         else
-            Trq = Trqn+Trq_da+Tr;
+            Trq = Trqn+Trq_da;
         end
         
-        %% -----Update rocket state derivatives-----
+        %update rocket state derivatives 
         roro.Xdot= Xdot;
         roro.Qdot= Qdot;
         roro.Pdot= Ftot;
         roro.Ldot= Trq;
-        
+            
         state_dot =[Xdot; Qdot; Ftot;Trq];
-        %% -----Log Data for Plotting----
-        SM_ExtendedBarrow = (Xcp-roro.Xcm)/roro.D; %Stability margin extended Barrowman eq (Body lift)
-        SM_Barrow = (Xcp_Barrow-roro.Xcm)/roro.D; %Stability margin classic Barrowman eq
+        logData(roro.alpha, roro.Cd, t);
         
-        logData(Xcp,Xcp_Barrow,roro.Xcm,SM_ExtendedBarrow,SM_Barrow,Cda,Vmag,roro.Mass,alpha,Ca,t); % Eg roro.cd for drag norm(Xdot)/env.C     
-        %% Launch rail exit Velocity
-        if((X(3)-roro.Rail) <= 0.03 && (X(3)-roro.Rail) >= -0.03)
-            v_RailExit = Vmag;
-            t_RailExit = t;
-        end
-       
-        %% Burnout time
-        if(roro.propM_current<0.01 && t_Burnout==0)
-            t_Burnout = t;
-        end
     end
     
     function [value,isterminal,direction] = event_function(t,state)

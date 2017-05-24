@@ -4,7 +4,7 @@ clear all; clc;
 % Global varialbes
 %global roro
 global env
-global log
+%global log
 % Create rocket class
 
 roro = rocket(init_rocket());% creates class with the initial values
