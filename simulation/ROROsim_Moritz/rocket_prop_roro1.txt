@@ -1,0 +1,18 @@
+Lenght,         2.626
+Cone Lenght, 	0.61
+Diameter,       0.158
+Number of Fins, 3
+Fin height, 	11.5e-2
+Fin base length,21e-2
+Fin top length,	7e-2
+Fin Sweep angle,45
+Fin thickness, 	1e-2
+Mass dry,       24.14
+Ixx,            0.07528
+Iyy,            7.422
+Izz,            7.422
+Xcm dry,            1.433
+Launchpin height, 17e-3
+Launchpin Dia,    30e-3
+Trim mass,      0.0
+AeroTech_M2400.eng, 0
