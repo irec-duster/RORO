@@ -1,4 +1,4 @@
-function [Cn_alpha, Xcp, Cda]=Cn_alphaXcp(roro) 
+function [Cn_alpha, Xcp, Cda, zeta, Ssm]=Cn_alphaXcp(roro) 
     % Takes rocket handle and environment  to calculate Cn, location of cop
     
     % using barrowman implemented in OpenRocket
@@ -129,14 +129,24 @@ function [Cn_alpha, Xcp, Cda]=Cn_alphaXcp(roro)
     lcc = roro.Xcm_prop -roro.Xcm;
     Cda_jet = roro.deltaMass *(lcn^2 - lcc^2);
     
+    % Aerodynamic damping
     Cda_l = 0.5*rho* V * A_ref *( fin.Cn_alpha*(fin.Xcp-roro.Xcm)^2+...
         cone.Cn_alpha*(cone.Xcp - roro.Xcm)^2 + cyl.Cn_alpha*(cyl.Xcp - roro.Xcm)^2);
     
+    % Damping Moment Coefficient
     Cda  =  Cda_l+ Cda_jet;
     
     %% Cn_alpha
     Cn_alpha = fin.Cn_alpha + cyl.Cn_alpha + cone.Cn_alpha;
 
-
+    %% Static Stability Margin
+    Ssm = (Xcp-roro.Xcm)/roro.D;
+    
+    %% Damping Ratio
+    % Corrective Moment Coefficient
+    Ccm = (rho/2 * V^2 * roro.A_ref * Cn_alpha) * (Xcp-roro.Xcm);
+    Ibody = roro.Ibody;
+     zeta = Cda/(2*sqrt(Ccm*Ibody(2,2)));
+   
 end
 
