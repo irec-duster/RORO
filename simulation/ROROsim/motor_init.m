@@ -16,7 +16,7 @@ function motor_init( roro )
     tline = fgets(fid);
     tline = fgets(fid);
     tline = fgets(fid);
-    tline = fgets(fid);
+    %tline = fgets(fid);
     C = strsplit(tline);
     Motor_diameter = str2double((C(2)))*1e-3; %[m]
     Motor_lenght = str2double((C(3)))*1e-3; %[m]
@@ -42,7 +42,7 @@ function motor_init( roro )
     roro.prop_OD = prop_OD;
     roro.prop_h = prop_h;
     
-    %Initializing propellent inertias w.r.t. 
+    %Initializing propellent inertias w.r.t. cm
     d = roro.Xcm_prop - roro.Xcm; % Note: The mass of the prop should already be updated in roro to get correct Xcm 
     propIx = 0.5*Mass_prop*(prop_OD^2+prop_ID^2)/4;
     propIy = Mass_prop/12*(3*(prop_ID^2+prop_ID^2)/4 + prop_h^2) + Mass_prop*(d);

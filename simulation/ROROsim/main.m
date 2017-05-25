@@ -8,9 +8,9 @@ global log
 % Create rocket class
 
 roro = rocket(init_rocket());% creates class with the initial values
-
+%%
 motor_init( roro ); %loads rocket motor
-
+%%
 % Initilize Environmental variables 
 %To Do: read to do doc
 
@@ -38,7 +38,7 @@ axis([-500 500 -500 500 0 4000])
 
 h_max=max(state(:,3))
 %%
-clog = clean_log(log); %extract_data ( state,t);
+clog = clean_log(t); %extract_data ( state,t);
 
 %%
 figure(3)
