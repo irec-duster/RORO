@@ -44,7 +44,8 @@ function  [t, state] = accent_calc( roro,tend )
         Cn= CnXcp(1);
         Xcp= CnXcp(2);
         Cda = CnXcp(3); % Damping coefficient
-        Ssm = CnXcp(4);
+        zeta = CnXcp(4); % Damping ratio
+        Ssm = CnXcp(5); % Static stability margin
         %% ------- X Velocity-------
         Xdot=P./roro.Mass;
         
@@ -128,7 +129,7 @@ function  [t, state] = accent_calc( roro,tend )
         roro.Ldot= Trq;
             
         state_dot =[Xdot; Qdot; Ftot;Trq];
-        logData(roro.alpha, roro.Cd, Cda, roro.Xcm, roro.Mass, Vmag, Xcp, Ssm, t);
+        logData(roro.alpha, roro.Cd, Cda, roro.Xcm, roro.Mass, Vmag, Xcp, zeta, Ssm, t);
         
     end
     
