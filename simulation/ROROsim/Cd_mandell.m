@@ -10,7 +10,7 @@ function [Cd]=Cd_mandell(roro)
 
     % Approx laminar flow over rocket
 
-    % Rocket dimentions 
+    %% Rocket dimentions 
     L = roro.Length; 
     L_cone = roro.Cone_L;
     L_cyl = L - L_cone;
@@ -48,7 +48,7 @@ function [Cd]=Cd_mandell(roro)
 
 
 
-    % assigning to equations as discribes in mandell
+    %% Assigning to equations as discribes in mandell
     l_n = L_cone;
 
     d_n = D_cyl;
@@ -70,13 +70,14 @@ function [Cd]=Cd_mandell(roro)
     fin.sweepc = atan2((fin.basechord/2 + (temp.x2-fin.topchord/2)),fin.h);
 
     clear temp fun fun2
-    l_m = fin.h/acos(fin.sweepc);
+    l_m = fin.h/acos(fin.sweepc); % length midchord
 
     A_fe= (fin.topchord+fin.basechord)/2*fin.h;
 
     A_fp = A_fe + 0.5*d_f*fin.basechord;
 
-    %%
+    %% ------Viscous Friction------
+    % Viscous friction ROCKET FORBODY Cf
     B = Re_c*(0.074/Re^(0.2) - 1.328/sqrt(Re));
 
     if (Re < Re_c)
@@ -85,7 +86,7 @@ function [Cd]=Cd_mandell(roro)
         Cf=0.074/Re^(0.2)-B/Re;
     end
 
-    % 
+    %  Viscous friction ROCKET FINS Cf_f
     Re_f  = env.rho*V*l_m/env.mu;  %Note the V is at the cop not the finneed to recalculate for better results 
 
     B_f = Re_c*(0.074/Re_f^(0.2) - 1.328/sqrt(Re_f));
@@ -95,16 +96,17 @@ function [Cd]=Cd_mandell(roro)
     else
         Cf_f=0.074/Re_f^(0.2)-B_f/Re_f;
     end
-    %
-
+    
+    %% -------Drag at zero AoA-------
+    % Body drag, Box Eq41
     Cd_fb = (1 + 60/(l_TR/d_b)^3+0.0025*l_b/d_b)*(2.7*l_n/d_b +4*l_b/d_b + 2*(1-d_d/d_b)*l_c/d_b)*Cf;
-
+    % Base drag, Box Eq42
     Cd_b = 0.029*(d_d/d_b)^3/sqrt(Cd_fb);
-
+    % Fin drag, Box Eq44
     Cd_f = 2*Cf_f *(1+2*T_f/l_m)*4*n*A_fp/(pi*d_f^2);
-
+    % Interference drag, Box Eq44
     Cd_i = 2*Cf_f*(1+2*T_f/l_m)*4*n*(A_fp-A_fe)/(pi*d_f^2);
-
+    % Total drag coefficient at zero angle of attack
     Cd0 = Cd_fb + Cd_b + Cd_f + Cd_i;
 
     % Launch pin drag
@@ -112,8 +114,10 @@ function [Cd]=Cd_mandell(roro)
     Cd_pin = 2*0.5*A_pin/A_ref; 
     Cd0 = Cd0 + Cd_pin;
     % compressibility correction
+    %% -------Additional drag at AoA-------
     % Alpha
     alpha = roro.alpha;
+    % Coefficients delta dn eta from windtunnel experiments, See Box p13
     deltaktab=[4 6 8 10 12 14 16 18 20;0.78 0.86 0.92 0.94 0.96 0.97 0.975 0.98 0.982];
     etatab=[4 6 8 10 12 14 16 18 20 22 24;0.6 0.63 0.66 0.68 0.71 0.725 0.74 0.75 0.758 0.77 0.775];
     % error in paper
@@ -125,14 +129,16 @@ function [Cd]=Cd_mandell(roro)
     if deltak>1;
         deltak=1;
     end
+    % Body drag at angle alpha
     Cd_b_alpha = 2*deltak*alpha^2 + 3.6*etak*(1.36*l_TR - 0.55*l_n)*alpha^3/(pi*d_b);
-
+    % Fin body interference coefficients
     Rs = R_cyl/(R_cyl+fin.h);
     Kbf=0.8065*Rs^2+1.1553*Rs;
     Kfb=0.1935*Rs^2+0.8174*Rs+1;
-
+    % Fin drag at angle alpha
     Cd_f_alpha = (1.2*A_fp*4/(pi*d_f^2) +3.12*(Kfb +Kbf-1)*A_fe*4/(pi*d_f^2))*alpha^2;
 
+    %% -------Totol Drag Coefficient-------
     Cd = Cd0 + Cd_b_alpha + Cd_f_alpha;
     Cd = Cd/sqrt(1-M^2);
     CnXcp = roro.CnXcp;

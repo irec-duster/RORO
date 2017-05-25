@@ -51,6 +51,7 @@ function  [t, state] = ascent_calc( roro,tend )
         Xcp_Planform = CnXcp(4);
         Cda = CnXcp(5); % Damping coefficient
         Cld = CnXcp(6);
+        Zeta = CnXcp(7);
         CaCd = roro.CaCd;
         Ca = CaCd(1);
         Cd = CaCd(2);
@@ -141,7 +142,7 @@ function  [t, state] = ascent_calc( roro,tend )
         SM_ExtendedBarrow = (Xcp-roro.Xcm)/roro.D; %Stability margin extended Barrowman eq (Body lift)
         SM_Barrow = (Xcp_Barrow-roro.Xcm)/roro.D; %Stability margin classic Barrowman eq
         
-        logData(Xcp,Xcp_Barrow,roro.Xcm,SM_ExtendedBarrow,SM_Barrow,Cda,Vmag,roro.Mass,alpha,Ca,t); % Eg roro.cd for drag norm(Xdot)/env.C     
+        logData(Xcp,Xcp_Barrow,roro.Xcm,SM_ExtendedBarrow,SM_Barrow,Zeta,Vmag,roro.Mass,alpha,Ca,t); % Eg roro.cd for drag norm(Xdot)/env.C     
         %% Launch rail exit Velocity
         if((X(3)-roro.Rail) <= 0.05 && (X(3)-roro.Rail) >= -0.05)
             v_RailExit = Vmag;
