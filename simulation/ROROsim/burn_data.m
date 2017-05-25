@@ -3,7 +3,7 @@ function burn_data( roro )
     % solver. This updates the motor mass and inertias by assuming the
     % impulse generated is proportional to the mass consumed
     t= roro.time;
-    T=roro.T;
+    T=roro.T; % Thrust 
     tt=roro.motordata(:,1);
     TT=roro.motordata(:,2);
     ind= find(tt<t); % Finds index less then curretn time

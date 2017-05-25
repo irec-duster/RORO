@@ -111,7 +111,7 @@ function [Cd]=Cd_mandell(roro)
 
     % Launch pin drag
     A_pin = roro.L_pinDia*roro.L_pinH;
-    Cd_pin = 2*0.5*A_pin/A_ref; 
+    Cd_pin = 2*0.8*A_pin/A_ref; 
     Cd0 = Cd0 + Cd_pin;
     % compressibility correction
     %% -------Additional drag at AoA-------

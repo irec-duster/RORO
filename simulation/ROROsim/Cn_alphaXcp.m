@@ -130,8 +130,8 @@ function [Cn_alpha, Xcp, Cda, zeta, Ssm]=Cn_alphaXcp(roro)
     Cda_jet = roro.deltaMass *(lcn^2 - lcc^2);
     
     % Aerodynamic damping
-    Cda_l = 0.5*rho* V * A_ref *( fin.Cn_alpha*(fin.Xcp-roro.Xcm)^2+...
-        cone.Cn_alpha*(cone.Xcp - roro.Xcm)^2 + cyl.Cn_alpha*(cyl.Xcp - roro.Xcm)^2);
+    Cda_l = 0;%0.5*rho* V * A_ref *( fin.Cn_alpha*(fin.Xcp-roro.Xcm)^2+...
+        %cone.Cn_alpha*(cone.Xcp - roro.Xcm)^2 + cyl.Cn_alpha*(cyl.Xcp - roro.Xcm)^2);
     
     % Damping Moment Coefficient
     Cda  =  Cda_l+ Cda_jet;

@@ -20,7 +20,7 @@ motor_init( roro ); %loads rocket motor
 
 
 % optional argument: Elevation(m) Temperature(C)and Pressure(Pa)
-env = environement(1400, 25, 85900, roro );
+env = environement(350, 15, 97190.44, roro );
 
 
 %%
@@ -38,23 +38,23 @@ plot3(state(:,1),state(:,2),state(:,3))
 xlabel('x(m)')
 ylabel('y (m)')
 zlabel('Height (m)')
-axis([-500 500 -500 500 0 4000])
+axis([-500 500 -500 500 0 800])
 
 h_max=max(state(:,3))
 %%
-clog = clean_log(t); %extract_data ( state,t);
+clog = log; %clean_log(t); %extract_data ( state,t);
 
 %%
 figure(3)
 
-plot(clog(:,9),clog(:,2))
+plot(clog(:,10),clog(:,2))
 
 xlabel('Time')
 ylabel('Value1, Value2')
 axis([0 20 0.25 1])
 % 
 figure(4)
-plot(clog(:,9),clog(:,1))
+plot(clog(:,10),clog(:,1))
 xlabel('Time')
 ylabel('Value1, Value2')
 %axis([0 25 0 01])
