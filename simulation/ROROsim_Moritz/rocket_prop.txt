@@ -15,4 +15,3 @@ Xcm,            1.4918
 Launchpin height, 17e-3
 Launchpin Dia,    30e-3
 AeroTech_M2400.eng, 0
-Trim mass,      0

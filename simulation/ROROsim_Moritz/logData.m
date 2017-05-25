@@ -1,9 +1,8 @@
-function logData(alpha, Cd, Cda, Xcm, Mass, Vmag, Xcp, zeta, Ssm, t)
+function logData( Xcp,Xcp_Barrow,Xcm,SM_ExBarrow,SM_Barrow,Cda,V,Mass,alpha,Cd,t)
 
     global log
-
-    %log = [log;[Xdot, Xstab, rad2deg(alpha),t]];
-    log = [log;[alpha, Cd, Cda, Xcm, Mass, Vmag, Xcp, zeta, Ssm, t]];
+    
+    log = [log; [Xcp,Xcp_Barrow,Xcm,SM_ExBarrow,SM_Barrow,Cda,V,Mass,alpha,Cd,t] ];
 %     if(t==0)
 %         file1 = fopen('log.dat','w');
 %     else

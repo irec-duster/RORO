@@ -50,6 +50,8 @@ function  [t, state] = ascent_calc( roro,tend )
         Xcp_Barrow = CnXcp(3);
         Xcp_Planform = CnXcp(4);
         Cda = CnXcp(5); % Damping coefficient
+        Cld = CnXcp(6);
+        Zeta = CnXcp(7);
         CaCd = roro.CaCd;
         Ca = CaCd(1);
         Cd = CaCd(2);
@@ -88,14 +90,6 @@ function  [t, state] = ascent_calc( roro,tend )
         alpha = acos(dot(Vnorm,RA));
         alpha = real(alpha);
         
-        %clip angle of attack to ensure the fesibility of Barrowman
-        if(alpha>=0.3)
-            alpha=0.3;
-        end
-        if(alpha<=-0.3)
-            alpha=-0.3;
-        end
-        
         roro.alpha = alpha;
         
         %% -----P Liner Momentum-----
@@ -106,12 +100,12 @@ function  [t, state] = ascent_calc( roro,tend )
         Fg = [0, 0, -mg]';
         
         % Axial Forces
-        Famag = 0.5*env.rho*Vmag^2*roro.A_ref*Ca;
+        Famag = 0.5*env.rho*Vmag^2*roro.A_ref*Ca; % Drag force
         
         Fa = -Famag*RA;
         
         % Normal Forces
-        Fnmag = 0.5*env.rho*Vmag^2*roro.A_ref*Cn;
+        Fnmag = 0.5*env.rho*Vmag^2*roro.A_ref*Cn; % Lift force
         
         RA_Vplane = cross(RA,Vnorm);
         Fn = Fnmag*(cross(RA,RA_Vplane));
@@ -129,12 +123,12 @@ function  [t, state] = ascent_calc( roro,tend )
         Trq_da = -Cda*Rmatrix*m*Rmatrix'*omega;
         %Tqm=(Cda1*omega)*omegaax2; rotational torque by motor
 %        r_f = %TODO roll damping 
-        Trmag = 0.5*env.rho*Vmag^2*roro.A_ref*Cld;
-        Tr = Trmag*RA;
+%         Trmag = 0.5*env.rho*Vmag^2*roro.A_ref*Cld;
+%         Tr = Trmag*RA;
         if(norm(X) < roro.Rail)
             Trq = [0, 0, 0]';
         else
-            Trq = Trqn+Trq_da+Tr;
+            Trq = Trqn+Trq_da;
         end
         
         %% -----Update rocket state derivatives-----
@@ -148,9 +142,9 @@ function  [t, state] = ascent_calc( roro,tend )
         SM_ExtendedBarrow = (Xcp-roro.Xcm)/roro.D; %Stability margin extended Barrowman eq (Body lift)
         SM_Barrow = (Xcp_Barrow-roro.Xcm)/roro.D; %Stability margin classic Barrowman eq
         
-        logData(Xcp,Xcp_Barrow,roro.Xcm,SM_ExtendedBarrow,SM_Barrow,Cda,Vmag,roro.Mass,alpha,Ca,t); % Eg roro.cd for drag norm(Xdot)/env.C     
+        logData(Xcp,Xcp_Barrow,roro.Xcm,SM_ExtendedBarrow,SM_Barrow,Zeta,Vmag,roro.Mass,alpha,Ca,t); % Eg roro.cd for drag norm(Xdot)/env.C     
         %% Launch rail exit Velocity
-        if((X(3)-roro.Rail) <= 0.03 && (X(3)-roro.Rail) >= -0.03)
+        if((X(3)-roro.Rail) <= 0.05 && (X(3)-roro.Rail) >= -0.05)
             v_RailExit = Vmag;
             t_RailExit = t;
         end
