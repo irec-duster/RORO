@@ -6,6 +6,7 @@ import rotation_integration
 import sys
 import time
 from pymavlink import mavutil
+import numpy as np
 
 # tell python where to find mavlink so we can import it
 sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../mavlink'))
@@ -25,32 +26,33 @@ def handle_rc_raw(msg):
 def handle_hud(msg):
     hud_data = (msg.airspeed, msg.groundspeed, msg.heading,
                 msg.throttle, msg.alt, msg.climb)
-    print "Aspd\tGspd\tHead\tThro\tAlt\tClimb"
-    print "%0.2f\t%0.2f\t%0.2f\t%0.2f\t%0.2f\t%0.2f" % hud_data
-    print "\n"
+    # print "Aspd\tGspd\tHead\tThro\tAlt\tClimb"
+    # print "%0.2f\t%0.2f\t%0.2f\t%0.2f\t%0.2f\t%0.2f" % hud_data
+    # print "\n"
 
 
 def handle_attitude(msg):
     attitude_data = (msg.roll, msg.pitch, msg.yaw, msg.rollspeed,
                      msg.pitchspeed, msg.yawspeed)
-    print "Roll\tPit\tYaw\tRSpd\tPSpd\tYSpd"
-    print "%0.2f\t%0.2f\t%0.2f\t%0.2f\t%0.2f\t%0.2f\t" % attitude_data
-    print "\n"
+    # print "Roll\tPit\tYaw\tRSpd\tPSpd\tYSpd"
+    # print "%0.2f\t%0.2f\t%0.2f\t%0.2f\t%0.2f\t%0.2f\t" % attitude_data
+    # print "\n"
 
 
 def handle_gyro(msg, rot):
     gyro_data = (msg.xgyro, msg.ygyro, msg.zgyro)
 
-    print "Time \t GyroX\tGyroY\tGyrY\t"
-    print "%0.2f\t%0.2f\t%0.2f\t" % gyro_data
+    # print "GyroX\tGyroY\tGyrY\t"
+    # print "%0.2f\t%0.2f\t%0.2f\t" % gyro_data
+    # print(gyro_data)
     # print time
     # print "\n"
-    delta_t = 1
-    #rot.integration_step(gyro_data, delta_t)
-    print '{},{},{},{}'.format(*rot.get_quaternion())
+    delta_t = 1/100
+    rot.integration_step(np.array(gyro_data), delta_t)
+    print('{},{},{},{}'.format(*rot.get_quaternion()))
     # print(delta_t)
-    time.sleep(0.1)
-    #sys.stdout.flush()
+    #time.sleep(0.1)
+    sys.stdout.flush()
 
 
 def read_loop(m, rot):
@@ -67,7 +69,6 @@ def read_loop(m, rot):
                 sys.stdout.write(msg.data)
                 sys.stdout.flush()
         elif msg_type == "HIGHRES_IMU":
-            time = time + 1
             handle_gyro(msg, rot)
 
 
