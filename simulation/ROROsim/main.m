@@ -22,6 +22,8 @@ motor_init( roro ); %loads rocket motor
 % optional argument: Elevation(m) Temperature(C)and Pressure(Pa)
 env = environement(350, 15, 97190.44, roro );
 
+% Calculate Xcp Barrowman for documentation
+[Xcp_Barrowman, Xcp_Planform, Ssm_Barrowman] = Xcp_Barrowman(roro);
 
 %%
 % Phase: Accent
@@ -44,6 +46,8 @@ h_max=max(state(:,3))
 %%
 clog = log; %clean_log(t); %extract_data ( state,t);
 
+Xcp_B = ones(length(clog),1) * Xcp_Barrowman;
+Xcp_P= ones(length(clog),1) * Xcp_Planform;
 %%
 figure(3)
 
@@ -114,7 +118,8 @@ figure('Name','Stability Analysis', 'Position', [0 0 400 1000])
 subplot(4,1,1)
 hold on
 plot(clog(:,10),clog(:,7))
-plot(clog(:,10),clog(:,7))
+plot(clog(:,10),Xcp_B)
+plot(clog(:,10),Xcp_P)
 hold off
 xlabel('Time')
 ylabel('Xcp [m]')
@@ -122,7 +127,7 @@ title('Center of Pressure')
 axis([0 25 1.5 1.9])
 line([t_RailExit t_RailExit],[0 300],'Color',[0 1 0])
 line([t_Burnout t_Burnout],[0 300],'Color',[1 0 0])
-legend('Barrowman+BodyLift','Barrowman','rail exit','burnout')
+legend('Barrowman+BodyLift','Barrowman','Planform','rail exit','burnout')
 % COG
 subplot(4,1,2)
 plot(clog(:,10),clog(:,4))
