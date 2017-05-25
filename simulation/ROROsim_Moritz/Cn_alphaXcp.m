@@ -1,4 +1,4 @@
-function [Cn_alpha, Xcp, Xcp_Barrow, Xcp_Planform, Cda, Cld] = Cn_alphaXcp(roro) 
+function [Cn_alpha, Xcp, Xcp_Barrow, Xcp_Planform, Cda, Cld, Zeta] = Cn_alphaXcp(roro) 
     % Takes rocket handle and environment  to calculate Cn, location of cop
     
     global env
@@ -126,7 +126,8 @@ function [Cn_alpha, Xcp, Xcp_Barrow, Xcp_Planform, Cda, Cld] = Cn_alphaXcp(roro)
     % Damping ratio 
     % (See ApogeeRockets newsletter 197, p2)
     I_longitudinal = roro.Ibody_dry(2,2);
-    Cda = c2/(2*sqrt(c1*I_longitudinal));
+    Cda = c2;
+    Zeta = c2/(2*sqrt(c1*I_longitudinal));
     
 end
 

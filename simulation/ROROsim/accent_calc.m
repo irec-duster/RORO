@@ -2,6 +2,7 @@ function  [t, state] = accent_calc( roro,tend )
 %Function calculates the assent phase of the rocket
     global env;
     global log;
+    global t_Burnout
    
     state_0 = [roro.X; roro.Q; roro.P; roro.L];
     tspan = [0,tend];
@@ -44,10 +45,12 @@ function  [t, state] = accent_calc( roro,tend )
         Cn= CnXcp(1);
         Xcp= CnXcp(2);
         Cda = CnXcp(3); % Damping coefficient
-        %% -------Velocity-------
+        zeta = CnXcp(4); % Damping ratio
+        Ssm = CnXcp(5); % Static stability margin
+        %% ------- X Velocity-------
         Xdot=P./roro.Mass;
         
-        %% -------Angular velocity--------- in quarternians 
+        %% ------- Q Angular velocity--------- in quarternians 
         invIbody = roro.Ibody\eye(3); %inv(roro.Ibody); inverting matrix
         omega = Rmatrix*invIbody*Rmatrix'*L;
         s = Q(1);
@@ -71,9 +74,9 @@ function  [t, state] = accent_calc( roro,tend )
 %             warning('Rocket unstable');
 %         end
         omega_norm = normalize(omega); %normalized
-        Xprep =Xstab*sin(acos(dot(RA,omega_norm))); % Prependicular distance between omaga and RA
+        Xperp =Xstab*sin(acos(dot(RA,omega_norm))); % Prependicular distance between omaga and RA
         
-        Vomega = Xprep *cross(RA,omega);
+        Vomega = Xperp *cross(RA,omega);
         
         V = Vcm + Vomega; % approxamating the velocity of the cop        
         
@@ -81,7 +84,7 @@ function  [t, state] = accent_calc( roro,tend )
         Vnorm = normalize(V);
         alpha = acos(dot(Vnorm,RA));
         roro.alpha = alpha;
-        %% Forces = rate of change of Momentums
+        %% ------- P Forces = rate of change of Momentums-------
 
         Fthrust = roro.T*RA;
         
@@ -104,7 +107,7 @@ function  [t, state] = accent_calc( roro,tend )
         else
             Ftot = Fthrust + Fg + Fa + Fn;
         end
-        %% Torque
+        %% ------- L Torque-------
         Trqn = Fnmag*Xstab*(RA_Vplane); 
         
         m=diag([1, 1, 0]);
@@ -120,14 +123,21 @@ function  [t, state] = accent_calc( roro,tend )
             Trq = Trqn+Trq_da;
         end
         
-        %update rocket state derivatives 
+        %% -------Update rocket state derivatives-------
         roro.Xdot= Xdot;
         roro.Qdot= Qdot;
         roro.Pdot= Ftot;
         roro.Ldot= Trq;
             
         state_dot =[Xdot; Qdot; Ftot;Trq];
-        logData(roro.alpha, roro.Cd, t);
+       
+        %% -------Burnout time-------
+        if(roro.propM_current<0.01 && t_Burnout==0)
+            t_Burnout = t;
+        end
+        
+        %% Log Data
+        logData(roro.alpha, roro.Cd, Cda, roro.Xcm, roro.Mass, Vmag, Xcp, zeta, Ssm, t);
         
     end
     
