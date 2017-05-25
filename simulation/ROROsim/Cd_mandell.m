@@ -93,7 +93,7 @@ function [Cd]=Cd_mandell(roro)
     if (Re_f < Re_c)
         Cf_f =  1.328/sqrt(Re_f);
     else
-        Cf_f=0.074/Re_f^(0.2)-B/Re_f;
+        Cf_f=0.074/Re_f^(0.2)-B_f/Re_f;
     end
     %
 

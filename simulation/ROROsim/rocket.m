@@ -98,8 +98,8 @@ classdef rocket <handle
        end
        
        function CnXcp = CnXcp(obj) % Normal force and Cop location
-           [Cn_alpha, Xcp, Cda]=Cn_alphaXcp(obj);
-           CnXcp = [Cn_alpha*obj.alpha, Xcp, Cda];
+           [Cn_alpha, Xcp, Cda, Ssm]=Cn_alphaXcp(obj);
+           CnXcp = [Cn_alpha*obj.alpha, Xcp, Cda, Ssm];
        end
        
        function T = T(obj) % Thrust curve

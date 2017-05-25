@@ -44,10 +44,11 @@ function  [t, state] = accent_calc( roro,tend )
         Cn= CnXcp(1);
         Xcp= CnXcp(2);
         Cda = CnXcp(3); % Damping coefficient
-        %% -------Velocity-------
+        Ssm = CnXcp(4);
+        %% ------- X Velocity-------
         Xdot=P./roro.Mass;
         
-        %% -------Angular velocity--------- in quarternians 
+        %% ------- Q Angular velocity--------- in quarternians 
         invIbody = roro.Ibody\eye(3); %inv(roro.Ibody); inverting matrix
         omega = Rmatrix*invIbody*Rmatrix'*L;
         s = Q(1);
@@ -71,9 +72,9 @@ function  [t, state] = accent_calc( roro,tend )
 %             warning('Rocket unstable');
 %         end
         omega_norm = normalize(omega); %normalized
-        Xprep =Xstab*sin(acos(dot(RA,omega_norm))); % Prependicular distance between omaga and RA
+        Xperp =Xstab*sin(acos(dot(RA,omega_norm))); % Prependicular distance between omaga and RA
         
-        Vomega = Xprep *cross(RA,omega);
+        Vomega = Xperp *cross(RA,omega);
         
         V = Vcm + Vomega; % approxamating the velocity of the cop        
         
@@ -81,7 +82,7 @@ function  [t, state] = accent_calc( roro,tend )
         Vnorm = normalize(V);
         alpha = acos(dot(Vnorm,RA));
         roro.alpha = alpha;
-        %% Forces = rate of change of Momentums
+        %% ------- P Forces = rate of change of Momentums-------
 
         Fthrust = roro.T*RA;
         
@@ -104,7 +105,7 @@ function  [t, state] = accent_calc( roro,tend )
         else
             Ftot = Fthrust + Fg + Fa + Fn;
         end
-        %% Torque
+        %% ------- L Torque-------
         Trqn = Fnmag*Xstab*(RA_Vplane); 
         
         m=diag([1, 1, 0]);
@@ -120,14 +121,14 @@ function  [t, state] = accent_calc( roro,tend )
             Trq = Trqn+Trq_da;
         end
         
-        %update rocket state derivatives 
+        %% -------Update rocket state derivatives-------
         roro.Xdot= Xdot;
         roro.Qdot= Qdot;
         roro.Pdot= Ftot;
         roro.Ldot= Trq;
             
         state_dot =[Xdot; Qdot; Ftot;Trq];
-        logData(roro.alpha, roro.Cd, t);
+        logData(roro.alpha, roro.Cd, Cda, roro.Xcm, roro.Mass, Vmag, Xcp, Ssm, t);
         
     end
     

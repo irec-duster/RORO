@@ -1,4 +1,4 @@
-function [Cn_alpha, Xcp, Cda]=Cn_alphaXcp(roro) 
+function [Cn_alpha, Xcp, Cda, Ssm]=Cn_alphaXcp(roro) 
     % Takes rocket handle and environment  to calculate Cn, location of cop
     
     % using barrowman implemented in OpenRocket
@@ -132,11 +132,12 @@ function [Cn_alpha, Xcp, Cda]=Cn_alphaXcp(roro)
     Cda_l = 0.5*rho* V * A_ref *( fin.Cn_alpha*(fin.Xcp-roro.Xcm)^2+...
         cone.Cn_alpha*(cone.Xcp - roro.Xcm)^2 + cyl.Cn_alpha*(cyl.Xcp - roro.Xcm)^2);
     
-    Cda  =  0; %Cda_l+ Cda_jet;
+    Cda  =  Cda_l+ Cda_jet;
     
     %% Cn_alpha
     Cn_alpha = fin.Cn_alpha + cyl.Cn_alpha + cone.Cn_alpha;
 
-
+    %% Static Stability Margin
+    Ssm = (Xcp-roro.Xcm)/roro.D;
 end
 
