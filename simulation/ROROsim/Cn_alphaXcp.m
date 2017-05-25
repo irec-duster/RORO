@@ -145,6 +145,8 @@ function [Cn_alpha, Xcp, Cda, zeta, Ssm]=Cn_alphaXcp(roro)
     %% Damping Ratio
     % Corrective Moment Coefficient
     Ccm = (rho/2 * V^2 * roro.A_ref * Cn_alpha) * (Xcp-roro.Xcm);
-    zeta = Cda/(2*sqrt(Ccm*roro.Ibody_dry(2,2)));
+    Ibody = roro.Ibody;
+     zeta = Cda/(2*sqrt(Ccm*Ibody(2,2)));
+   
 end
 

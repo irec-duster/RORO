@@ -5,8 +5,10 @@ clear all; clc;
 %global roro
 global env
 global log
-t_Burnout=0;
+global t_Burnout;
+
 t_RailExit=0;
+t_Burnout=0;
 % Create rocket class
 
 roro = rocket(init_rocket());% creates class with the initial values
@@ -102,7 +104,7 @@ plot(clog(:,10),clog(:,1))
 xlabel('Time')
 ylabel('alpha [rad]')
 title('Angle of Attack')
-axis([0 25 0 0.2])
+axis([0 25 0 0.4])
 line([t_RailExit t_RailExit],[0 300],'Color',[0 1 0])
 line([t_Burnout t_Burnout],[0 300],'Color',[1 0 0])
 

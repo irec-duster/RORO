@@ -2,6 +2,7 @@ function  [t, state] = accent_calc( roro,tend )
 %Function calculates the assent phase of the rocket
     global env;
     global log;
+    global t_Burnout
    
     state_0 = [roro.X; roro.Q; roro.P; roro.L];
     tspan = [0,tend];
@@ -129,6 +130,13 @@ function  [t, state] = accent_calc( roro,tend )
         roro.Ldot= Trq;
             
         state_dot =[Xdot; Qdot; Ftot;Trq];
+       
+        %% -------Burnout time-------
+        if(roro.propM_current<0.01 && t_Burnout==0)
+            t_Burnout = t;
+        end
+        
+        %% Log Data
         logData(roro.alpha, roro.Cd, Cda, roro.Xcm, roro.Mass, Vmag, Xcp, zeta, Ssm, t);
         
     end
