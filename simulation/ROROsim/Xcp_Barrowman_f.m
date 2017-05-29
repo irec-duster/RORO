@@ -1,4 +1,4 @@
-function [Xcp_Barrowman, Xcp_Planform, Ssm_Barrowman] = Xcp_Barrowman( roro )
+function [Xcp_Barrowman, Xcp_Planform, Ssm_Barrowman] = Xcp_Barrowman_f( roro )
 %Calculate Xcp according to Barrowman for documentation
     %% Rocket Dimensions
     
@@ -43,9 +43,9 @@ function [Xcp_Barrowman, Xcp_Planform, Ssm_Barrowman] = Xcp_Barrowman( roro )
         + (fin.basechord + fin.topchord - (fin.topchord*fin.basechord)/(fin.basechord + fin.topchord))/6;
     
     Cn_alpha_Barrow = cone.Cn_alpha + fin.Cn_alpha;
-    Xcp_Barrowman = (fin.Cn_alpha*fin.Xcp + cone.Cn_alpha*cone.Xcp) / Cn_alpha_Barrow
+    Xcp_Barrowman = (fin.Cn_alpha*fin.Xcp + cone.Cn_alpha*cone.Xcp) / Cn_alpha_Barrow;
     %Static stability amrgin
-    Ssm_Barrowman = (Xcp_Barrowman - roro.Xcm)/roro.D
+    Ssm_Barrowman = (Xcp_Barrowman - roro.Xcm)/roro.D;
     
     %% CoP: Center of Planform Area
     % A_planform
@@ -63,6 +63,6 @@ function [Xcp_Barrowman, Xcp_Planform, Ssm_Barrowman] = Xcp_Barrowman( roro )
     fin.X_plan3 = fin.X_b * fin.basechord - 2/3 * fin.l_backward;
     
     Xcp_Planform = (cone.A_plan * cone.X_plan + cyl.A_plan * cyl.X_plan...
-        + fin.A_plan1 * fin.X_plan1 + fin.A_plan2 * fin.X_plan2 + fin.A_plan3 * fin.X_plan3) / A_plan
+        + fin.A_plan1 * fin.X_plan1 + fin.A_plan2 * fin.X_plan2 + fin.A_plan3 * fin.X_plan3) / A_plan;
 end
 

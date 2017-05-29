@@ -109,7 +109,7 @@ function [Cd]=Cd_mandell(roro)
     % Total drag coefficient at zero angle of attack
     Cd0 = Cd_fb + Cd_b + Cd_f + Cd_i;
 
-    % Launch pin drag
+    % Launch pin drag % estimated from Mandell 
     A_pin = roro.L_pinDia*roro.L_pinH;
     Cd_pin = 2*0.8*A_pin/A_ref; 
     Cd0 = Cd0 + Cd_pin;

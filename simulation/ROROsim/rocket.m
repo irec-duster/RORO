@@ -16,12 +16,12 @@ classdef rocket <handle
       Mass_dry          %Rocket and motor housing no prop
       Ibody_dry         %Rocket and motor housing no prop
       Xcm_dry           %Rocket and motor housing no prop
-      Rail = 5.5;
+      Rail = 3.5;
       L_pinDia
       L_pinH
       A_ref %Clean this up?
       
-      %Motor Characteristics: Updated in each itteration fh the accent_calc     
+      %Motor Characteristics: Updated in each iteration of the accent_calc     
       motorname
       motordata
       Mass_motor
@@ -39,7 +39,10 @@ classdef rocket <handle
       impulseGen                % Impulse generated upto that point 
       propM_current             % Remaning prop mass
       propM_prev = 0;           % Mass for previous time step to calcualte deltaMass
-           
+      
+      departureState            %Saves the state vector at departure
+      t_Burnout = 0;
+      
       % Current State Vector with Initial values, Updated in accent_calc
       time = 0;         %time
       X = [0; 0; 0];    % Position x, y, z   
@@ -76,7 +79,7 @@ classdef rocket <handle
                 obj.L_pinDia = prop(15);
                 obj.L_pinH = prop(16);
                 % test heading 84deg
-                Ra = -0.1047; deg2rad(90-prop(17));                
+                Ra = -0.1047; %deg2rad(90-prop(17));                
                 Rax = [0.1684;    0.985;         0];
                 obj.Q=[cos(Ra/2) sin(Ra/2)*Rax(1) sin(Ra/2)*Rax(2) sin(Ra/2)*Rax(3)]';
                 
@@ -92,8 +95,8 @@ classdef rocket <handle
 
        function Cd = Cd(obj) % Drag in axial direction
            Cd = Cd_mandell(obj);
-           if (isinf(Cd) || Cd > 1)
-               Cd =1;
+           if (isinf(Cd) || Cd > 10)
+               Cd =10;
            end
        end
        

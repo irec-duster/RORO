@@ -68,7 +68,7 @@ classdef environement<handle
       end
       function W = W(obj) % Wind Vecor
           %global roro
-          W = [5, 0, 0]'; % Access wind model from here
+          W = [0, 0, 0]'; % Access wind model from here
       end
 
    end

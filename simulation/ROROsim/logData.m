@@ -3,7 +3,7 @@ function logData(alpha, Cd, Cda, Xcm, Mass, Vmag, Xcp, zeta, Ssm, t)
     global log
 
     %log = [log;[Xdot, Xstab, rad2deg(alpha),t]];
-    log = [log;[alpha, Cd, Cda, Xcm, Mass, Vmag, Xcp, zeta, Ssm, t]];
+    log = vertcat(log,[alpha, Cd, Cda, Xcm, Mass, Vmag, Xcp, zeta, Ssm, t]);
 %     if(t==0)
 %         file1 = fopen('log.dat','w');
 %     else
