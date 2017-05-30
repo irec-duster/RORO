@@ -16,7 +16,7 @@ function motor_init( roro )
     tline = fgets(fid);
     tline = fgets(fid);
     tline = fgets(fid);
-    %tline = fgets(fid);
+    tline = fgets(fid);
     C = strsplit(tline);
     Motor_diameter = str2double((C(2)))*1e-3; %[m]
     Motor_lenght = str2double((C(3)))*1e-3; %[m]
@@ -32,9 +32,9 @@ function motor_init( roro )
     roro.Motor_impulse = trapz(roro.motordata(:,1),roro.motordata(:,2));
     
     %Initializing propellent dimentions 
-    prop_density =   1.4905e+03;% 1.5079e+03; % calciualed by volume and mass of prop from drawing   
-    prop_OD =  Motor_diameter  -6.5000e-3;%12.4000e-3; %[m] %Offsets estimates from drawing
-    prop_h = Motor_lenght - 69e-3;%111.10003e-3;   %[m]
+    prop_density =   1.5079e+03; %1.4905e+03;%  calciualed by volume and mass of prop from drawing   
+    prop_OD =  Motor_diameter  -12.4000e-3; %-6.5000e-3;%[m] %Offsets estimates from drawing
+    prop_h = Motor_lenght -111.10003e-3;   %- 69e-3;%[m]
     prop_ID = sqrt(prop_OD^2 -4*Mass_prop/(pi*prop_h*prop_density ));
     roro.Xcm_prop = roro.Length - prop_h/2; % Has to be confirmed with drawing every time the motor changes 
     

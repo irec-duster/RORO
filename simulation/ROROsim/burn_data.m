@@ -17,7 +17,8 @@ function burn_data( roro )
     if(roro.deltat == 0)
         roro.deltaMass =0 ;
     else
-        roro.deltaMass = (roro.propM_current - roro.propM_prev)/ roro.deltat;
+        % taking average for numerical stability
+        roro.deltaMass = (roro.propM_current - roro.propM_prev)/ roro.deltat; %1.2902/1.8;%
     end
     roro.propM_prev = roro.propM_current;
     
