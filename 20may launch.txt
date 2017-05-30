@@ -1,0 +1,53 @@
+20may launch
+
+K1275 (RMS-54/2560)
+    21303 - 20550 = 753g (case measured 518g)
+    22611 - 20550 = 2061g
+    retainer adapter: 104g
+    centering adapter: 49g
+launch rail length: 3.5
+
+(alt. 440m)
+
+configuration:
+800g payload (at 150mm from btm)
+3.5kg nosecone
+500g paint
+->CG: 1368mm 14.671kg
+same without paint
+->CG: 1356mm 14.151kg
+
+
+-> target CG (no motor): 1466mm, 16151g for 1.2stability, 575m apogee
+final weight measured: 16.9kg (including empty motor tube (518g)) with Hassan's scale
+final CM measured: 1491mm (including empty motor tube)
+assuming 16.356kg actual empty:
+    apogee: 565m (600m max)
+    rail dep vel (3.5m): 22.8m/s
+
+Mass including empty motor case:
+16.7kg, CM 1490mm
+Ix  0.056 kg*m2
+Iyz 7.422 kg*m2
+
+motor masses:
+case empty: 0.518 kg
+case after burnout: 0.753 kg
+case with propellant: 2.061 kg
+propellant: 1.308 kg
+residues: 0.235 kg
+residues + propellant = 1.543 kg
+
+case empty + residues + propellant = case with propellant
+case empty + residues = case after burnout
+
+
+Mass liftoff
+18.283 kg, CM 1567 mm
+Ix     57'318'942 gmm2
+Iyz  8670'683'536 gmm2
+
+Mass burnout
+16,975 kg, CM 1502 mm
+Ix     56'895'999 gmm2
+Iyz  7626'496'489 gmm2
