@@ -75,9 +75,8 @@ def read_loop(m, rot):
 def main():
 
     # read command line options
-
     rot = rotation_integration.Attitude()
-
+    print("Start")
     parser = OptionParser("readdata.py [options]")
     parser.add_option("--baudrate", dest="baudrate", type='int',
                         help="master port baud rate", default=115200)
@@ -97,9 +96,10 @@ def main():
     # wait for the heartbeat msg to find the system ID
     master.wait_heartbeat()
     # request data to be sent at the given rate
-    master.mav.request_data_stream_send(master.target_system, master.target_component,
-        mavutil.mavlink.MAV_DATA_STREAM_ALL, opts.rate, 1)
-    #print(master.messages , "\n")
+    #master.mav.request_data_stream_send(master.target_system, master.target_component,
+    #    mavutil.mavlink.MAV_DATA_STREAM_ALL, opts.rate, 1)
+    print(master.messages , "\n")
+    print("ceva")
     #print "\n"
     # enter the data loop
     read_loop(master, rot)
