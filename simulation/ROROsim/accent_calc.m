@@ -2,7 +2,6 @@ function  [t, state] = accent_calc( roro,tend )
 %Function calculates the assent phase of the rocket
     global env;
     global log;
-    global t_Burnout
    
     state_0 = [roro.X; roro.Q; roro.P; roro.L];
     tspan = [0:0.005:tend];
@@ -70,9 +69,7 @@ function  [t, state] = accent_calc( roro,tend )
         
         Vcm = Xdot  + W;
         Xstab = Xcp- roro.Xcm;
-%         if(Xstab < 0)
-%             warning('Rocket unstable');
-%         end
+
         omega_norm = normalize(omega); %normalized
         Xperp =Xstab*sin(acos(dot(RA,omega_norm))); % Prependicular distance between omaga and RA
         
@@ -119,6 +116,8 @@ function  [t, state] = accent_calc( roro,tend )
 %        Tr = Trmag*RA;
         if(norm(X) < roro.Rail)
             Trq = [0, 0, 0]';
+            roro.departureState(1) = norm(Xdot); % Get rail departure vel from here wrt earth
+            roro.departureState(2) = t; 
         else
             Trq = Trqn+Trq_da;
         end
@@ -132,12 +131,13 @@ function  [t, state] = accent_calc( roro,tend )
         state_dot =[Xdot; Qdot; Ftot;Trq];
        
         %% -------Burnout time-------
-        if(roro.propM_current<0.01 && t_Burnout==0)
-            t_Burnout = t;
+        if(roro.propM_current<0.01 && roro.t_Burnout == 0 )
+            roro.t_Burnout = t;
         end
-%         
+         
         %% Log Data
-         logData(roro.alpha, roro.Cd, Cda, roro.Xcm, roro.Mass, Vmag, Xcp, zeta, Ssm, t);
+       
+        %logData(roro.alpha, roro.Cd, Cda, roro.Xcm, roro.Mass, Vmag, Xcp, zeta, Ssm, t);
         
     end
     
