@@ -1,4 +1,4 @@
-function [Cn_alpha, Xcp, Cda, zeta, Ssm]=Cn_alphaXcp(roro) 
+function [Cn_alpha, Xcp, Cda, zeta, Ssm, Ssm_B, Ccm]=Cn_alphaXcp(roro) 
     % Takes rocket handle and environment  to calculate Cn, location of cop
     
     % using barrowman implemented in OpenRocket
@@ -116,6 +116,9 @@ function [Cn_alpha, Xcp, Cda, zeta, Ssm]=Cn_alphaXcp(roro)
 
 
     Xcp = (fin.Cn_alpha*fin.Xcp + cone.Cn_alpha*cone.Xcp +  cyl.Xcp*cyl.Cn_alpha)/(fin.Cn_alpha+cone.Cn_alpha+cyl.Cn_alpha);
+    %% Xcp without Body lift for documentation
+    [Xcp_Barrowman, Xcp_Planform, Ssm_Barrowman] = Xcp_Barrowman_f(roro);
+    Xcp_B = Xcp_Barrowman;
     %% Roll damping 
     % % omega = deg2rad(140);
     % % Cn_alpha0 = 2*pi/beta; % from potential flow over a thin foil. 
@@ -141,7 +144,7 @@ function [Cn_alpha, Xcp, Cda, zeta, Ssm]=Cn_alphaXcp(roro)
 
     %% Static Stability Margin
     Ssm = (Xcp-roro.Xcm)/roro.D;
-    
+    Ssm_B = (Xcp_B-roro.Xcm)/roro.D;
     %% Damping Ratio
     % Corrective Moment Coefficient
     Ccm = (rho/2 * V^2 * roro.A_ref * Cn_alpha) * (Xcp-roro.Xcm);
