@@ -13,7 +13,7 @@ motor_init( roro ); %loads rocket motor
 %%
 % Initilize Environmental variables 
 % optional argument: Elevation(m) Temperature(C)and Pressure(Pa)
-env = environement(1400, 25, 86000, roro );
+env = environement(1400, 35, 86000, roro );
 
 
 
@@ -21,17 +21,17 @@ env = environement(1400, 25, 86000, roro );
 tend=30;
 [t, state] = accent_calc(roro,tend);
 %%
-figure(1);
-plot(t,state(:,3))
-xlabel('Time(s)')
-ylabel('Height (m)')
-
-figure(2);
-plot3(state(:,1),state(:,2),state(:,3))
-xlabel('x(m)')
-ylabel('y (m)')
-zlabel('Height (m)')
-axis([-500 500 -500 500 0 800])
+% figure(1);
+% plot(t,state(:,3))
+% xlabel('Time(s)')
+% ylabel('Height (m)')
+% 
+% figure(2);
+% plot3(state(:,1),state(:,2),state(:,3))
+% xlabel('x(m)')
+% ylabel('y (m)')
+% zlabel('Height (m)')
+% axis([-500 500 -500 500 0 800])
 
 h_max=max(state(:,3))
 %%
