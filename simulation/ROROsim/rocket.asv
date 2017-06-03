@@ -78,8 +78,8 @@ classdef rocket <handle
                 obj.Xcm_dry = prop(14);
                 obj.L_pinDia = prop(15);
                 obj.L_pinH = prop(16);
-                % Launch Rail Heading
-                Ra =  -0.1047; %deg2rad(90-prop(17));                
+                % test heading 84deg
+                Ra = -0.1047; %deg2rad(90-prop(17));                
                 Rax = [0.1684;    0.985;         0];
                 obj.Q=[cos(Ra/2) sin(Ra/2)*Rax(1) sin(Ra/2)*Rax(2) sin(Ra/2)*Rax(3)]';
                 
@@ -94,17 +94,16 @@ classdef rocket <handle
        %Fuctions to calcualte various properties
 
        function Cd = Cd(obj) % Drag in axial direction
-           global var;
-           Cd = Cd_mandell(obj)*var.ca;
+           global var
+           Cd = Cd_mandell(obj) ;
            if (isinf(Cd) || Cd > 10)
                Cd =10;
            end
        end
        
        function CnXcp = CnXcp(obj) % Normal force and Cop location
-           global var;
            [Cn_alpha, Xcp, Cda, zeta, Ssm]=Cn_alphaXcp(obj);
-           CnXcp = [Cn_alpha*obj.alpha*var.cn, Xcp*var.Xcp, Cda, zeta, Ssm];
+           CnXcp = [Cn_alpha*obj.alpha, Xcp, Cda, zeta, Ssm];
        end
        
        function T = T(obj) % Thrust curve
@@ -122,7 +121,6 @@ classdef rocket <handle
        end
        
        function Mass = Mass(obj) % Current mass of rocket
-           global var
            M = obj.motordata;
            if ( obj.time > M(end,1)); % To assure it goes to zero incase of integartion error
                obj.propM_current =0;
