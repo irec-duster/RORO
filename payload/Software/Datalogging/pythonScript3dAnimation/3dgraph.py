@@ -243,6 +243,8 @@ class InputThread(QtCore.QThread):
 
 
 
+
+
 def main():
     parser = argparse.ArgumentParser(description='Plot 3D Orientation',
                     epilog='reading from stdin, format: q0,q1,q2,q3[,x,y,z]')
@@ -251,23 +253,38 @@ def main():
     parser.add_argument('--stl', default=None)
     args = parser.parse_args()
 
-
     app = QtGui.QApplication([])
+    canvas =  QtGui.QWidget()
+    canvas.showFullScreen()
+
+    layout = QtGui.QGridLayout()
+    canvas.setLayout(layout)
+    canvas.setStyleSheet("background-color: white");
+
     w = gl.GLViewWidget()
-    w.show()
+    layout.addWidget(w, 1, 0)
+    canvas.show()
+
     w.setWindowTitle(args.title)
+
     w.pan(0, 0, 1)
     w.setCameraPosition(distance=20)
 
-    ax=gl.GLAxisItem()
-    ax.setSize(3,3,3)
+
+    ax = gl.GLAxisItem()
+
+    ax.setSize(3, 3, 3)
     ax.translate(0, 0, 1)
     w.addItem(ax)
 
     g = gl.GLGridItem()
-    g.scale(2,2,1)
+    g.scale(2, 2, 1)
     g.translate(0, 0, 0)
     w.addItem(g)
+
+    text = QtGui.QLineEdit('Ground Station RORO')
+    layout.addWidget(text, 0, 0)   # text edit goes in middle-left
+
 
     if args.stl == None:
         mesh = cubeMeshItem()
@@ -284,10 +301,7 @@ def main():
     thread = InputThread(mesh, args)
     thread.finished.connect(app.exit)
     thread.start()
-
-    if (sys.flags.interactive != 1) or not hasattr(QtCore, 'PYQT_VERSION'):
-        QtGui.QApplication.instance().exec_()
-
+    app.exec_()
 
 if __name__ == '__main__':
     main()
