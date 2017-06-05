@@ -96,6 +96,43 @@ int high_range_differential_pressure_read(float *p_press, float *p_temp)
     return 0;
 }
 
+// open 1.95ms
+// closed 1.06ms
+bool nosecone_locked = false;
+
+void servo_timer_cb(GPTDriver *gptp)
+{
+    (void) gptp;
+    palClearPad(GPIOE, GPIOE_SERVO_5);
+}
+
+static THD_WORKING_AREA(servo_thread, 500);
+void servo_thread_main(void *arg)
+{
+    (void) arg;
+
+    palSetPadMode(GPIOE, GPIOE_SERVO_5, PAL_MODE_OUTPUT_PUSHPULL);
+
+    static const GPTConfig tim6_config = {
+        100000,
+        servo_timer_cb,
+        0,  /* CR2 settings */
+        0   /* DMA settings */
+    };
+    gptStart(&GPTD6, &tim6_config);
+
+    while (1) {
+        if (nosecone_locked) {
+            palSetPad(GPIOE, GPIOE_SERVO_5);
+            gptStartOneShot(&GPTD6, 106);
+        } else {
+            palSetPad(GPIOE, GPIOE_SERVO_5);
+            gptStartOneShot(&GPTD6, 195);
+        }
+        chThdSleepMilliseconds(20);
+    }
+}
+
 int main(void)
 {
     /* System initialization */
@@ -114,6 +151,16 @@ int main(void)
     };
     sdStart(&SD3, &xbee_serial_conf);
     xbee = (BaseSequentialStream *)&SD3;
+
+    chThdCreateStatic(&servo_thread, sizeof(servo_thread), NORMALPRIO,
+                      servo_thread_main, NULL);
+
+    while (1) {
+        chThdSleepSeconds(15);
+        nosecone_locked = false;
+        chThdSleepSeconds(15);
+        nosecone_locked = true;
+    }
 
     /* I2C2 init */
     static const I2CConfig i2c_cfg = {
