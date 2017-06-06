@@ -18,10 +18,10 @@ class Window(QtGui.QWidget):
         super(Window, self).__init__()
         width =  QtGui.QDesktopWidget().screenGeometry().width()
         height  = QtGui.QDesktopWidget().screenGeometry().height()
-        self.resize(width, height-100)
+        self.resize(width, height)
         print(width,height)
         self.setWindowTitle("Team DUSTER Ground Station")
-        self.setStyleSheet("background-color: white");
+        self.setStyleSheet("background-color: black");
         layout = QtGui.QGridLayout(self)
         self.setLayout(layout)
 
@@ -36,16 +36,19 @@ class Window(QtGui.QWidget):
         lb1 = QtGui.QLabel(self)
         lb1.setPixmap(logo)
         layout.addWidget(lb1, 0, 0)
-        text = QtGui.QLineEdit('Ground Station RORO')
-        layout.addWidget(text, 0, 2, 1, 1)
-        text.setMargin(0)
-        text.setStyleSheet('font-size: 30pt; font-family: Courier;  border: none')
+
+    def setTitle(self, layout):
+        l2 = QtGui.QLabel()
+        l2.setText("RORO I GROUND STATION . . . . .  . . . .  . . . . ")
+        l2.setStyleSheet('font-size: 30pt; font-family: RALE WAY;  color: #02E148')
+        layout.addWidget(l2, 0, 1, 1, 1)
 
 
     def setExitButton(self, layout):
         btn = QtGui.QPushButton("Quit", self)
         btn.clicked.connect(QtCore.QCoreApplication.instance().quit)
         layout.addWidget(btn, 3, 3, 1, 1)
+        btn.setStyleSheet('font-size: 16pt; font-family: RALE WAY;  color: #02E148; border: 0.5px solid #02E148; border-radius: 5px;s')
 
     def setRocketAnimation(self, layout):
         pass
