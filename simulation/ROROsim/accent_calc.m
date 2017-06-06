@@ -1,10 +1,9 @@
 function  [t, state] = accent_calc( roro,tend )
 %Function calculates the assent phase of the rocket
     global env;
-    global log;
-   
+    global log;   
     state_0 = [roro.X; roro.Q; roro.P; roro.L];
-    tspan = [0,tend];
+    tspan = [0:0.005:tend];
     
     % Event function to stop at max height
     options = odeset('Events',@event_function);

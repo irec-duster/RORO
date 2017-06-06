@@ -43,9 +43,11 @@ function a = extract_data ( state,t)
         CnXcp = roro_data.CnXcp;
         Cn= CnXcp(1);
         Xcp= CnXcp(2);
-        Cda = CnXcp(3); % Damping coefficient
+        Cda = CnXcp(3); % Damping moment coefficient
         zeta = CnXcp(4); % Damping ratio
         Ssm = CnXcp(5); % Static stability margin
+        Ssm_B = CnXcp(6); % Static stability margin without body lift correction
+        Ccm = CnXcp(7); % Corrective moment coeff
         invIbody = roro_data.Ibody\eye(3); %inv(roro.Ibody); inverting matrix
         omega = Rmatrix*invIbody*Rmatrix'*L;
         Vcm = Xdot  + W;
@@ -65,7 +67,7 @@ function a = extract_data ( state,t)
         
         %% Log Data
        
-        logData(roro_data.alpha, roro_data.Cd, Cda, roro_data.Xcm, roro_data.Mass, Vmag, Xcp, zeta, Ssm, t(i));
+        logData(roro_data.alpha, roro_data.Cd, Cda, roro_data.Xcm, roro_data.Mass, Vmag, Xcp, zeta, Ssm, Ssm_B, Ccm, t(i));
 
          %logData(roro_data.X(3),roro_data.Cd,t(i)); % Eg roro.Cd for drag norm(Xdot)/env.C
 %          log(i,1) = norm(roro_data.Xdot);
