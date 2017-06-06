@@ -78,8 +78,8 @@ classdef rocket <handle
                 obj.Xcm_dry = prop(14);
                 obj.L_pinDia = prop(15);
                 obj.L_pinH = prop(16);
-                % test heading 84deg
-                Ra = -0.1047; %deg2rad(90-prop(17));                
+                % Launch Rail Heading
+                Ra =  -0.1047; %deg2rad(90-prop(17));                
                 Rax = [0.1684;    0.985;         0];
                 obj.Q=[cos(Ra/2) sin(Ra/2)*Rax(1) sin(Ra/2)*Rax(2) sin(Ra/2)*Rax(3)]';
                 
@@ -101,6 +101,8 @@ classdef rocket <handle
        end
        
        function CnXcp = CnXcp(obj) % Normal force and Cop location
+           [Cn_alpha, Xcp, Cda, zeta, Ssm]=Cn_alphaXcp(obj);
+           CnXcp = [Cn_alpha*obj.alpha, Xcp, Cda, zeta, Ssm];
            [Cn_alpha, Xcp, Cda, zeta, Ssm, Ssm_B, Ccm]=Cn_alphaXcp(obj);
            CnXcp = [Cn_alpha*obj.alpha, Xcp, Cda, zeta, Ssm, Ssm_B, Ccm];
        end

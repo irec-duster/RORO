@@ -67,7 +67,7 @@ classdef environement<handle
           C = sqrt(obj.gamma*obj.R*obj.Temp);
       end
       function W = W(obj) % Wind Vecor
-          %global roro
+          global var
           W = [0, 0, 0]'; % Access wind model from here
       end
 
