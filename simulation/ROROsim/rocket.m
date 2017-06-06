@@ -94,17 +94,17 @@ classdef rocket <handle
        %Fuctions to calcualte various properties
 
        function Cd = Cd(obj) % Drag in axial direction
-           global var;
-           Cd = Cd_mandell(obj)*var.ca;
+           Cd = Cd_mandell(obj);
            if (isinf(Cd) || Cd > 10)
                Cd =10;
            end
        end
        
        function CnXcp = CnXcp(obj) % Normal force and Cop location
-           global var;
            [Cn_alpha, Xcp, Cda, zeta, Ssm]=Cn_alphaXcp(obj);
-           CnXcp = [Cn_alpha*obj.alpha*var.cn, Xcp*var.Xcp, Cda, zeta, Ssm];
+           CnXcp = [Cn_alpha*obj.alpha, Xcp, Cda, zeta, Ssm];
+           [Cn_alpha, Xcp, Cda, zeta, Ssm, Ssm_B, Ccm]=Cn_alphaXcp(obj);
+           CnXcp = [Cn_alpha*obj.alpha, Xcp, Cda, zeta, Ssm, Ssm_B, Ccm];
        end
        
        function T = T(obj) % Thrust curve
@@ -122,7 +122,6 @@ classdef rocket <handle
        end
        
        function Mass = Mass(obj) % Current mass of rocket
-           global var
            M = obj.motordata;
            if ( obj.time > M(end,1)); % To assure it goes to zero incase of integartion error
                obj.propM_current =0;
