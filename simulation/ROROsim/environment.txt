@@ -1,8 +1,0 @@
-'gamma', 			1.4
-R, 			287
-Ref Temp(K), 		291.15
-Ref Dynamic viscosity,	1.827e-7
-Sutherlands constant(K),120
-Earth Mass (Kg),	5.974e24
-Earth Radius(m),	6378100	
-G,			6.673e-11
