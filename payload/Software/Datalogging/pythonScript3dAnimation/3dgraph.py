@@ -1,4 +1,5 @@
-from pyqtgraph.Qt import QtCore, QtGui
+
+from PyQt5 import QtGui, QtCore
 import pyqtgraph as pg
 import pyqtgraph.opengl as gl
 from OpenGL.GL import glViewport
@@ -11,8 +12,43 @@ import numpy as np
 import stl_parser as stl
 
 
+class Window(QtGui.QWidget):
+
+    def __init__(self):
+        super(Window, self).__init__()
+        width =  QtGui.QDesktopWidget().screenGeometry().width()
+        height  = QtGui.QDesktopWidget().screenGeometry().height()
+        self.resize(width, height-100)
+        print(width,height)
+        self.setWindowTitle("Team DUSTER Ground Station")
+        self.setStyleSheet("background-color: white");
+        layout = QtGui.QGridLayout(self)
+        self.setLayout(layout)
+
+        # Starting putting the widgets
+        self.setLogo(layout)
+        self.setExitButton(layout)
+        self.show()
 
 
+    def setLogo(self, layout):
+        logo = QtGui.QPixmap('logo.png')
+        lb1 = QtGui.QLabel(self)
+        lb1.setPixmap(logo)
+        layout.addWidget(lb1, 0, 0)
+        text = QtGui.QLineEdit('Ground Station RORO')
+        layout.addWidget(text, 0, 2, 1, 1)
+        text.setMargin(0)
+        text.setStyleSheet('font-size: 30pt; font-family: Courier;  border: none')
+
+
+    def setExitButton(self, layout):
+        btn = QtGui.QPushButton("Quit", self)
+        btn.clicked.connect(QtCore.QCoreApplication.instance().quit)
+        layout.addWidget(btn, 3, 3, 1, 1)
+
+    def setRocketAnimation(self, layout):
+        pass
 
 
 def main():
@@ -24,36 +60,29 @@ def main():
     args = parser.parse_args()
 
 
-
-
     app = QtGui.QApplication([])
-    canvas =  QtGui.QWidget()
-    width = screenShape = QtGui.QDesktopWidget().screenGeometry().width()
-    height = screenShape = QtGui.QDesktopWidget().screenGeometry().height()
-
-
-    print (width,height)
-    canvas.resize(width,height)
+    GUI = Window()
 
 
 
-    layout = QtGui.QGridLayout()
-    canvas.setLayout(layout)
-    canvas.setStyleSheet("background-color: white");
+    # layout = QtGui.QGridLayout()
+    # GUI.setLayout(layout)
+    # GUI.setStyleSheet("background-color: white");
 
-    w = gl.GLViewWidget()
-    layout.addWidget(w, 0, 0, 3, 3)
+    # w = gl.GLViewWidget()
+
+    # layout.addWidget(w, 0, 0, 3, 3)
 
 
 
-    #image = pg.image('logo.png')
+    # #image = pg.image('logo.png')
     #layout.addWidget(image, 0, 0, 1, 1)
 
-    win = pg.GraphicsWindow(title="Altitude[m]")
-    #pg.setConfigOptions(antialias=True)
-    layout.addWidget(win, 4, 4, 1, 1)
+    # win = pg.GraphicsWindow(title="Altitude[m]")
+    # #pg.setConfigOptions(antialias=True)
+    # layout.addWidget(win, 4, 4, 1, 1)
 
-    p1 = win.addPlot(title="Basic array plotting", y=np.random.normal(size=100))
+    # p1 = win.addPlot(title="Basic array plotting", y=np.random.normal(size=100))
 
 
     # p6 = win.addPlot(canvas)
@@ -75,52 +104,51 @@ def main():
 
     # vp = (0,0,fs.width(),fs.height())
     # vp = (0,0,2*fs.width(),2*fs.height())
-    width = canvas.frameGeometry().width()
-    height = canvas.frameGeometry().height()
-    pr = w.devicePixelRatio()
-    height = int(height*1.41)
-    width = int(width*1.41)
-    vp = (-100, -100, width, height)
-    print(vp)
-    w.opts['viewport'] = vp
-    print(w.opts['viewport'])
-    print(w.devicePixelRatio())
+    # width = 100
+    # height = 100
+    # pr = w.devicePixelRatio()
+    # height = int(height*1.41)
+    # width = int(width*1.41)
+    # vp = (-100, -100, width, height)
+    # print(vp)
+    # w.opts['viewport'] = vp
+    # print(w.opts['viewport'])
+    # print(w.devicePixelRatio())
 
-    w.setWindowTitle(args.title)
+    # w.setWindowTitle(args.title)
 
-    #w.setBackgroundColor('w')
-    w.pan(0, 0, 1)
-    w.setCameraPosition(distance=20)
-
-
-    ax = gl.GLAxisItem()
-
-    ax.setSize(3, 3, 3)
-    ax.translate(0, 0, 1)
-    w.addItem(ax)
-
-    g = gl.GLGridItem()
-    g.scale(2, 2, 1)
-    g.translate(0, 0, 0)
-    w.addItem(g)
+    # #w.setBackgroundColor('w')
+    # w.pan(0, 0, 1)
+    # w.setCameraPosition(distance=20)
 
 
-    if args.stl == None:
-        mesh = cubeMeshItem()
-    else:
-        stlmodel = stl.loader()
-        stlmodel.load_stl(args.stl)
-        # stlmodel.draw()
-        mesh = stlmodel.mesh()
-        # mesh.setColor(pg.mkColor('r'))
+    # ax = gl.GLAxisItem()
 
-    mesh.translate(0,0,1)
-    w.addItem(mesh)
-    canvas.show()
+    # ax.setSize(3, 3, 3)
+    # ax.translate(0, 0, 1)
+    # w.addItem(ax)
 
-    thread = stl.InputThread(mesh, args)
-    thread.finished.connect(app.exit)
-    thread.start()
+    # g = gl.GLGridItem()
+    # g.scale(2, 2, 1)
+    # g.translate(0, 0, 0)
+    # w.addItem(g)
+
+
+    # if args.stl == None:
+    #     mesh = stl.cubeMeshItem()
+    # else:
+    #     stlmodel = stl.loader()
+    #     stlmodel.load_stl(args.stl)
+    #     # stlmodel.draw()
+    #     mesh = stlmodel.mesh()
+    #     # mesh.setColor(pg.mkColor('r'))
+
+    # mesh.translate(0,0,1)
+    # w.addItem(mesh)
+
+    # thread = stl.InputThread(mesh, args)
+    # thread.finished.connect(app.exit)
+    # thread.start()
     app.exec_()
 
 if __name__ == '__main__':
