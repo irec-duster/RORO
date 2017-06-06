@@ -43,7 +43,7 @@ def main():
     for sample in gyro:
         delta_t = sample[TIME] - prev_time
         prev_time = sample[TIME]
-        sys.stderr.write('s {} t {} dt {}\n'.format(sample, sample[TIME], delta_t))
+        #sys.stderr.write('s {} t {} dt {}\n'.format(sample, sample[TIME], delta_t))
         rot.integration_step(sample[:3], delta_t)
 
         print('{},{},{},{}'.format(*rot.get_quaternion()))
