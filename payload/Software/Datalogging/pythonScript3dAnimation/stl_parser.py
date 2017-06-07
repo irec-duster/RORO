@@ -88,7 +88,7 @@ class createtriangle:
         a=self.calculate_vector(p3,p2)
         b=self.calculate_vector(p3,p1)
         #calculate the cross product returns a vector
-        return self.cross_product(a,b)    
+        return self.cross_product(a,b)
   
     def cross_product(self,p1,p2):
         return (p1[1]*p2[2]-p2[1]*p1[2]) , (p1[2]*p2[0])-(p2[2]*p1[0]) , (p1[0]*p2[1])-(p2[0]*p1[1])
@@ -205,41 +205,5 @@ class loader:
 
 
 
-def rad2deg(rad):
-    return 360*rad/2/math.pi
-
-class InputThread(QtCore.QThread):
-    def __init__(self, mesh_item, args):
-        self.mesh_item = mesh_item
-        super(InputThread, self).__init__()
-
-    def run(self):
-        while True:
-            line = sys.stdin.readline()
-            i = line.split(',')
-            if len(i) >= 4:
-                q = [float(x) for x in i[:4]]
-                # print(q)
-                if (len(i) == 4+3):
-                    t = [float(x) for x in i[4:]]
-                    self.updateMeshTransform(q, t)
-                else:
-                    self.updateMeshTransform(q)
-
-    def updateMeshTransform(self, q, t=[0,0,1]):
-        v = numpy.array(q[1:])
-        vnorm = numpy.linalg.norm(v)
-        v = v * 1/vnorm
-        angle = 2*math.atan2(vnorm, q[0])
-        # print('3d', angle, v)
-        tr = pg.Transform3D()
-        tr.translate(*t)
-        tr.rotate(rad2deg(angle), *v)
-
-        tr.rotate(90, 1,0,0)
-        # tr.translate(0, 0, -0.5)
-        tr.scale(0.01, 0.01, 0.01)
-
-        self.mesh_item.setTransform(tr)
 
 
