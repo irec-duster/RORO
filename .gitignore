@@ -13,3 +13,4 @@ payload/FlightStack_Glider/HIL
 payload/FlightStack_Glider/px4
 payload/FlightStack_Glider/mavlink
 payload/FlightStack_Glider/jsbsim
+__pycache__
