@@ -724,6 +724,7 @@
 extern "C" {
 #endif
   void boardInit(void);
+  void reboot_st_bootloader(void);
 #ifdef __cplusplus
 }
 #endif

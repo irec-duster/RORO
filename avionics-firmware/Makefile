@@ -112,7 +112,13 @@ CSRC = $(STARTUPSRC) \
        $(PLATFORMSRC) \
        $(TESTSRC) \
        $(CHIBIOS)/os/hal/lib/streams/chprintf.c \
+       $(CHIBIOS)/os/various/shell.c \
        src/board.c \
+       src/imu.c \
+       src/differential_pressure.c \
+       src/servo.c \
+       src/commands.c \
+       src/usbcfg.c \
        src/main.c
 
 # C++ sources that can be compiled in ARM or THUMB mode depending on the global
@@ -140,7 +146,10 @@ TCSRC =
 TCPPSRC =
 
 # List ASM source files here
-ASMSRC = $(STARTUPASM) $(PORTASM) $(OSALASM)
+# Note: Using custom crt0_v7m.s instead of $(STARTUPASM)
+#       This might create problems if the original crt0_v7m.s is updated or
+# 		further startup assembly sources are added to STARTUPASM.
+ASMSRC = $(PORTASM) $(OSALASM) src/crt0_v7m.s #$(STARTUPASM)
 
 INCDIR = $(STARTUPINC) $(KERNINC) $(PORTINC) $(OSALINC) \
          $(HALINC) $(PLATFORMINC) $(BOARDINC) $(TESTINC) \

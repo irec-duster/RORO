@@ -67,6 +67,33 @@ const PALConfig pal_default_config = {
 };
 #endif
 
+/* thank you stapelzeiger */
+static void start_st_bootloader(void)
+{
+    __asm__ __volatile__ (
+            "LDR  R0, =0x1FFF0000   \n"
+            "LDR  SP,[R0, #0]       \n"
+            "LDR  R0,[R0, #4]       \n"
+            "BX   R0                \n"
+        );
+}
+
+#define ST_BOOTLOADER_MAGIC 0x6810c5ced73a5569
+static __attribute__((section(".noinit"))) uint64_t st_bootloader_magic;
+
+void reboot_st_bootloader(void)
+{
+    st_bootloader_magic = ST_BOOTLOADER_MAGIC;
+    NVIC_SystemReset();
+}
+
+void __very_early_init(void) {
+    if (st_bootloader_magic == ST_BOOTLOADER_MAGIC) {
+        st_bootloader_magic = 0;
+        start_st_bootloader();
+    }
+}
+
 /**
  * @brief   Early initialization code.
  * @details This initialization must be performed just after stack setup

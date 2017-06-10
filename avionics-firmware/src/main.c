@@ -1,8 +1,11 @@
 #include <ch.h>
 #include <hal.h>
 #include <chprintf.h>
+#include <shell.h>
 
-BaseSequentialStream *xbee;
+#include "commands.h"
+#include "usbcfg.h"
+#include "servo.h"
 
 static THD_WORKING_AREA(heartbeat_thread, 200);
 void heartbeat_main(void *arg)
@@ -20,128 +23,9 @@ void heartbeat_main(void *arg)
     }
 }
 
-#define DIFF_PRESS_HIGH_RANGE_SENSOR_ADDR   0x58
-#define DIFF_PRESS_LOW_RANGE_SENSOR_ADDR    0x28
-
-#define PRESSURE_SENSOR_STATUS_NORMAL       0b00
-#define PRESSURE_SENSOR_STATUS_COMMAND      0b01
-#define PRESSURE_SENSOR_STATUS_STALE_DATA   0b10
-#define PRESSURE_SENSOR_STATUS_DIAGNOSTIC   0b11
-
-/* HSCMRRN001PD2A3, +/- 1psi */
-#define PRESSURE_SENSOR1_MAX     6894.76f   /* [Pa] */
-#define PRESSURE_SENSOR1_MIN     -6894.76f  /* [Pa] */
-
-/* SSCMRNN015PG5A3 0 - 15 psi*/
-#define PRESSURE_SENSOR2_MAX     103421.f    /* [Pa] */
-#define PRESSURE_SENSOR2_MIN     0.f         /* [Pa] */
-
-int low_range_differential_pressure_read(float *p_press, float *p_temp)
+BaseSequentialStream *xbee = NULL;
+static void xbee_uart_init(void)
 {
-    uint8_t buf[4];
-    msg_t ret;
-    i2cAcquireBus(&I2CD2);
-    ret = i2cMasterReceiveTimeout(&I2CD2, DIFF_PRESS_LOW_RANGE_SENSOR_ADDR,
-                                     buf, sizeof(buf), TIME_INFINITE);
-    i2cReleaseBus(&I2CD2);
-
-    if (ret != MSG_OK) {
-        return -1;
-    }
-    uint16_t press = (((uint16_t)buf[0] << 8) | (uint16_t)buf[1]) & 0x3fff;
-    uint16_t temp = (((uint16_t)buf[2] << 3) | ((uint16_t)buf[1] >> 5)) & 0x07ff;
-    uint8_t status = buf[0] >> 6;
-
-    if (status != PRESSURE_SENSOR_STATUS_NORMAL && status != PRESSURE_SENSOR_STATUS_STALE_DATA) {
-        return -1;
-    }
-
-    /* Pressure transfer function */
-    *p_press = ((float)press - 1638) * (PRESSURE_SENSOR1_MAX - PRESSURE_SENSOR1_MIN)
-                / (14745 - 1638) + PRESSURE_SENSOR1_MIN;
-
-    /* Temperature transfer function */
-    *p_temp = ((float)temp / 2047 * 200) - 50;
-
-    return 0;
-}
-
-int high_range_differential_pressure_read(float *p_press, float *p_temp)
-{
-    uint8_t buf[4];
-    msg_t ret;
-    i2cAcquireBus(&I2CD2);
-    ret = i2cMasterReceiveTimeout(&I2CD2, DIFF_PRESS_HIGH_RANGE_SENSOR_ADDR,
-                                     buf, sizeof(buf), TIME_INFINITE);
-    i2cReleaseBus(&I2CD2);
-
-    if (ret != MSG_OK) {
-        return -1;
-    }
-    uint16_t press = (((uint16_t)buf[0] << 8) | (uint16_t)buf[1]) & 0x3fff;
-    uint16_t temp = (((uint16_t)buf[2] << 3) | ((uint16_t)buf[1] >> 5)) & 0x07ff;
-    uint8_t status = buf[0] >> 6;
-
-    if (status != PRESSURE_SENSOR_STATUS_NORMAL && status != PRESSURE_SENSOR_STATUS_STALE_DATA) {
-        return -1;
-    }
-
-    /* Pressure transfer function */
-    *p_press = ((float)press - 1638) * (PRESSURE_SENSOR2_MAX - PRESSURE_SENSOR2_MIN)
-                / (14745 - 1638) + PRESSURE_SENSOR2_MIN;
-
-    /* Temperature transfer function */
-    *p_temp = ((float)temp / 2047 * 200) - 50;
-
-    return 0;
-}
-
-// open 1.95ms
-// closed 1.06ms
-bool nosecone_locked = false;
-
-void servo_timer_cb(GPTDriver *gptp)
-{
-    (void) gptp;
-    palClearPad(GPIOE, GPIOE_SERVO_5);
-}
-
-static THD_WORKING_AREA(servo_thread, 500);
-void servo_thread_main(void *arg)
-{
-    (void) arg;
-
-    palSetPadMode(GPIOE, GPIOE_SERVO_5, PAL_MODE_OUTPUT_PUSHPULL);
-
-    static const GPTConfig tim6_config = {
-        100000,
-        servo_timer_cb,
-        0,  /* CR2 settings */
-        0   /* DMA settings */
-    };
-    gptStart(&GPTD6, &tim6_config);
-
-    while (1) {
-        if (nosecone_locked) {
-            palSetPad(GPIOE, GPIOE_SERVO_5);
-            gptStartOneShot(&GPTD6, 106);
-        } else {
-            palSetPad(GPIOE, GPIOE_SERVO_5);
-            gptStartOneShot(&GPTD6, 195);
-        }
-        chThdSleepMilliseconds(20);
-    }
-}
-
-int main(void)
-{
-    /* System initialization */
-    halInit();
-    chSysInit();
-
-    chThdCreateStatic(&heartbeat_thread, sizeof(heartbeat_thread), NORMALPRIO,
-                      heartbeat_main, NULL);
-
     /* XBee UART init */
     static const SerialConfig xbee_serial_conf = {
         57600,
@@ -151,72 +35,53 @@ int main(void)
     };
     sdStart(&SD3, &xbee_serial_conf);
     xbee = (BaseSequentialStream *)&SD3;
+}
 
-    chThdCreateStatic(&servo_thread, sizeof(servo_thread), NORMALPRIO,
-                      servo_thread_main, NULL);
+static void usb_init(void)
+{
+    /* USB serial driver */
+    sduObjectInit(&SDU1);
+    sduStart(&SDU1, &serusbcfg);
+    usbDisconnectBus(serusbcfg.usbp);
+    chThdSleepMilliseconds(100);
+    usbStart(serusbcfg.usbp, &usbcfg);
+    usbConnectBus(serusbcfg.usbp);
+}
 
-    while (1) {
-        chThdSleepSeconds(15);
-        nosecone_locked = false;
-        chThdSleepSeconds(15);
-        nosecone_locked = true;
+static void spawn_shell(BaseSequentialStream *shell_dev)
+{
+    static thread_t *shelltp = NULL;
+    static ShellConfig shell_cfg;
+    static THD_WORKING_AREA(shell_wa, 2048);
+
+    shell_cfg.sc_channel = shell_dev;
+    shell_cfg.sc_commands = shell_commands;
+
+    if (shelltp == NULL && shell_dev != NULL) {
+        shelltp = shellCreateStatic(&shell_cfg, shell_wa, sizeof(shell_wa), LOWPRIO);
+    } else if (shelltp != NULL && chThdTerminatedX(shelltp)) {
+        shelltp = NULL;
     }
+}
 
-    /* I2C2 init */
-    static const I2CConfig i2c_cfg = {
-        .op_mode = OPMODE_I2C,
-        .clock_speed = 400000,
-        .duty_cycle = FAST_DUTY_CYCLE_2
-    };
-    i2cStart(&I2CD2, &i2c_cfg);
+int main(void)
+{
+    /* System initialization */
+    halInit();
+    chSysInit();
 
-    /* power up sensors */
-    palClearPad(GPIOB, GPIOB_DIF_P_SENS_EN_N);
-    chThdSleepMilliseconds(10);
+    /* Heartbeat thread */
+    chThdCreateStatic(&heartbeat_thread, sizeof(heartbeat_thread), NORMALPRIO,
+                      heartbeat_main, NULL);
 
-    chprintf(xbee, "p1,t1,p2,t2,raw1,raw2\n");
+    servo_init();
+
+    xbee_uart_init();
+    usb_init();
+
 
     while (true) {
-        float p, t;
-        int err;
-
-        err = low_range_differential_pressure_read(&p, &t);
-        if (!err) {
-            chprintf(xbee, "%f,%d", p, (int)t);
-        } else {
-            chprintf(xbee, ",");
-        }
-        chprintf(xbee, ",");
-
-        err = high_range_differential_pressure_read(&p, &t);
-        if (!err) {
-            chprintf(xbee, "%f,%d", p, (int)t);
-        } else {
-            chprintf(xbee, ",");
-        }
-        chprintf(xbee, ", ");
-
-        uint32_t buf[2];
-        i2cAcquireBus(&I2CD2);
-        err = i2cMasterReceiveTimeout(&I2CD2, DIFF_PRESS_LOW_RANGE_SENSOR_ADDR,
-                                         (void*)buf, sizeof(buf), TIME_INFINITE);
-        i2cReleaseBus(&I2CD2);
-
-        if (err == MSG_OK) {
-            chprintf(xbee, "%08x %08x", buf[0], buf[1]);
-        }
-        chprintf(xbee, ", ");
-
-        i2cAcquireBus(&I2CD2);
-        err = i2cMasterReceiveTimeout(&I2CD2, DIFF_PRESS_HIGH_RANGE_SENSOR_ADDR,
-                                         (void*)buf, sizeof(buf), TIME_INFINITE);
-        i2cReleaseBus(&I2CD2);
-
-        if (err == MSG_OK) {
-            chprintf(xbee, "%08x %08x", buf[0], buf[1]);
-        }
-        chprintf(xbee, "\n");
-
-        chThdSleepMilliseconds(50);
+        spawn_shell((BaseSequentialStream *)&SDU1);
+        chThdSleepMilliseconds(100);
     }
 }
