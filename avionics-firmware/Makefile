@@ -230,3 +230,7 @@ include $(RULESPATH)/rules.mk
 .PHONY: flash
 flash: all
 	openocd -f openocd.cfg -c "program $(BUILDDIR)/$(PROJECT).elf verify reset" -c "shutdown"
+
+.PHONY: dfu
+dfu: build/$(PROJECT).bin
+	dfu-util -a 0 -d 0483:df11 --dfuse-address 0x08000000 -D build/$(PROJECT).bin

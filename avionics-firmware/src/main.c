@@ -42,8 +42,9 @@ static void usb_init(void)
     /* USB serial driver */
     sduObjectInit(&SDU1);
     sduStart(&SDU1, &serusbcfg);
+
     usbDisconnectBus(serusbcfg.usbp);
-    chThdSleepMilliseconds(100);
+    chThdSleepMilliseconds(1500);
     usbStart(serusbcfg.usbp, &usbcfg);
     usbConnectBus(serusbcfg.usbp);
 }
@@ -79,9 +80,11 @@ int main(void)
     xbee_uart_init();
     usb_init();
 
+    chprintf((BaseSequentialStream *)&SDU1, "boot\n");
 
+    shellInit();
     while (true) {
-        spawn_shell((BaseSequentialStream *)&SDU1);
+        // spawn_shell((BaseSequentialStream *)&SDU1);
         chThdSleepMilliseconds(100);
     }
 }
