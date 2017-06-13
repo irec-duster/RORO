@@ -79,7 +79,7 @@ static void start_st_bootloader(void)
 }
 
 #define ST_BOOTLOADER_MAGIC 0x6810c5ced73a5569
-static __attribute__((section(".noinit"))) uint64_t st_bootloader_magic;
+static uint64_t st_bootloader_magic = 0;
 
 void reboot_st_bootloader(void)
 {

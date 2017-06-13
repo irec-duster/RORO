@@ -92,9 +92,9 @@
 #define GPIOB_SPI2_MISO             14U // PB14 SPI2_MISO (flash)
 #define GPIOB_SPI2_MOSI             15U // PB15 SPI2_MOSI (flash)
 
-#define GPIOC_LED1                  0U // PC0 LED1
-#define GPIOC_LED2                  1U // PC1 LED2
-#define GPIOC_LED3                  2U // PC2 LED3
+#define GPIOC_LED1                  0U // PC0 LED1, red
+#define GPIOC_LED2                  1U // PC1 LED2, green
+#define GPIOC_LED3                  2U // PC2 LED3, blue
 #define GPIOC_GPS_EXTINT            3U // PC3 GPS_EXTINT
 #define GPIOC_XBEE_RSSI             4U // PC4 XBEE_RSSI, RX signal strength indicator
 #define GPIOC_GPS_EN_N              5U // PC5 GPS_ENn

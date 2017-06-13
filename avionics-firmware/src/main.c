@@ -37,6 +37,20 @@ static void xbee_uart_init(void)
     xbee = (BaseSequentialStream *)&SD3;
 }
 
+BaseSequentialStream *debug = NULL;
+static void debug_uart_init(void)
+{
+    /* Front panel debug UART init */
+    static const SerialConfig debug_serial_conf = {
+        57600,
+        0,
+        USART_CR2_STOP1_BITS | USART_CR2_LINEN,
+        0
+    };
+    sdStart(&SD4, &debug_serial_conf);
+    debug = (BaseSequentialStream *)&SD4;
+}
+
 static void usb_init(void)
 {
     /* USB serial driver */
@@ -77,14 +91,16 @@ int main(void)
 
     servo_init();
 
-    xbee_uart_init();
-    usb_init();
+    debug_uart_init();
+    chprintf(debug, "boot\n");
 
-    chprintf((BaseSequentialStream *)&SDU1, "boot\n");
+    xbee_uart_init();
+    // usb_init();
+
 
     shellInit();
     while (true) {
-        // spawn_shell((BaseSequentialStream *)&SDU1);
+        spawn_shell(debug);
         chThdSleepMilliseconds(100);
     }
 }

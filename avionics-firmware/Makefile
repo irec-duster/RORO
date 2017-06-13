@@ -149,7 +149,7 @@ TCPPSRC =
 # Note: Using custom crt0_v7m.s instead of $(STARTUPASM)
 #       This might create problems if the original crt0_v7m.s is updated or
 # 		further startup assembly sources are added to STARTUPASM.
-ASMSRC = $(PORTASM) $(OSALASM) src/crt0_v7m.s #$(STARTUPASM)
+ASMSRC = $(PORTASM) $(OSALASM) crt0.s #$(STARTUPASM)
 
 INCDIR = $(STARTUPINC) $(KERNINC) $(PORTINC) $(OSALINC) \
          $(HALINC) $(PLATFORMINC) $(BOARDINC) $(TESTINC) \
