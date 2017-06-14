@@ -377,7 +377,7 @@
                                      PIN_MODE_INPUT(GPIOC_GPS_EXTINT) | \
                                      PIN_MODE_INPUT(GPIOC_XBEE_RSSI) | \
                                      PIN_MODE_OUTPUT(GPIOC_GPS_EN_N) | \
-                                     PIN_MODE_ALTERNATE(GPIOC_UART6_TX) | \
+                                     PIN_MODE_INPUT(GPIOC_UART6_TX) | \
                                      PIN_MODE_ALTERNATE(GPIOC_UART6_RX) | \
                                      PIN_MODE_OUTPUT(GPIOC_GPS_RESET_N) | \
                                      PIN_MODE_OUTPUT(GPIOC_GPS_SWITCH) | \

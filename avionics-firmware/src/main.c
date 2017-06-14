@@ -6,6 +6,7 @@
 #include "commands.h"
 #include "usbcfg.h"
 #include "servo.h"
+#include "main.h"
 
 static THD_WORKING_AREA(heartbeat_thread, 200);
 void heartbeat_main(void *arg)
@@ -49,6 +50,20 @@ static void debug_uart_init(void)
     };
     sdStart(&SD4, &debug_serial_conf);
     debug = (BaseSequentialStream *)&SD4;
+}
+
+BaseSequentialStream *gps = NULL;
+static void gps_uart_init(void)
+{
+    /* Front panel gps UART init */
+    static const SerialConfig gps_serial_conf = {
+        9600,
+        0,
+        USART_CR2_STOP1_BITS | USART_CR2_LINEN,
+        0
+    };
+    sdStart(&SD6, &gps_serial_conf);
+    gps = (BaseSequentialStream *)&SD4;
 }
 
 static void usb_init(void)
@@ -95,6 +110,11 @@ int main(void)
     chprintf(debug, "boot\n");
 
     xbee_uart_init();
+    gps_uart_init();
+    chprintf(debug, "enable GPS...\n");
+    palClearPad(GPIOC, GPIOC_GPS_EN_N);
+    
+    palSetPadMode(GPIOC, GPIOC_UART6_TX, PAL_MODE_INPUT);
     // usb_init();
 
 
