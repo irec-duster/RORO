@@ -444,7 +444,7 @@
                                      PIN_ODR_HIGH(GPIOC_UART6_TX) | \
                                      PIN_ODR_HIGH(GPIOC_UART6_RX) | \
                                      PIN_ODR_HIGH(GPIOC_GPS_RESET_N) | \
-                                     PIN_ODR_LOW(GPIOC_GPS_SWITCH) | \
+                                     PIN_ODR_HIGH(GPIOC_GPS_SWITCH) | \
                                      PIN_ODR_HIGH(GPIOC_USART4_TX) | \
                                      PIN_ODR_HIGH(GPIOC_USART4_RX) | \
                                      PIN_ODR_HIGH(GPIOC_PIN12) | \
