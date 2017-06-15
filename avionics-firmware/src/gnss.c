@@ -9,3 +9,14 @@ GPIO: GPIOC_GPS_SWITCH
 CTRL = HIGH: RF1, P33, up
 CTRL = LOW: RF2, P34, down
 */
+
+/*
+baudrate: 9600
+
+Messages:
+
+UBX NAV SOL
+UBX NAV CLK
+UBX RXM RAWX
+
+*/
