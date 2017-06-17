@@ -66,6 +66,7 @@ static void gps_uart_init(void)
     gps = (BaseSequentialStream *)&SD4;
 }
 
+BaseSequentialStream *usb = NULL;
 static void usb_init(void)
 {
     /* USB serial driver */
@@ -76,6 +77,8 @@ static void usb_init(void)
     chThdSleepMilliseconds(1500);
     usbStart(serusbcfg.usbp, &usbcfg);
     usbConnectBus(serusbcfg.usbp);
+
+    usb = (BaseSequentialStream *)&SDU1;
 }
 
 static void spawn_shell(BaseSequentialStream *shell_dev)
@@ -115,12 +118,12 @@ int main(void)
     palClearPad(GPIOC, GPIOC_GPS_EN_N);
     
     palSetPadMode(GPIOC, GPIOC_UART6_TX, PAL_MODE_INPUT);
-    // usb_init();
+    usb_init();
 
 
     shellInit();
     while (true) {
-        spawn_shell(debug);
+        spawn_shell(usb);
         chThdSleepMilliseconds(100);
     }
 }

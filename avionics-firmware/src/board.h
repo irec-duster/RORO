@@ -55,6 +55,9 @@
  */
 #define STM32F405xx
 
+/* Disable USB VBUS sense */
+#define BOARD_OTG_NOVBUSSENS
+
 /*
  * IO pins assignments.
  */
