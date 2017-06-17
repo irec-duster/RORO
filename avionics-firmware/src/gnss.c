@@ -11,7 +11,7 @@ CTRL = LOW: RF2, P34, down
 */
 
 /*
-baudrate: 9600
+baudrate: 19200
 
 Messages:
 

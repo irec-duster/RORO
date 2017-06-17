@@ -52,18 +52,18 @@ static void debug_uart_init(void)
     debug = (BaseSequentialStream *)&SD4;
 }
 
-BaseSequentialStream *gps = NULL;
-static void gps_uart_init(void)
+BaseSequentialStream *gnss = NULL;
+static void gnss_uart_init(void)
 {
-    /* Front panel gps UART init */
-    static const SerialConfig gps_serial_conf = {
-        9600,
+    /* Front panel gnss UART init */
+    static const SerialConfig gnss_serial_conf = {
+        19200,
         0,
         USART_CR2_STOP1_BITS | USART_CR2_LINEN,
         0
     };
-    sdStart(&SD6, &gps_serial_conf);
-    gps = (BaseSequentialStream *)&SD4;
+    sdStart(&SD6, &gnss_serial_conf);
+    gnss = (BaseSequentialStream *)&SD4;
 }
 
 BaseSequentialStream *usb = NULL;
@@ -113,10 +113,10 @@ int main(void)
     chprintf(debug, "boot\n");
 
     xbee_uart_init();
-    gps_uart_init();
+    gnss_uart_init();
     chprintf(debug, "enable GPS...\n");
     palClearPad(GPIOC, GPIOC_GPS_EN_N);
-    
+
     palSetPadMode(GPIOC, GPIOC_UART6_TX, PAL_MODE_INPUT);
     usb_init();
 
