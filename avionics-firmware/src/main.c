@@ -6,6 +6,7 @@
 #include "commands.h"
 #include "usbcfg.h"
 #include "servo.h"
+#include "imu.h"
 #include "main.h"
 
 static THD_WORKING_AREA(heartbeat_thread, 200);
@@ -117,6 +118,10 @@ int main(void)
     chprintf(debug, "enable GPS...\n");
     palClearPad(GPIOC, GPIOC_GPS_EN_N);
     palSetPad(GPIOC, GPIOC_GPS_SWITCH); // select upper antenna
+
+    chprintf(debug, "enable IMU...\n");
+    imu_init();
+    imu_start();
 
     usb_init();
     while (true) {

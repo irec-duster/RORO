@@ -206,6 +206,8 @@ CPPWARN = -Wall -Wextra -Wundef
 
 # List all user C define here, like -D_DEBUG=1
 UDEFS = -DCHPRINTF_USE_FLOAT=1
+UDEFS += -DSHELL_MAX_ARGUMENTS=10
+UDEFS += -DSHELL_MAX_LINE_LENGTH=200
 
 # Define ASM defines here
 UADEFS =
