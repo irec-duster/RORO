@@ -3,7 +3,7 @@
 
 // open 1.95ms
 // closed 1.06ms
-bool nosecone_locked = false;
+bool nosecone_locked = true;
 
 void servo_timer_cb(GPTDriver *gptp)
 {
@@ -28,11 +28,15 @@ void servo_thread_main(void *arg)
 
     while (1) {
         if (nosecone_locked) {
+            chSysLock();
             palSetPad(GPIOE, GPIOE_SERVO_5);
-            gptStartOneShot(&GPTD6, 106);
+            gptStartOneShotI(&GPTD6, 106);
+            chSysUnlock();
         } else {
+            chSysLock();
             palSetPad(GPIOE, GPIOE_SERVO_5);
-            gptStartOneShot(&GPTD6, 195);
+            gptStartOneShotI(&GPTD6, 195);
+            chSysUnlock();
         }
         chThdSleepMilliseconds(20);
     }
