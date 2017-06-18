@@ -37,7 +37,6 @@ static void cmd_gnss_config(BaseSequentialStream *chp, int argc, char *argv[])
     (void)argv;
     chprintf(chp, "Configure GNSS UART pin as input... ");
     palSetPadMode(GPIOC, GPIOC_UART6_TX, PAL_MODE_INPUT);
-    // palSetPadMode(GPIOC, GPIOC_UART6_RX, PAL_MODE_INPUT);
     chprintf(chp, "Done\n");
     chprintf(chp, "You can now configure the GNSS.\n");
 }
@@ -65,10 +64,6 @@ static void cmd_gnss_forward(BaseSequentialStream *chp, int argc, char *argv[])
     (void)chp;
     (void)argc;
     (void)argv;
-    // // todo
-    // palSetPadMode(GPIOC, GPIOC_UART6_TX, PAL_MODE_ALTERNATE(8));
-    // palSetPadMode(GPIOC, GPIOC_UART6_RX, PAL_MODE_ALTERNATE(8) | PAL_STM32_PUPDR_PULLUP);
-
     while(1) {
         static uint8_t buf[100];
         size_t len = sdReadTimeout(&SD6, buf, sizeof(buf), MS2ST(10));

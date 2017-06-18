@@ -27,12 +27,11 @@ void heartbeat_main(void *arg)
 BaseSequentialStream *xbee = NULL;
 static void xbee_uart_init(void)
 {
-    /* XBee UART init */
     static const SerialConfig xbee_serial_conf = {
         57600,
         0,
         USART_CR2_STOP1_BITS | USART_CR2_LINEN,
-        0
+        0 // USART_CR3_RTSE | USART_CR3_CTSE /* enable RTS/CTS flow control */
     };
     sdStart(&SD3, &xbee_serial_conf);
     xbee = (BaseSequentialStream *)&SD3;
@@ -55,7 +54,6 @@ static void debug_uart_init(void)
 BaseSequentialStream *gnss = NULL;
 static void gnss_uart_init(void)
 {
-    /* Front panel gnss UART init */
     static const SerialConfig gnss_serial_conf = {
         19200,
         0,
@@ -63,7 +61,7 @@ static void gnss_uart_init(void)
         0
     };
     sdStart(&SD6, &gnss_serial_conf);
-    gnss = (BaseSequentialStream *)&SD4;
+    gnss = (BaseSequentialStream *)&SD6;
 }
 
 BaseSequentialStream *usb = NULL;
@@ -112,16 +110,15 @@ int main(void)
     debug_uart_init();
     chprintf(debug, "boot\n");
 
+    shellInit();
+
     xbee_uart_init();
     gnss_uart_init();
     chprintf(debug, "enable GPS...\n");
     palClearPad(GPIOC, GPIOC_GPS_EN_N);
+    palSetPad(GPIOC, GPIOC_GPS_SWITCH); // select upper antenna
 
-    palSetPadMode(GPIOC, GPIOC_UART6_TX, PAL_MODE_INPUT);
     usb_init();
-
-
-    shellInit();
     while (true) {
         spawn_shell(usb);
         chThdSleepMilliseconds(100);

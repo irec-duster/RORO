@@ -280,7 +280,7 @@
                                      PIN_MODE_ALTERNATE(GPIOB_SWO) | \
                                      PIN_MODE_INPUT(GPIOB_PIN4) | \
                                      PIN_MODE_INPUT(GPIOB_PIN5) | \
-                                     PIN_MODE_ALTERNATE(GPIOB_USART1_TX) | \
+                                     PIN_MODE_INPUT(GPIOB_USART1_TX) | \
                                      PIN_MODE_ALTERNATE(GPIOB_USART1_RX) | \
                                      PIN_MODE_INPUT(GPIOB_GPS_TIMEPULSE) | \
                                      PIN_MODE_ALTERNATE(GPIOB_IMU_INT0) | \
@@ -533,7 +533,7 @@
                                      PIN_PUPDR_FLOATING(GPIOD_USART3_TX) | \
                                      PIN_PUPDR_PULLUP(GPIOD_USART3_RX) | \
                                      PIN_PUPDR_PULLUP(GPIOD_PIN10) | \
-                                     PIN_PUPDR_PULLUP(GPIOD_USART3_CTS) | \
+                                     PIN_PUPDR_PULLDOWN(GPIOD_USART3_CTS) | \
                                      PIN_PUPDR_FLOATING(GPIOD_USART3_RTS) | \
                                      PIN_PUPDR_FLOATING(GPIOD_XBEE_RESET_N) | \
                                      PIN_PUPDR_FLOATING(GPIOD_BUZZER) | \
