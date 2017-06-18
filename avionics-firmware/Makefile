@@ -115,7 +115,7 @@ CSRC = $(STARTUPSRC) \
        $(CHIBIOS)/os/various/shell.c \
        src/board.c \
        src/imu.c \
-       src/differential_pressure.c \
+       src/pitot.c \
        src/servo.c \
        src/commands.c \
        src/usbcfg.c \
