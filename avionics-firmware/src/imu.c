@@ -216,6 +216,9 @@ void imu_read_quaternion(float *q)
     q[3] = pop_float(&rp);
 }
 
+bool imu_quaternion_update = false;
+float imu_quaternion[4];
+
 static THD_WORKING_AREA(imu_thread, 2000);
 void imu_main(void *arg)
 {
@@ -233,11 +236,18 @@ void imu_main(void *arg)
     while (1) {
         float acc[3];
         imu_read_acc(acc);
-        // chprintf(debug, "%f %f %f\n", acc[0], acc[1], acc[2]);
+        // XXX TODO: publish acceleration
 
         float q[4];
         imu_read_quaternion(q);
-        chprintf(xbee, "%f, %f, %f, %f\n", q[0], q[1], q[2], q[3]);
+
+        chSysLock();
+        imu_quaternion[0] = q[0];
+        imu_quaternion[1] = q[1];
+        imu_quaternion[2] = q[2];
+        imu_quaternion[3] = q[3];
+        imu_quaternion_update = true;
+        chSysUnlock();
 
         chThdSleepMilliseconds(100);
     }

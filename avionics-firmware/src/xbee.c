@@ -5,6 +5,7 @@
 #include <string.h>
 
 #include "gnss.h"
+#include "imu.h"
 #include "main.h"
 
 static void cmd_start(BaseSequentialStream *chp, int argc, char *argv[])
@@ -29,7 +30,18 @@ static void cmd_start(BaseSequentialStream *chp, int argc, char *argv[])
             chSysUnlock();
             chprintf(chp, "%s\n", gnss_buf);
         }
-        chThdSleepMilliseconds(100);
+        if (imu_quaternion_update) {
+            static float q[4];
+            chSysLock();
+            q[0] = imu_quaternion[0];
+            q[1] = imu_quaternion[1];
+            q[2] = imu_quaternion[2];
+            q[3] = imu_quaternion[3];
+            imu_quaternion_update = false;
+            chSysUnlock();
+            chprintf(chp, "Q,%f, %f, %f, %f\n", q[0], q[1], q[2], q[3]);
+        }
+        chThdSleepMilliseconds(10);
     }
 
     chprintf(chp, "exit shell\n");
