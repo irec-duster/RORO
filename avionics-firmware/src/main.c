@@ -85,6 +85,30 @@ static void spawn_shell(BaseSequentialStream *shell_dev)
     }
 }
 
+void panic(const char *reason)
+{
+
+    // shutting down GNSS
+    palSetPad(GPIOC, GPIOC_GPS_EN_N);
+
+    // shutting down IMU
+    palSetPad(GPIOD, GPIOD_IMU_EN_N);
+
+    // shutting down pitot
+    palSetPad(GPIOB, GPIOB_DIF_P_SENS_EN_N);
+
+    // shutting down barometer
+    palSetPad(GPIOB, GPIOB_ABS_P_SENS_EN_N);
+
+    // wait a bit to properly reset peripherals
+    unsigned i = 1000000;
+    while (i--) {
+        __asm__ volatile ("nop": : :);
+    }
+
+    NVIC_SystemReset();
+}
+
 int main(void)
 {
     /* System initialization */
