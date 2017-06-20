@@ -3,6 +3,7 @@
 #include <chprintf.h>
 #include <string.h>
 #include "main.h"
+#include "xbee.h"
 
 #define IMU_START_BYTE          0xF7
 #define IMU_START_BYTE_W_HEADER 0xF9
@@ -246,6 +247,5 @@ void imu_start(void)
 {
     imu_uart_init();
 
-    chThdCreateStatic(&imu_thread, sizeof(imu_thread), NORMALPRIO,
-                      imu_main, NULL);
+    chThdCreateStatic(&imu_thread, sizeof(imu_thread), IMU_PRIO, imu_main, NULL);
 }

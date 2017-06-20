@@ -8,6 +8,7 @@
 #include "servo.h"
 #include "imu.h"
 #include "gnss.h"
+#include "xbee.h"
 #include "pitot.h"
 #include "main.h"
 
@@ -25,19 +26,6 @@ void heartbeat_main(void *arg)
         palClearPad(GPIOC, GPIOC_LED2);
         chThdSleepMilliseconds(760);
     }
-}
-
-BaseSequentialStream *xbee = NULL;
-static void xbee_uart_init(void)
-{
-    static const SerialConfig xbee_serial_conf = {
-        57600,
-        0,
-        USART_CR2_STOP1_BITS | USART_CR2_LINEN,
-        0 // USART_CR3_RTSE | USART_CR3_CTSE /* enable RTS/CTS flow control */
-    };
-    sdStart(&SD3, &xbee_serial_conf);
-    xbee = (BaseSequentialStream *)&SD3;
 }
 
 BaseSequentialStream *debug = NULL;
@@ -87,6 +75,7 @@ static void spawn_shell(BaseSequentialStream *shell_dev)
 
 void panic(const char *reason)
 {
+    (void) reason;
 
     // shutting down GNSS
     palSetPad(GPIOC, GPIOC_GPS_EN_N);
@@ -126,15 +115,16 @@ int main(void)
 
     shellInit();
 
-    xbee_uart_init();
+    chprintf(debug, "start XBEE shell...\n");
+    xbee_start();
 
-    chprintf(debug, "enable GPS...\n");
+    chprintf(debug, "start GPS...\n");
     gnss_start();
 
-    chprintf(debug, "enable IMU...\n");
+    chprintf(debug, "start IMU...\n");
     imu_start();
 
-    chprintf(debug, "enable Pitot...\n");
+    chprintf(debug, "start Pitot...\n");
     pitot_start();
 
     usb_init();

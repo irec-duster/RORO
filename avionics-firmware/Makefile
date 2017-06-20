@@ -117,6 +117,7 @@ CSRC = $(STARTUPSRC) \
        src/imu.c \
        src/gnss.c \
        src/pitot.c \
+       src/xbee.c \
        src/servo.c \
        src/commands.c \
        src/usbcfg.c \
