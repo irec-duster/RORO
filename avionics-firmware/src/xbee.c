@@ -4,6 +4,7 @@
 #include <shell.h>
 #include <string.h>
 
+#include "gnss.h"
 #include "main.h"
 
 static void cmd_start(BaseSequentialStream *chp, int argc, char *argv[])
@@ -12,8 +13,24 @@ static void cmd_start(BaseSequentialStream *chp, int argc, char *argv[])
     (void)argv;
 
     // XXX TODO: start sequence
-    chprintf(chp, "do stuff\n");
-    chThdSleepMilliseconds(100);
+    while (true) {
+        static char gnss_buf[GNSS_NMEA_MAX_SENTENCE];
+        if (nmea_gngga_update) {
+            chSysLock();
+            strcpy(gnss_buf, nmea_gngll_sentence);
+            nmea_gngll_update = false;
+            chSysUnlock();
+            chprintf(chp, "%s\n", gnss_buf);
+        }
+        if (nmea_gngga_update) {
+            chSysLock();
+            strcpy(gnss_buf, nmea_gngga_sentence);
+            nmea_gngga_update = false;
+            chSysUnlock();
+            chprintf(chp, "%s\n", gnss_buf);
+        }
+        chThdSleepMilliseconds(100);
+    }
 
     chprintf(chp, "exit shell\n");
     shellExit(0);

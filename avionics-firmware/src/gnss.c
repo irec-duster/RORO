@@ -39,7 +39,7 @@ static void gnss_uart_init(void)
     gnss = (BaseSequentialStream *)&GNSS_SERIAL;
 }
 
-bool buffer_push_byte(char **wp, const char *end, char c)
+static bool buffer_push_byte(char **wp, const char *end, char c)
 {
     if (*wp < end) {
         *(*wp)++ = c;
@@ -50,9 +50,9 @@ bool buffer_push_byte(char **wp, const char *end, char c)
 }
 
 bool nmea_gngga_update = false;
-char gngga_sentence[GNSS_NMEA_MAX_SENTENCE];
+char nmea_gngga_sentence[GNSS_NMEA_MAX_SENTENCE];
 bool nmea_gngll_update = false;
-char gngll_sentence[GNSS_NMEA_MAX_SENTENCE];
+char nmea_gngll_sentence[GNSS_NMEA_MAX_SENTENCE];
 
 static THD_WORKING_AREA(gnss_thread, 2000);
 void gnss_main(void *arg)
@@ -63,35 +63,47 @@ void gnss_main(void *arg)
     const char *buf_end = &buf[0] + sizeof(buf) - 1;
     char *wp = &buf[0];
 
-    bool nmea_sentence_found = false;
     while (1) {
-        char c = sdGet(&GNSS_SERIAL);
-        if (c == '$') {
-            nmea_sentence_found = true;
-            wp = &buf[0];
+        while (sdGet(&GNSS_SERIAL) != '$') {
+            ;
         }
-        if (nmea_sentence_found) {
-            if (buffer_push_byte(&wp, buf_end, c)) {
-                // overflow
-                nmea_sentence_found = false;
+
+        wp = &buf[0];
+        buffer_push_byte(&wp, buf_end, '$');
+
+        while (1) {
+            char c = sdGet(&GNSS_SERIAL);
+            if (c == '$') {
+                // restart line
+
+                wp = &buf[0];
+                buffer_push_byte(&wp, buf_end, '$');
+
                 continue;
             }
-
-            // end of sentence
             if (c == '\n' || c == '\r') {
+                // end of line
 
                 *wp = 0; // 0-terminate
 
-                if (strcmp(buf, "$GNGGA")) {
-                    strcpy(gngga_sentence, buf);
+                if (strncmp(buf, "$GNGGA", 6) == 0) {
+                    chSysLock();
+                    strcpy(nmea_gngga_sentence, buf);
                     nmea_gngga_update = true;
-                } else if (strcmp(buf, "$GNGLL")) {
-                    strcpy(gngll_sentence, buf);
+                    chSysUnlock();
+                } else if (strncmp(buf, "$GNGLL", 6) == 0) {
+                    chSysLock();
+                    strcpy(nmea_gngll_sentence, buf);
                     nmea_gngll_update = true;
+                    chSysUnlock();
                 }
                 // XXX TODO: add more NMEA messages here.
 
-                nmea_sentence_found = false;
+                break;
+            }
+            if (buffer_push_byte(&wp, buf_end, c)) {
+                // overflow
+                break;
             }
         }
     }
