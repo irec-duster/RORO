@@ -7,6 +7,8 @@
 #include "usbcfg.h"
 #include "servo.h"
 #include "imu.h"
+#include "gnss.h"
+#include "pitot.h"
 #include "main.h"
 
 static THD_WORKING_AREA(heartbeat_thread, 200);
@@ -52,19 +54,6 @@ static void debug_uart_init(void)
     debug = (BaseSequentialStream *)&SD4;
 }
 
-BaseSequentialStream *gnss = NULL;
-static void gnss_uart_init(void)
-{
-    static const SerialConfig gnss_serial_conf = {
-        19200,
-        0,
-        USART_CR2_STOP1_BITS | USART_CR2_LINEN,
-        0
-    };
-    sdStart(&SD6, &gnss_serial_conf);
-    gnss = (BaseSequentialStream *)&SD6;
-}
-
 BaseSequentialStream *usb = NULL;
 static void usb_init(void)
 {
@@ -90,7 +79,7 @@ static void spawn_shell(BaseSequentialStream *shell_dev)
     shell_cfg.sc_commands = shell_commands;
 
     if (shelltp == NULL && shell_dev != NULL) {
-        shelltp = shellCreateStatic(&shell_cfg, shell_wa, sizeof(shell_wa), LOWPRIO);
+        shelltp = shellCreateStatic(&shell_cfg, shell_wa, sizeof(shell_wa), SHELL_PRIO);
     } else if (shelltp != NULL && chThdTerminatedX(shelltp)) {
         shelltp = NULL;
     }
@@ -103,7 +92,7 @@ int main(void)
     chSysInit();
 
     /* Heartbeat thread */
-    chThdCreateStatic(&heartbeat_thread, sizeof(heartbeat_thread), NORMALPRIO,
+    chThdCreateStatic(&heartbeat_thread, sizeof(heartbeat_thread), HEARTBEAT_PRIO,
                       heartbeat_main, NULL);
 
     servo_init();
@@ -114,14 +103,15 @@ int main(void)
     shellInit();
 
     xbee_uart_init();
-    gnss_uart_init();
+
     chprintf(debug, "enable GPS...\n");
-    palClearPad(GPIOC, GPIOC_GPS_EN_N);
-    palSetPad(GPIOC, GPIOC_GPS_SWITCH); // select upper antenna
+    gnss_start();
 
     chprintf(debug, "enable IMU...\n");
-    imu_init();
     imu_start();
+
+    chprintf(debug, "enable Pitot...\n");
+    pitot_start();
 
     usb_init();
     while (true) {

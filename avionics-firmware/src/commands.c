@@ -5,6 +5,7 @@
 #include <string.h>
 
 #include "main.h"
+#include "gnss.h"
 
 static void cmd_bootloader(BaseSequentialStream *chp, int argc, char *argv[])
 {
@@ -52,10 +53,10 @@ static void cmd_gnss_switch(BaseSequentialStream *chp, int argc, char *argv[])
 
     if (!strcmp(argv[0], "up")) {
         chprintf(chp, "select upper GNSS antenna.\n");
-        palSetPad(GPIOC, GPIOC_GPS_SWITCH);
+        gnss_switch_upper_antenna();
     } else if (!strcmp(argv[0], "down")) {
         chprintf(chp, "select lower GNSS antenna.\n");
-        palClearPad(GPIOC, GPIOC_GPS_SWITCH);
+        gnss_switch_lower_antenna();
     }
 }
 
@@ -66,7 +67,7 @@ static void cmd_gnss_forward(BaseSequentialStream *chp, int argc, char *argv[])
     (void)argv;
     while(1) {
         static uint8_t buf[100];
-        size_t len = sdReadTimeout(&SD6, buf, sizeof(buf), MS2ST(10));
+        size_t len = sdReadTimeout(&GNSS_SERIAL, buf, sizeof(buf), MS2ST(10));
         if (len > 0) {
             chSequentialStreamWrite(chp, buf, len);
         }

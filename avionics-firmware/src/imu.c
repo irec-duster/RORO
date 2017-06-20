@@ -166,11 +166,6 @@ static void imu_uart_init(void)
     imu = &SD2;
 }
 
-void imu_init(void)
-{
-    imu_uart_init();
-}
-
 void imu_command(uint8_t cmd, uint8_t *arg, size_t arg_len)
 {
     static uint8_t buf[100];
@@ -249,6 +244,8 @@ void imu_main(void *arg)
 
 void imu_start(void)
 {
+    imu_uart_init();
+
     chThdCreateStatic(&imu_thread, sizeof(imu_thread), NORMALPRIO,
                       imu_main, NULL);
 }

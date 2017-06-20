@@ -1,5 +1,6 @@
 #include <ch.h>
 #include <hal.h>
+#include "main.h"
 
 // open 1.95ms
 // closed 1.06ms
@@ -44,6 +45,6 @@ void servo_thread_main(void *arg)
 
 void servo_init(void)
 {
-    chThdCreateStatic(&servo_thread, sizeof(servo_thread), HIGHPRIO,
+    chThdCreateStatic(&servo_thread, sizeof(servo_thread), SERVO_PRIO,
                       servo_thread_main, NULL);
 }
