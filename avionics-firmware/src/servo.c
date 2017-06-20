@@ -16,6 +16,7 @@ static THD_WORKING_AREA(servo_thread, 500);
 void servo_thread_main(void *arg)
 {
     (void) arg;
+    chRegSetThreadName("servo");
 
     palSetPadMode(GPIOE, GPIOE_SERVO_5, PAL_MODE_OUTPUT_PUSHPULL);
 

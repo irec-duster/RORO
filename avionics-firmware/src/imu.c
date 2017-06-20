@@ -224,6 +224,8 @@ void imu_main(void *arg)
 {
     (void)arg;
 
+    chRegSetThreadName("IMU");
+
     palClearPad(GPIOD, GPIOD_IMU_EN_N);
     chThdSleepMilliseconds(100);
 

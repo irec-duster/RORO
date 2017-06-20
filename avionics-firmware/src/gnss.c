@@ -59,6 +59,8 @@ void gnss_main(void *arg)
 {
     (void)arg;
 
+    chRegSetThreadName("GNSS");
+
     static char buf[GNSS_NMEA_MAX_SENTENCE];
     const char *buf_end = &buf[0] + sizeof(buf) - 1;
     char *wp = &buf[0];

@@ -90,6 +90,7 @@ static THD_WORKING_AREA(pitot_thread, 2000);
 void pitot_main(void *arg)
 {
     (void)arg;
+    chRegSetThreadName("pitot");
 
     /* differential pressure I2C2 init */
     static const I2CConfig i2c_cfg = {

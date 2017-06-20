@@ -16,6 +16,9 @@ static THD_WORKING_AREA(heartbeat_thread, 200);
 void heartbeat_main(void *arg)
 {
     (void) arg;
+
+    chRegSetThreadName("heartbeat");
+
     while (true) {
         palSetPad(GPIOC, GPIOC_LED2);
         chThdSleepMilliseconds(80);

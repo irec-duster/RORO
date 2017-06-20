@@ -111,6 +111,7 @@ static THD_WORKING_AREA(xbee_thread, 2000);
 void xbee_main(void *arg)
 {
     (void)arg;
+    chRegSetThreadName("Xbee");
 
     while (true) {
         spawn_shell(xbee);
