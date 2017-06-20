@@ -228,17 +228,11 @@ void imu_main(void *arg)
     palClearPad(GPIOD, GPIOD_IMU_EN_N);
     chThdSleepMilliseconds(100);
 
-    static uint8_t buf[100];
-    uint8_t *wp;
-
-    // response header config, no response header
-    wp = &buf[0];
-    push_byte(&wp, IMU_START_BYTE);
-    push_byte(&wp, 221);
-    push_uint32(&wp, 0);
-    push_byte(&wp, checksum(&buf[0] + 1, wp));
-    ptrdiff_t len = wp - &buf[0];
-    sdWrite(imu, buf, len);
+    // response header config: no response header
+    uint8_t buf[4];
+    uint8_t *wp = buf;
+    push_uint32(&wp, 0x00);
+    imu_command(221, buf, sizeof(buf));
 
     while (1) {
         float acc[3];
@@ -247,7 +241,7 @@ void imu_main(void *arg)
 
         float q[4];
         imu_read_quaternion(q);
-        chprintf(debug, "%f %f %f %f\n", q[0], q[1], q[2], q[3]);
+        chprintf(xbee, "%f, %f, %f, %f\n", q[0], q[1], q[2], q[3]);
 
         chThdSleepMilliseconds(100);
     }
