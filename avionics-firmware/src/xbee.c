@@ -6,6 +6,8 @@
 
 #include "gnss.h"
 #include "imu.h"
+#include "servo.h"
+#include "commands.h"
 #include "main.h"
 
 static void cmd_start(BaseSequentialStream *chp, int argc, char *argv[])
@@ -74,9 +76,9 @@ static void cmd_reset(BaseSequentialStream *chp, int argc, char *argv[])
 static const ShellCommand xbee_commands[] = {
     {"reset", cmd_reset},
     {"START", cmd_start},
+    {"nosecone", cmd_nosecone},
     {NULL, NULL}
 };
-
 
 static void spawn_shell(BaseSequentialStream *shell_dev)
 {

@@ -4,8 +4,9 @@
 #include <shell.h>
 #include <string.h>
 
-#include "main.h"
 #include "gnss.h"
+#include "servo.h"
+#include "main.h"
 
 static void cmd_bootloader(BaseSequentialStream *chp, int argc, char *argv[])
 {
@@ -97,9 +98,26 @@ static void cmd_gnss_forward(BaseSequentialStream *chp, int argc, char *argv[])
     }
 }
 
+/* shared commands */
+void cmd_nosecone(BaseSequentialStream *chp, int argc, char *argv[])
+{
+    if (argc < 1) {
+        chprintf(chp, "usage: nosecone lock|unlock\n");
+    }
+
+    if (!strcmp(argv[0], "lock")) {
+        chprintf(chp, "Locking nosecone...\n");
+        nosecone_locked = true;
+    } else if (!strcmp(argv[0], "unlock")) {
+        chprintf(chp, "Unlocking nosecone...\n");
+        nosecone_locked = false;
+    }
+}
+
 const ShellCommand shell_commands[] = {
-    {"bootloader", cmd_bootloader},
     {"threads", cmd_threads},
+    {"bootloader", cmd_bootloader},
+    {"nosecone", cmd_nosecone},
     {"gnss_pwr", cmd_gnss_pwr},
     {"gnss_config", cmd_gnss_config},
     {"gnss_switch", cmd_gnss_switch},
