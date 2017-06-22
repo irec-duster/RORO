@@ -216,7 +216,7 @@ void deployment_main(void *arg)
             break;
         }
 
-        chThdSleepMilliseconds(5);
+        chThdSleepMilliseconds(2);
     }
     chprintf(debug, "[%8u] launch detected\n", chVTGetSystemTime());
     buzzer_mode = BUZZER_FLIGHT;
@@ -260,7 +260,7 @@ void deployment_main(void *arg)
             break;
         }
 
-        chThdSleepMilliseconds(5);
+        chThdSleepMilliseconds(2);
     }
     chprintf(debug, "[%8u] main deployment detected\n", chVTGetSystemTime());
     chThdSleepSeconds(GLIDER_DEPLOYMENT_DELAY_S); // TODO
