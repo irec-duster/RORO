@@ -138,8 +138,26 @@ void panic(const char *reason)
 // delay after launch
 #define NOSECONE_DEPLOYMENT_DELAY_S   35 // [s] time to apogee: 24.7s, delay: 10s
 
-// delay from main chute deployment TODO!!!
-#define GLIDER_DEPLOYMENT_DELAY_S   20 // [s]
+/* Glider deployment delay after main parachute deployment at 400m AGL
+ * target altitude 50m AGL
+ * Cd: 2.2
+ * diameter: 2.13 m
+ * mass: 21.1 kg
+ * estimated descent velocity 6.87 m/s
+ *
+ * time = (400m - 50m) / 6.87m/s = 51s
+ *
+ * main parachute deployment delay: 1s
+ * droque descent velocity: 37m/s
+ * time = (400m - 50m - 37m) / 6.87m/s = 44s
+ *
+ * including other factors:
+ * - deceleration time
+ * - deployment time of glider
+ * - margin
+ * time: 40s
+ */
+#define GLIDER_DEPLOYMENT_DELAY_S   40 // [s]
 
 #define LAUNCH_ACC_TH               4.0f // UNITS IN G !!!
 #define LAUNCH_ACC_TIME_MS          100 // [ms]
