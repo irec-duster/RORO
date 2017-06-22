@@ -1,7 +1,9 @@
 #include <ch.h>
 #include <hal.h>
 #include <chprintf.h>
+#include <string.h>
 
+#include "gnss.h"
 #include "main.h"
 
 BaseSequentialStream *xbee = NULL;
@@ -23,8 +25,27 @@ void xbee_main(void *arg)
     (void)arg;
     chRegSetThreadName("Xbee");
 
-    while (true) {
+    // msgbus_subscriber_t imu_raw_sub;
+    // msgbus_topic_subscribe(&imu_raw_sub, &bus, "/imu/raw", MSGBUS_TIMEOUT_NEVER);
 
+    // msgbus_subscriber_t imu_quaternion_sub;
+    // msgbus_topic_subscribe(&imu_quaternion_sub, &bus, "/imu/quaternion", MSGBUS_TIMEOUT_NEVER);
+    while (true) {
+        static char gnss_buf[GNSS_NMEA_MAX_SENTENCE];
+        if (nmea_gngga_update) {
+            chSysLock();
+            strcpy(gnss_buf, nmea_gngll_sentence);
+            nmea_gngll_update = false;
+            chSysUnlock();
+            chprintf(xbee, "%s\n", gnss_buf);
+        }
+        if (nmea_gngga_update) {
+            chSysLock();
+            strcpy(gnss_buf, nmea_gngga_sentence);
+            nmea_gngga_update = false;
+            chSysUnlock();
+            chprintf(xbee, "%s\n", gnss_buf);
+        }
         chThdSleepMilliseconds(100);
     }
 }
