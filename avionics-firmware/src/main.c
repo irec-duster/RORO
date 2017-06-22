@@ -35,6 +35,36 @@ void heartbeat_main(void *arg)
     }
 }
 
+enum {
+    BUZZER_OFF,
+    BUZZER_PREFLIGHT,
+    BUZZER_FLIGHT
+} buzzer_mode = BUZZER_OFF;
+
+static THD_WORKING_AREA(buzzer_thread, 200);
+void buzzer_main(void *arg)
+{
+    (void) arg;
+
+    chRegSetThreadName("buzzer");
+
+    while (true) {
+        if (buzzer_mode == BUZZER_PREFLIGHT) {
+            palSetPad(GPIOD, GPIOD_BUZZER);
+            chThdSleepMilliseconds(100);
+            palClearPad(GPIOD, GPIOD_BUZZER);
+            chThdSleepMilliseconds(900);
+        } else if (buzzer_mode == BUZZER_FLIGHT) {
+            palSetPad(GPIOD, GPIOD_BUZZER);
+            chThdSleepMilliseconds(100);
+            palClearPad(GPIOD, GPIOD_BUZZER);
+            chThdSleepMilliseconds(100);
+        } else {
+            palClearPad(GPIOD, GPIOD_BUZZER);
+        }
+    }
+}
+
 BaseSequentialStream *debug = NULL;
 static void debug_uart_init(void)
 {
@@ -134,6 +164,7 @@ void deployment_main(void *arg)
     msgbus_subscriber_t imu_raw_sub;
     msgbus_topic_subscribe(&imu_raw_sub, &bus, "/imu/raw", MSGBUS_TIMEOUT_NEVER);
 
+    buzzer_mode = BUZZER_PREFLIGHT;
     gnss_switch_upper_antenna();
     nosecone_locked = true;
     glider_locked = false;
@@ -169,6 +200,7 @@ void deployment_main(void *arg)
         chThdSleepMilliseconds(5);
     }
     chprintf(debug, "[%8u] launch detected\n", chVTGetSystemTime());
+    buzzer_mode = BUZZER_FLIGHT;
 
     // wait until apogee reached and drogue deployed
     chThdSleepSeconds(NOSECONE_DEPLOYMENT_DELAY_S);
@@ -228,6 +260,10 @@ int main(void)
     /* Heartbeat thread */
     chThdCreateStatic(&heartbeat_thread, sizeof(heartbeat_thread), HEARTBEAT_PRIO,
                       heartbeat_main, NULL);
+
+    /* Buzzer thread */
+    chThdCreateStatic(&buzzer_thread, sizeof(buzzer_thread), BUZZER_PRIO,
+                      buzzer_main, NULL);
 
     servo_init();
 
