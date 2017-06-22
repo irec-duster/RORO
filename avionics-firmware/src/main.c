@@ -270,6 +270,32 @@ void deployment_main(void *arg)
     chThdExit(0);
 }
 
+static THD_WORKING_AREA(glider_deploy_thread, 1000);
+void glider_deploy_main(void *arg)
+{
+    (void) arg;
+
+    chRegSetThreadName("glider_deploy");
+
+    while (true) {
+        char c;
+        c = streamGet(xbee);
+        if (c == 'x') {
+            c = streamGet(xbee);
+            if (c == '\n' || c == '\r') {
+                glider_locked = false;
+            }
+        }
+        if (c == 'y') {
+            c = streamGet(xbee);
+            if (c == '\n' || c == '\r') {
+                glider_locked = true;
+            }
+        }
+        chThdSleepMilliseconds(1);
+    }
+}
+
 int main(void)
 {
     /* System initialization */
@@ -308,6 +334,9 @@ int main(void)
     chprintf(debug, "start deployment thread\n");
     chThdCreateStatic(&deployment_thread, sizeof(deployment_thread), DEPLOYMENT_PRIO,
                       deployment_main, NULL);
+
+    chThdCreateStatic(&glider_deploy_thread, sizeof(glider_deploy_thread), NORMALPRIO,
+                      glider_deploy_main, NULL);
 
     usb_init();
     while (true) {
