@@ -118,7 +118,15 @@ static uint32_t pop_uint32(uint8_t **read_p)
 
 /* IMU commands */
 #define IMU_CMD_GET_ORIENTATION_QUATERNION  0x00
+
+#define IMU_CMD_GET_CORRECTED_GYRO          0x26
+#define IMU_CMD_GET_CORRECTED_ACC           0x27
+
+#define IMU_CMD_GET_RAW_GYRO                0x41
 #define IMU_CMD_GET_RAW_ACC                 0x42
+
+#define IMU_CMD_SET_ACC_RANGE_SETTING       0x79
+#define IMU_CMD_SET_RESPONSE_HEADER         0xdd
 
 /* IMU header bitfield */
 #define IMU_RESP_HEADER_SUCCESS             0x01 // 1byte, 0 on success
@@ -204,6 +212,20 @@ void imu_read_acc(float *acc)
     acc[2] = pop_float(&rp);
 }
 
+void imu_read_gyro(float *gyro)
+{
+    imu_command(IMU_CMD_GET_RAW_GYRO, NULL, 0);
+
+    uint8_t buf[12];
+    if (sdReadTimeout(imu, buf, sizeof(buf), MS2ST(100)) != sizeof(buf)) {
+        return;
+    }
+    uint8_t *rp = &buf[0];
+    gyro[0] = pop_float(&rp);
+    gyro[1] = pop_float(&rp);
+    gyro[2] = pop_float(&rp);
+}
+
 void imu_read_quaternion(float *q)
 {
     imu_command(IMU_CMD_GET_ORIENTATION_QUATERNION, NULL, 0);
@@ -232,39 +254,36 @@ void imu_main(void *arg)
     palClearPad(GPIOD, GPIOD_IMU_EN_N);
     chThdSleepMilliseconds(100);
 
+
     static msgbus_topic_t imu_quaternion_topic;
     static imu_quaternion_t imu_quaternion_topic_buf;
     msgbus_topic_create(&imu_quaternion_topic, &bus, &imu_quaternion_type, &imu_quaternion_topic_buf, "/imu/quaternion");
+
+    static msgbus_topic_t imu_raw_topic;
+    static imu_raw_t imu_raw_topic_buf;
+    msgbus_topic_create(&imu_raw_topic, &bus, &imu_raw_type, &imu_raw_topic_buf, "/imu/raw");
 
     // response header config: no response header
     uint8_t buf[4];
     uint8_t *wp = buf;
     push_uint32(&wp, 0x00);
-    imu_command(221, buf, sizeof(buf));
+    imu_command(IMU_CMD_SET_RESPONSE_HEADER, buf, sizeof(buf));
+
+    // accelerometer range setting
+    uint8_t accel_setting = 2; // 2: max range (something lik +-8g, the datasheet is vague here)
+    imu_command(IMU_CMD_SET_ACC_RANGE_SETTING, &accel_setting, 1);
 
     while (1) {
-        float acc[3];
-        imu_read_acc(acc);
-        // XXX TODO: publish acceleration
-
-        float q[4];
-        imu_read_quaternion(q);
+        imu_raw_t imu_raw;
+        imu_read_acc(imu_raw.acc);
+        imu_read_gyro(imu_raw.gyro);
+        imu_raw.timestamp = chVTGetSystemTime();
+        msgbus_topic_publish(&imu_raw_topic, &imu_raw);
 
         imu_quaternion_t quaternion_buf;
+        imu_read_quaternion(quaternion_buf.q);
         quaternion_buf.timestamp = chVTGetSystemTime();
-        quaternion_buf.q[0] = q[0];
-        quaternion_buf.q[1] = q[1];
-        quaternion_buf.q[2] = q[2];
-        quaternion_buf.q[3] = q[3];
         msgbus_topic_publish(&imu_quaternion_topic, &quaternion_buf);
-
-        chSysLock();
-        imu_quaternion[0] = q[0];
-        imu_quaternion[1] = q[1];
-        imu_quaternion[2] = q[2];
-        imu_quaternion[3] = q[3];
-        imu_quaternion_update = true;
-        chSysUnlock();
 
         chThdSleepMilliseconds(100);
     }
