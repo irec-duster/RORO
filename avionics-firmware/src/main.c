@@ -2,6 +2,7 @@
 #include <hal.h>
 #include <chprintf.h>
 #include <shell.h>
+#include <math.h>
 
 #include "commands.h"
 #include "usbcfg.h"
@@ -10,6 +11,7 @@
 #include "gnss.h"
 #include "xbee.h"
 #include "pitot.h"
+#include "types.h"
 #include "main.h"
 
 msgbus_t bus;
@@ -115,6 +117,10 @@ void deployment_main(void *arg)
     (void)arg;
     chRegSetThreadName("deployment");
 
+    imu_raw_t imu_raw;
+    msgbus_subscriber_t imu_raw_sub;
+    msgbus_topic_subscribe(&imu_raw_sub, &bus, "/imu/raw", MSGBUS_TIMEOUT_NEVER);
+
     nosecone_locked = true;
     glider_locked = false;
 
@@ -126,11 +132,11 @@ void deployment_main(void *arg)
     // Wait for Launch
     bool hig_acc_detect;
     while (1) {
-        float acc_z = 0;
-        // todo: get z acceleration
+        msgbus_subscriber_read(&imu_raw_sub, &imu_raw);
+        float acc_z = fabsf(imu_raw.acc[2]);
 
         systime_t hig_acc_start;
-        if (fabsf(acc_z) > 4.0f) {
+        if (acc_z > 4.0f) {
             if (hig_acc_detect == false) {
                 hig_acc_start = chVTGetSystemTime();
             }
@@ -144,6 +150,8 @@ void deployment_main(void *arg)
         if (hig_acc_detect && ST2MS(now - hig_acc_start) > 100) {
             break;
         }
+
+        chThdSleepMilliseconds(5);
     }
     chprintf(debug, "[%8u] launch detected\n", chVTGetSystemTime());
 
@@ -161,7 +169,34 @@ void deployment_main(void *arg)
 
     // TODO: wait for main chute deployment at 400m
     // TODO: deploy glider after N seconds delay at approx 50m-100m AGL.
+
+    while (1) {
+        msgbus_subscriber_read(&imu_raw_sub, &imu_raw);
+        float acc = sqrtf(imu_raw.acc[0]*imu_raw.acc[0]
+                          + imu_raw.acc[1]*imu_raw.acc[1]
+                          + imu_raw.acc[2]*imu_raw.acc[2]);
+
+        systime_t hig_acc_start;
+        if (acc > 4.0f) {
+            if (hig_acc_detect == false) {
+                hig_acc_start = chVTGetSystemTime();
+            }
+            hig_acc_detect = true;
+        } else {
+            hig_acc_detect = false;
+        }
+
+        // main chute deployment detect
+        systime_t now = chVTGetSystemTime();
+        if (hig_acc_detect && ST2MS(now - hig_acc_start) > 50) {
+            break;
+        }
+
+        chThdSleepMilliseconds(5);
+    }
+    chThdSleepSeconds(20); // TODO
     chprintf(debug, "[%8u] deploy glider\n", chVTGetSystemTime());
+    glider_locked = false;
 
     chThdExit(0);
 }

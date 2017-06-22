@@ -285,7 +285,7 @@ void imu_main(void *arg)
         quaternion_buf.timestamp = chVTGetSystemTime();
         msgbus_topic_publish(&imu_quaternion_topic, &quaternion_buf);
 
-        chThdSleepMilliseconds(100);
+        chThdSleepMilliseconds(10);
     }
 }
 
