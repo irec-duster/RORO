@@ -1,0 +1,16 @@
+# This is a comment
+
+example:
+    string(10) str # string type (max 10 characters)
+    float32 array[100] # this is a fixed size array
+    float32 list[<=10] # this is a dynamic array with maximum 10 items ('<' and '<=' are supported)
+
+# comment blocks
+# and vertical whitespace
+# are pereserved in the generated C file
+
+
+# This is the doxygen docstring for the foo type
+foo:
+    int32 x # doxygen docstring for the struct entry x
+    int32 y

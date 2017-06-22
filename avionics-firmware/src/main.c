@@ -12,6 +12,8 @@
 #include "pitot.h"
 #include "main.h"
 
+msgbus_t bus;
+
 static THD_WORKING_AREA(heartbeat_thread, 200);
 void heartbeat_main(void *arg)
 {
@@ -115,6 +117,8 @@ int main(void)
 
     debug_uart_init();
     chprintf(debug, "boot\n");
+
+    msgbus_init(&bus);
 
     shellInit();
 

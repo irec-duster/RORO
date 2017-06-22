@@ -46,7 +46,7 @@ endif
 # If enabled, this option makes the build process faster by not compiling
 # modules not used in the current configuration.
 ifeq ($(USE_SMART_BUILD),)
-  USE_SMART_BUILD = no
+  USE_SMART_BUILD = yes
 endif
 
 #
@@ -71,7 +71,7 @@ endif
 
 # Enables the use of FPU on Cortex-M4 (no, softfp, hard).
 ifeq ($(USE_FPU),)
-  USE_FPU = hard
+  USE_FPU = no
 endif
 
 #
@@ -86,21 +86,22 @@ endif
 PROJECT = ch
 
 # Imported source files and paths
-CHIBIOS = ChibiOS
+CHIBIOS = ../ChibiOS
 # Startup files.
-include $(CHIBIOS)/os/common/ports/ARMCMx/compilers/GCC/mk/startup_stm32f4xx.mk
+include $(CHIBIOS)/os/common/ports/ARMCMx/compilers/GCC/mk/startup_stm32f3xx.mk
 # HAL-OSAL files (optional).
 include $(CHIBIOS)/os/hal/hal.mk
-include $(CHIBIOS)/os/hal/ports/STM32/STM32F4xx/platform.mk
+include $(CHIBIOS)/os/hal/ports/STM32/STM32F3xx/platform.mk
+include $(CHIBIOS)/os/hal/boards/ST_NUCLEO_F302R8/board.mk
 include $(CHIBIOS)/os/hal/osal/rt/osal.mk
 # RTOS files (optional).
 include $(CHIBIOS)/os/rt/rt.mk
 include $(CHIBIOS)/os/rt/ports/ARMCMx/compilers/GCC/mk/port_v7m.mk
 # Other files (optional).
-# include $(CHIBIOS)/test/rt/test.mk
+include $(CHIBIOS)/test/rt/test.mk
 
 # Define linker script file here
-LDSCRIPT= $(STARTUPLD)/STM32F407xG.ld
+LDSCRIPT= $(STARTUPLD)/STM32F302x8.ld
 
 # C sources that can be compiled in ARM or THUMB mode depending on the global
 # setting.
@@ -110,22 +111,12 @@ CSRC = $(STARTUPSRC) \
        $(OSALSRC) \
        $(HALSRC) \
        $(PLATFORMSRC) \
+       $(BOARDSRC) \
        $(TESTSRC) \
-       $(CHIBIOS)/os/hal/lib/streams/chprintf.c \
-       $(CHIBIOS)/os/various/shell.c \
-       src/board.c \
-       src/imu.c \
-       src/gnss.c \
-       src/pitot.c \
-       src/xbee.c \
-       src/servo.c \
-       src/commands.c \
-       src/usbcfg.c \
-       src/msgbus/msgbus.c \
-       src/msgbus/ports/ChibiOS/msgbus_port.c \
-       src/msgbus/type_print.c \
-       src/types.c \
-       src/main.c
+       main.c \
+	   ../messagebus_port.c \
+	   ../../../messagebus.c
+
 
 # C++ sources that can be compiled in ARM or THUMB mode depending on the global
 # setting.
@@ -152,16 +143,11 @@ TCSRC =
 TCPPSRC =
 
 # List ASM source files here
-# Note: Using custom crt0_v7m.s instead of $(STARTUPASM)
-#       This might create problems if the original crt0_v7m.s is updated or
-# 		further startup assembly sources are added to STARTUPASM.
-ASMSRC = $(PORTASM) $(OSALASM) crt0.s #$(STARTUPASM)
+ASMSRC = $(STARTUPASM) $(PORTASM) $(OSALASM)
 
 INCDIR = $(STARTUPINC) $(KERNINC) $(PORTINC) $(OSALINC) \
          $(HALINC) $(PLATFORMINC) $(BOARDINC) $(TESTINC) \
-         $(CHIBIOS)/os/various $(CHIBIOS)/os/hal/lib/streams \
-         src src/msgbus/ports/ChibiOS
-
+         $(CHIBIOS)/os/various
 
 #
 # Project, sources and paths
@@ -211,10 +197,7 @@ CPPWARN = -Wall -Wextra -Wundef
 #
 
 # List all user C define here, like -D_DEBUG=1
-UDEFS = -DCHPRINTF_USE_FLOAT=1
-UDEFS += -DSHELL_MAX_ARGUMENTS=10
-UDEFS += -DSHELL_MAX_LINE_LENGTH=200
-UDEFS += -DSERIAL_BUFFERS_SIZE=50
+UDEFS =
 
 # Define ASM defines here
 UADEFS =
@@ -235,15 +218,6 @@ ULIBS =
 RULESPATH = $(CHIBIOS)/os/common/ports/ARMCMx/compilers/GCC
 include $(RULESPATH)/rules.mk
 
-# PRE_MAKE_ALL_RULE_HOOK:
-
-types.c types.h: src/types.type
-	python3 src/msgbus/type_compiler/type_compiler.py src/types.type -o src/types.h
-
 .PHONY: flash
-flash: all
-	openocd -f openocd.cfg -c "program $(BUILDDIR)/$(PROJECT).elf verify reset" -c "shutdown"
-
-.PHONY: dfu
-dfu: build/$(PROJECT).bin
-	dfu-util -a 0 -d 0483:df11 --dfuse-address 0x08000000 -D build/$(PROJECT).bin
+flash: build/$(PROJECT).elf
+	openocd -f openocd.cfg -c "program build/$(PROJECT).elf verify reset" -c "shutdown"

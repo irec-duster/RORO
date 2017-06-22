@@ -2,6 +2,9 @@
 #include <hal.h>
 #include <chprintf.h>
 #include <string.h>
+
+#include <msgbus/msgbus.h>
+#include "types.h"
 #include "main.h"
 #include "xbee.h"
 
@@ -229,6 +232,10 @@ void imu_main(void *arg)
     palClearPad(GPIOD, GPIOD_IMU_EN_N);
     chThdSleepMilliseconds(100);
 
+    static msgbus_topic_t imu_quaternion_topic;
+    static imu_quaternion_t imu_quaternion_topic_buf;
+    msgbus_topic_create(&imu_quaternion_topic, &bus, &imu_quaternion_type, &imu_quaternion_topic_buf, "/imu/quaternion");
+
     // response header config: no response header
     uint8_t buf[4];
     uint8_t *wp = buf;
@@ -242,6 +249,14 @@ void imu_main(void *arg)
 
         float q[4];
         imu_read_quaternion(q);
+
+        imu_quaternion_t quaternion_buf;
+        quaternion_buf.timestamp = chVTGetSystemTime();
+        quaternion_buf.q[0] = q[0];
+        quaternion_buf.q[1] = q[1];
+        quaternion_buf.q[2] = q[2];
+        quaternion_buf.q[3] = q[3];
+        msgbus_topic_publish(&imu_quaternion_topic, &quaternion_buf);
 
         chSysLock();
         imu_quaternion[0] = q[0];

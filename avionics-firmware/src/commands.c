@@ -7,6 +7,7 @@
 #include "gnss.h"
 #include "servo.h"
 #include "main.h"
+#include "msgbus/type_print.h"
 
 static void cmd_bootloader(BaseSequentialStream *chp, int argc, char *argv[])
 {
@@ -114,6 +115,47 @@ void cmd_nosecone(BaseSequentialStream *chp, int argc, char *argv[])
     }
 }
 
+static void cmd_topic_print(BaseSequentialStream *stream, int argc, char *argv[]) {
+    if (argc != 1) {
+        chprintf(stream, "usage: topic_print name\n");
+        return;
+    }
+    msgbus_subscriber_t sub;
+    if (msgbus_topic_subscribe(&sub, &bus, argv[0], MSGBUS_TIMEOUT_IMMEDIATE)) {
+        if (msgbus_subscriber_topic_is_valid(&sub)) {
+            msgbus_topic_t *topic = msgbus_subscriber_get_topic(&sub);
+            const msgbus_type_definition_t *type = msgbus_topic_get_type(topic);
+
+            char buf[type->struct_size];
+            // void *buf = malloc(type->struct_size);
+            // if (buf == NULL) {
+            //     chprintf(stream, "malloc failed\n");
+            //     return;
+            // }
+            msgbus_subscriber_read(&sub, buf);
+            msgbus_print_type((void (*)(void *, const char *, ...))chprintf,
+                              stream, type, buf);
+            // free(buf);
+        } else {
+            chprintf(stream, "topic not published yet\n");
+            return;
+        }
+    } else {
+        chprintf(stream, "topic doesn't exist\n");
+        return;
+    }
+}
+
+static void cmd_topic_list(BaseSequentialStream *stream, int argc, char *argv[]) {
+    (void)argc;
+    (void)argv;
+    msgbus_topic_t *topic = msgbus_iterate_topics(&bus);
+    while (topic != NULL) {
+        chprintf(stream, "%s\n", msgbus_topic_get_name(topic));
+        topic = msgbus_iterate_topics_next(topic);
+    }
+}
+
 const ShellCommand shell_commands[] = {
     {"threads", cmd_threads},
     {"bootloader", cmd_bootloader},
@@ -122,5 +164,7 @@ const ShellCommand shell_commands[] = {
     {"gnss_config", cmd_gnss_config},
     {"gnss_switch", cmd_gnss_switch},
     {"gnss_forward", cmd_gnss_forward},
+    {"topic_list", cmd_topic_list},
+    {"topic_print", cmd_topic_print},
     {NULL, NULL}
 };
