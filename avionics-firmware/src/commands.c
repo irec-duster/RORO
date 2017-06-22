@@ -99,7 +99,6 @@ static void cmd_gnss_forward(BaseSequentialStream *chp, int argc, char *argv[])
     }
 }
 
-/* shared commands */
 void cmd_nosecone(BaseSequentialStream *chp, int argc, char *argv[])
 {
     if (argc < 1) {
@@ -115,10 +114,14 @@ void cmd_nosecone(BaseSequentialStream *chp, int argc, char *argv[])
     }
 }
 
-static void cmd_topic_print(BaseSequentialStream *stream, int argc, char *argv[]) {
-    if (argc != 1) {
-        chprintf(stream, "usage: topic_print name\n");
+static void cmd_topic_print(BaseSequentialStream *chp, int argc, char *argv[]) {
+    if (argc < 1) {
+        chprintf(chp, "usage: topic_print name (--watch)\n");
         return;
+    }
+    bool watch = false;
+    if (argc == 2 && !strcmp(argv[1], "--watch")) {
+        watch = true;
     }
     msgbus_subscriber_t sub;
     if (msgbus_topic_subscribe(&sub, &bus, argv[0], MSGBUS_TIMEOUT_IMMEDIATE)) {
@@ -129,19 +132,30 @@ static void cmd_topic_print(BaseSequentialStream *stream, int argc, char *argv[]
             char buf[type->struct_size];
             // void *buf = malloc(type->struct_size);
             // if (buf == NULL) {
-            //     chprintf(stream, "malloc failed\n");
+            //     chprintf(chp, "malloc failed\n");
             //     return;
             // }
             msgbus_subscriber_read(&sub, buf);
             msgbus_print_type((void (*)(void *, const char *, ...))chprintf,
-                              stream, type, buf);
+                              chp, type, buf);
+
+            while (watch) {
+                if (msgbus_subscriber_wait_for_update(&sub, 100000)) {
+                    msgbus_subscriber_read(&sub, buf);
+                    msgbus_print_type((void (*)(void *, const char *, ...))chprintf,
+                                      chp, type, buf);
+                }
+                if (chnGetTimeout((BaseChannel *)chp, TIME_IMMEDIATE) == 'q') {
+                    watch = false;
+                }
+            }
             // free(buf);
         } else {
-            chprintf(stream, "topic not published yet\n");
+            chprintf(chp, "topic not published yet\n");
             return;
         }
     } else {
-        chprintf(stream, "topic doesn't exist\n");
+        chprintf(chp, "topic doesn't exist\n");
         return;
     }
 }
@@ -164,7 +178,7 @@ const ShellCommand shell_commands[] = {
     {"gnss_config", cmd_gnss_config},
     {"gnss_switch", cmd_gnss_switch},
     {"gnss_forward", cmd_gnss_forward},
-    {"topic_list", cmd_topic_list},
+    {"topics", cmd_topic_list},
     {"topic_print", cmd_topic_print},
     {NULL, NULL}
 };

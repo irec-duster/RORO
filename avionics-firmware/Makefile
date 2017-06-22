@@ -235,9 +235,7 @@ ULIBS =
 RULESPATH = $(CHIBIOS)/os/common/ports/ARMCMx/compilers/GCC
 include $(RULESPATH)/rules.mk
 
-# PRE_MAKE_ALL_RULE_HOOK:
-
-types.c types.h: src/types.type
+PRE_MAKE_ALL_RULE_HOOK:
 	python3 src/msgbus/type_compiler/type_compiler.py src/types.type -o src/types.h
 
 .PHONY: flash
