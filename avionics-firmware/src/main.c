@@ -61,6 +61,7 @@ void buzzer_main(void *arg)
             chThdSleepMilliseconds(100);
         } else {
             palClearPad(GPIOD, GPIOD_BUZZER);
+            chThdSleepMilliseconds(100);
         }
     }
 }

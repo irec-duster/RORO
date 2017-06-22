@@ -132,12 +132,15 @@ void cmd_glider(BaseSequentialStream *chp, int argc, char *argv[])
 
 static void cmd_topic_print(BaseSequentialStream *chp, int argc, char *argv[]) {
     if (argc < 1) {
-        chprintf(chp, "usage: topic_print name (--watch)\n");
+        chprintf(chp, "usage: topic_print name (--watch|--stat)\n");
         return;
     }
     bool watch = false;
+    bool stat = false;
     if (argc == 2 && !strcmp(argv[1], "--watch")) {
         watch = true;
+    } else if (argc == 2 && !strcmp(argv[1], "--stat")) {
+        stat = true;
     }
     msgbus_subscriber_t sub;
     if (msgbus_topic_subscribe(&sub, &bus, argv[0], MSGBUS_TIMEOUT_IMMEDIATE)) {
@@ -154,7 +157,13 @@ static void cmd_topic_print(BaseSequentialStream *chp, int argc, char *argv[]) {
             msgbus_subscriber_read(&sub, buf);
             msgbus_print_type((void (*)(void *, const char *, ...))chprintf,
                               chp, type, buf);
-
+            if (stat) {
+                uint32_t count;
+                count = msgbus_subscriber_has_update(&sub);
+                chThdSleepSeconds(1);
+                count = msgbus_subscriber_has_update(&sub) - count;
+                chprintf(chp, "%s: %uHz\n", argv[0], count);
+            }
             while (watch) {
                 if (msgbus_subscriber_wait_for_update(&sub, 100000)) {
                     msgbus_subscriber_read(&sub, buf);

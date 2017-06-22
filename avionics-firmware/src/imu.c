@@ -126,6 +126,7 @@ static uint32_t pop_uint32(uint8_t **read_p)
 #define IMU_CMD_GET_RAW_ACC                 0x42
 
 #define IMU_CMD_SET_ACC_RANGE_SETTING       0x79
+#define IMU_CMD_SET_FILTER_MODE             0x7b
 #define IMU_CMD_SET_RESPONSE_HEADER         0xdd
 
 /* IMU header bitfield */
@@ -256,9 +257,9 @@ void imu_main(void *arg)
     chThdSleepMilliseconds(100);
 
 
-    static msgbus_topic_t imu_quaternion_topic;
-    static imu_quaternion_t imu_quaternion_topic_buf;
-    msgbus_topic_create(&imu_quaternion_topic, &bus, &imu_quaternion_type, &imu_quaternion_topic_buf, "/imu/quaternion");
+    // static msgbus_topic_t imu_quaternion_topic;
+    // static imu_quaternion_t imu_quaternion_topic_buf;
+    // msgbus_topic_create(&imu_quaternion_topic, &bus, &imu_quaternion_type, &imu_quaternion_topic_buf, "/imu/quaternion");
 
     static msgbus_topic_t imu_raw_topic;
     static imu_raw_t imu_raw_topic_buf;
@@ -274,6 +275,10 @@ void imu_main(void *arg)
     uint8_t accel_setting = 2; // 2: max range (something lik +-8g, the datasheet is vague here)
     imu_command(IMU_CMD_SET_ACC_RANGE_SETTING, &accel_setting, 1);
 
+    // set filter in IMU mode, no kalman, for maximal update rate
+    uint8_t filter_setting = 0;
+    imu_command(IMU_CMD_SET_FILTER_MODE, &filter_setting, 1);
+
     while (1) {
         imu_raw_t imu_raw;
         imu_read_acc(imu_raw.acc);
@@ -285,12 +290,12 @@ void imu_main(void *arg)
             msgbus_topic_publish(&imu_raw_topic, &imu_raw);
         }
 
-        imu_quaternion_t quaternion_buf;
-        imu_read_quaternion(quaternion_buf.q);
-        quaternion_buf.timestamp = chVTGetSystemTime();
-        msgbus_topic_publish(&imu_quaternion_topic, &quaternion_buf);
+        // imu_quaternion_t quaternion_buf;
+        // imu_read_quaternion(quaternion_buf.q);
+        // quaternion_buf.timestamp = chVTGetSystemTime();
+        // msgbus_topic_publish(&imu_quaternion_topic, &quaternion_buf);
 
-        chThdSleepMilliseconds(10);
+        chThdSleepMilliseconds(1);
     }
 }
 
