@@ -1,8 +1,10 @@
 #ifndef IMU_H
 #define IMU_H
 
-extern bool imu_quaternion_update;
-extern float imu_quaternion[4];
+#include "types.h"
+
+extern bool imu_overwrite;
+extern imu_raw_t imu_raw_overwrite_data;
 
 void imu_start(void);
 

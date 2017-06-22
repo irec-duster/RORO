@@ -241,8 +241,9 @@ void imu_read_quaternion(float *q)
     q[3] = pop_float(&rp);
 }
 
-bool imu_quaternion_update = false;
-float imu_quaternion[4];
+bool imu_overwrite = false;
+imu_raw_t imu_raw_overwrite_data = {0};
+
 
 static THD_WORKING_AREA(imu_thread, 2000);
 void imu_main(void *arg)
@@ -278,7 +279,11 @@ void imu_main(void *arg)
         imu_read_acc(imu_raw.acc);
         imu_read_gyro(imu_raw.gyro);
         imu_raw.timestamp = chVTGetSystemTime();
-        msgbus_topic_publish(&imu_raw_topic, &imu_raw);
+        if (imu_overwrite) {
+            msgbus_topic_publish(&imu_raw_topic, &imu_raw_overwrite_data);
+        } else {
+            msgbus_topic_publish(&imu_raw_topic, &imu_raw);
+        }
 
         imu_quaternion_t quaternion_buf;
         imu_read_quaternion(quaternion_buf.q);

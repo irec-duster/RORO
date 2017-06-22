@@ -5,6 +5,7 @@
 #include <string.h>
 
 #include "gnss.h"
+#include "imu.h"
 #include "servo.h"
 #include "main.h"
 #include "msgbus/type_print.h"
@@ -175,14 +176,40 @@ static void cmd_topic_print(BaseSequentialStream *chp, int argc, char *argv[]) {
     }
 }
 
-static void cmd_topic_list(BaseSequentialStream *stream, int argc, char *argv[]) {
+static void cmd_topic_list(BaseSequentialStream *chp, int argc, char *argv[]) {
     (void)argc;
     (void)argv;
     msgbus_topic_t *topic = msgbus_iterate_topics(&bus);
     while (topic != NULL) {
-        chprintf(stream, "%s\n", msgbus_topic_get_name(topic));
+        chprintf(chp, "%s\n", msgbus_topic_get_name(topic));
         topic = msgbus_iterate_topics_next(topic);
     }
+}
+
+static void cmd_simulate(BaseSequentialStream *chp, int argc, char *argv[]) {
+    (void)argc;
+    (void)argv;
+    chprintf(chp, "simulate launch...\n");
+    chThdSleepSeconds(1);
+    chprintf(chp, "launch\n");
+    imu_raw_overwrite_data.acc[0] = 0.0;
+    imu_raw_overwrite_data.acc[1] = 0.0;
+    imu_raw_overwrite_data.acc[2] = 5.0;
+    imu_overwrite = true;
+    chThdSleepMilliseconds(150);
+    imu_overwrite = false;
+
+    chThdSleepSeconds(25);
+    chprintf(chp, "apogee\n");
+
+    chThdSleepSeconds(30);
+    chprintf(chp, "main deployment\n");
+    imu_raw_overwrite_data.acc[0] = -1.0;
+    imu_raw_overwrite_data.acc[1] = 2.0;
+    imu_raw_overwrite_data.acc[2] = -3.9;
+    imu_overwrite = true;
+    chThdSleepMilliseconds(100);
+    imu_overwrite = false;
 }
 
 const ShellCommand shell_commands[] = {
@@ -196,5 +223,6 @@ const ShellCommand shell_commands[] = {
     {"gnss_forward", cmd_gnss_forward},
     {"topics", cmd_topic_list},
     {"topic_print", cmd_topic_print},
+    {"simulate", cmd_simulate},
     {NULL, NULL}
 };

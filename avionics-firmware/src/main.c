@@ -105,6 +105,18 @@ void panic(const char *reason)
     NVIC_SystemReset();
 }
 
+// delay after launch
+#define NOSECONE_DEPLOYMENT_DELAY_S   35 // [s] time to apogee: 24.7s, delay: 10s
+
+// delay from main chute deployment TODO!!!
+#define GLIDER_DEPLOYMENT_DELAY_S   20 // [s]
+
+#define LAUNCH_ACC_TH               4.0f // UNITS IN G !!!
+#define LAUNCH_ACC_TIME_MS          100 // [ms]
+
+#define MAIN_CHUTE_ACC_TH           4.0f // UNITS IN G !!!
+#define MAIN_CHUTE_ACC_TIME_MS      50 // [ms]
+
 
 /* Note:
  * IMU raw acceleation vector:
@@ -116,6 +128,7 @@ void deployment_main(void *arg)
 {
     (void)arg;
     chRegSetThreadName("deployment");
+    chprintf(debug, "[%8u] deployment thread start\n", chVTGetSystemTime());
 
     imu_raw_t imu_raw;
     msgbus_subscriber_t imu_raw_sub;
@@ -123,6 +136,7 @@ void deployment_main(void *arg)
 
     nosecone_locked = true;
     glider_locked = false;
+    chprintf(debug, "[%8u] glider unlock\n", chVTGetSystemTime());
 
     // Glider mounting
     chThdSleepSeconds(5);
@@ -136,7 +150,7 @@ void deployment_main(void *arg)
         float acc_z = fabsf(imu_raw.acc[2]);
 
         systime_t hig_acc_start;
-        if (acc_z > 4.0f) {
+        if (acc_z > LAUNCH_ACC_TH) {
             if (hig_acc_detect == false) {
                 hig_acc_start = chVTGetSystemTime();
             }
@@ -147,7 +161,7 @@ void deployment_main(void *arg)
 
         // Launch detect
         systime_t now = chVTGetSystemTime();
-        if (hig_acc_detect && ST2MS(now - hig_acc_start) > 100) {
+        if (hig_acc_detect && ST2MS(now - hig_acc_start) > LAUNCH_ACC_TIME_MS) {
             break;
         }
 
@@ -156,7 +170,7 @@ void deployment_main(void *arg)
     chprintf(debug, "[%8u] launch detected\n", chVTGetSystemTime());
 
     // wait until apogee reached and drogue deployed
-    chThdSleepSeconds(35); // time to apogee: 24.7s, delay: 10s
+    chThdSleepSeconds(NOSECONE_DEPLOYMENT_DELAY_S);
     chprintf(debug, "[%8u] deploy nosecone\n", chVTGetSystemTime());
     unsigned i = 10;
     while (i--) {   // 10 release cycles to be sure
@@ -177,7 +191,7 @@ void deployment_main(void *arg)
                           + imu_raw.acc[2]*imu_raw.acc[2]);
 
         systime_t hig_acc_start;
-        if (acc > 4.0f) {
+        if (acc > MAIN_CHUTE_ACC_TH) {
             if (hig_acc_detect == false) {
                 hig_acc_start = chVTGetSystemTime();
             }
@@ -188,13 +202,14 @@ void deployment_main(void *arg)
 
         // main chute deployment detect
         systime_t now = chVTGetSystemTime();
-        if (hig_acc_detect && ST2MS(now - hig_acc_start) > 50) {
+        if (hig_acc_detect && ST2MS(now - hig_acc_start) > MAIN_CHUTE_ACC_TIME_MS) {
             break;
         }
 
         chThdSleepMilliseconds(5);
     }
-    chThdSleepSeconds(20); // TODO
+    chprintf(debug, "[%8u] main deployment detected\n", chVTGetSystemTime());
+    chThdSleepSeconds(GLIDER_DEPLOYMENT_DELAY_S); // TODO
     chprintf(debug, "[%8u] deploy glider\n", chVTGetSystemTime());
     glider_locked = false;
 
