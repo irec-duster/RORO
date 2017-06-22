@@ -114,6 +114,21 @@ void cmd_nosecone(BaseSequentialStream *chp, int argc, char *argv[])
     }
 }
 
+void cmd_glider(BaseSequentialStream *chp, int argc, char *argv[])
+{
+    if (argc < 1) {
+        chprintf(chp, "usage: glider lock|unlock\n");
+    }
+
+    if (!strcmp(argv[0], "lock")) {
+        chprintf(chp, "Locking glider...\n");
+        glider_locked = true;
+    } else if (!strcmp(argv[0], "unlock")) {
+        chprintf(chp, "Unlocking glider...\n");
+        glider_locked = false;
+    }
+}
+
 static void cmd_topic_print(BaseSequentialStream *chp, int argc, char *argv[]) {
     if (argc < 1) {
         chprintf(chp, "usage: topic_print name (--watch)\n");
@@ -174,6 +189,7 @@ const ShellCommand shell_commands[] = {
     {"threads", cmd_threads},
     {"bootloader", cmd_bootloader},
     {"nosecone", cmd_nosecone},
+    {"glider", cmd_glider},
     {"gnss_pwr", cmd_gnss_pwr},
     {"gnss_config", cmd_gnss_config},
     {"gnss_switch", cmd_gnss_switch},

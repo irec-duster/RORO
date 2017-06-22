@@ -2,6 +2,11 @@
 #include <hal.h>
 #include "main.h"
 
+/*
+SERVO5: nosecone deployment, P28
+SERVO6: glider deployment, P30
+*/
+
 // open 1.95ms
 // closed 1.06ms
 bool nosecone_locked = true;
@@ -26,6 +31,7 @@ void servo_thread_main(void *arg)
     chRegSetThreadName("servo");
 
     palSetPadMode(GPIOE, GPIOE_SERVO_5, PAL_MODE_OUTPUT_PUSHPULL);
+    palSetPadMode(GPIOE, GPIOE_SERVO_6, PAL_MODE_OUTPUT_PUSHPULL);
 
     // nosecone servo timer
     static const GPTConfig tim6_config = {
@@ -46,6 +52,7 @@ void servo_thread_main(void *arg)
     gptStart(&GPTD7, &tim7_config);
 
     while (1) {
+        // nosecone
         if (nosecone_locked) {
             chSysLock();
             palSetPad(GPIOE, GPIOE_SERVO_5);
@@ -58,6 +65,7 @@ void servo_thread_main(void *arg)
             chSysUnlock();
         }
 
+        // glider
         if (glider_locked) {
             chSysLock();
             palSetPad(GPIOE, GPIOE_SERVO_6);
