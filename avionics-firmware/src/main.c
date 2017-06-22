@@ -134,6 +134,7 @@ void deployment_main(void *arg)
     msgbus_subscriber_t imu_raw_sub;
     msgbus_topic_subscribe(&imu_raw_sub, &bus, "/imu/raw", MSGBUS_TIMEOUT_NEVER);
 
+    gnss_switch_upper_antenna();
     nosecone_locked = true;
     glider_locked = false;
     chprintf(debug, "[%8u] glider unlock\n", chVTGetSystemTime());
@@ -171,6 +172,8 @@ void deployment_main(void *arg)
 
     // wait until apogee reached and drogue deployed
     chThdSleepSeconds(NOSECONE_DEPLOYMENT_DELAY_S);
+    chprintf(debug, "[%8u] switch to lower GNSS antenna\n", chVTGetSystemTime());
+    gnss_switch_lower_antenna();
     chprintf(debug, "[%8u] deploy nosecone\n", chVTGetSystemTime());
     unsigned i = 10;
     while (i--) {   // 10 release cycles to be sure
