@@ -5,6 +5,7 @@
 #include <msgbus/msgbus.h>
 
 /* Thread priorities */
+#define DEPLOYMENT_PRIO  HIGHPRIO-1
 #define GNSS_PRIO        NORMALPRIO+2
 #define SERVO_PRIO       HIGHPRIO
 #define PITOT_PRIO       NORMALPRIO

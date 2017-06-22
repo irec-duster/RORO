@@ -103,6 +103,69 @@ void panic(const char *reason)
     NVIC_SystemReset();
 }
 
+
+/* Note:
+ * IMU raw acceleation vector:
+ * 3rd elemant, positive for forward acceleration
+*/
+
+static THD_WORKING_AREA(deployment_thread, 2000);
+void deployment_main(void *arg)
+{
+    (void)arg;
+    chRegSetThreadName("deployment");
+
+    nosecone_locked = true;
+    glider_locked = false;
+
+    // Glider mounting
+    chThdSleepSeconds(5);
+    glider_locked = true;
+    chprintf(debug, "[%8u] glider lock\n", chVTGetSystemTime());
+
+    // Wait for Launch
+    bool hig_acc_detect;
+    while (1) {
+        float acc_z = 0;
+        // todo: get z acceleration
+
+        systime_t hig_acc_start;
+        if (fabsf(acc_z) > 4.0f) {
+            if (hig_acc_detect == false) {
+                hig_acc_start = chVTGetSystemTime();
+            }
+            hig_acc_detect = true;
+        } else {
+            hig_acc_detect = false;
+        }
+
+        // Launch detect
+        systime_t now = chVTGetSystemTime();
+        if (hig_acc_detect && ST2MS(now - hig_acc_start) > 100) {
+            break;
+        }
+    }
+    chprintf(debug, "[%8u] launch detected\n", chVTGetSystemTime());
+
+    // wait until apogee reached and drogue deployed
+    chThdSleepSeconds(35); // time to apogee: 24.7s, delay: 10s
+    chprintf(debug, "[%8u] deploy nosecone\n", chVTGetSystemTime());
+    unsigned i = 10;
+    while (i--) {   // 10 release cycles to be sure
+        nosecone_locked = false;
+        chThdSleepSeconds(1);
+        nosecone_locked = true;
+        chThdSleepSeconds(1);
+    }
+    nosecone_locked = false;
+
+    // TODO: wait for main chute deployment at 400m
+    // TODO: deploy glider after N seconds delay at approx 50m-100m AGL.
+    chprintf(debug, "[%8u] deploy glider\n", chVTGetSystemTime());
+
+    chThdExit(0);
+}
+
 int main(void)
 {
     /* System initialization */
@@ -122,7 +185,7 @@ int main(void)
 
     shellInit();
 
-    chprintf(debug, "start XBEE shell...\n");
+    chprintf(debug, "start XBEE...\n");
     xbee_start();
 
     chprintf(debug, "start GPS...\n");
@@ -133,6 +196,10 @@ int main(void)
 
     chprintf(debug, "start Pitot...\n");
     pitot_start();
+
+    chprintf(debug, "start deployment thread\n");
+    chThdCreateStatic(&deployment_thread, sizeof(deployment_thread), DEPLOYMENT_PRIO,
+                      deployment_main, NULL);
 
     usb_init();
     while (true) {
