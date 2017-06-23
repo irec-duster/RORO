@@ -69,12 +69,12 @@ void servo_thread_main(void *arg)
         if (glider_locked) {
             chSysLock();
             palSetPad(GPIOE, GPIOE_SERVO_6);
-            gptStartOneShotI(&GPTD7, 106); // TODO: set correct servo pulse in 0.01 ms
+            gptStartOneShotI(&GPTD7, 195); // TODO: set correct servo pulse in 0.01 ms
             chSysUnlock();
         } else {
             chSysLock();
             palSetPad(GPIOE, GPIOE_SERVO_6);
-            gptStartOneShotI(&GPTD7, 195);
+            gptStartOneShotI(&GPTD7, 130);
             chSysUnlock();
         }
         chThdSleepMilliseconds(20);
