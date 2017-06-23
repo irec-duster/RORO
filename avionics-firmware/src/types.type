@@ -1,0 +1,17 @@
+
+imu_quaternion:
+    uint32 timestamp
+    float32 q[4]
+
+imu_raw:
+    uint32 timestamp
+    float32 acc[3] # in g
+    float32 gyro[3] # [deg/s]
+
+pitot_sample:
+    uint32 timestamp
+    float32 dynamic_pressure # [Pa]
+    float32 temperature # [us]
+
+gnss_nmea_sentence:
+    string(100) line

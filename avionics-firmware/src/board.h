@@ -55,6 +55,9 @@
  */
 #define STM32F405xx
 
+/* Disable USB VBUS sense */
+#define BOARD_OTG_NOVBUSSENS
+
 /*
  * IO pins assignments.
  */
@@ -92,9 +95,9 @@
 #define GPIOB_SPI2_MISO             14U // PB14 SPI2_MISO (flash)
 #define GPIOB_SPI2_MOSI             15U // PB15 SPI2_MOSI (flash)
 
-#define GPIOC_LED1                  0U // PC0 LED1
-#define GPIOC_LED2                  1U // PC1 LED2
-#define GPIOC_LED3                  2U // PC2 LED3
+#define GPIOC_LED1                  0U // PC0 LED1, red
+#define GPIOC_LED2                  1U // PC1 LED2, green
+#define GPIOC_LED3                  2U // PC2 LED3, blue
 #define GPIOC_GPS_EXTINT            3U // PC3 GPS_EXTINT
 #define GPIOC_XBEE_RSSI             4U // PC4 XBEE_RSSI, RX signal strength indicator
 #define GPIOC_GPS_EN_N              5U // PC5 GPS_ENn
@@ -277,7 +280,7 @@
                                      PIN_MODE_ALTERNATE(GPIOB_SWO) | \
                                      PIN_MODE_INPUT(GPIOB_PIN4) | \
                                      PIN_MODE_INPUT(GPIOB_PIN5) | \
-                                     PIN_MODE_ALTERNATE(GPIOB_USART1_TX) | \
+                                     PIN_MODE_INPUT(GPIOB_USART1_TX) | \
                                      PIN_MODE_ALTERNATE(GPIOB_USART1_RX) | \
                                      PIN_MODE_INPUT(GPIOB_GPS_TIMEPULSE) | \
                                      PIN_MODE_ALTERNATE(GPIOB_IMU_INT0) | \
@@ -377,7 +380,7 @@
                                      PIN_MODE_INPUT(GPIOC_GPS_EXTINT) | \
                                      PIN_MODE_INPUT(GPIOC_XBEE_RSSI) | \
                                      PIN_MODE_OUTPUT(GPIOC_GPS_EN_N) | \
-                                     PIN_MODE_ALTERNATE(GPIOC_UART6_TX) | \
+                                     PIN_MODE_INPUT(GPIOC_UART6_TX) | \
                                      PIN_MODE_ALTERNATE(GPIOC_UART6_RX) | \
                                      PIN_MODE_OUTPUT(GPIOC_GPS_RESET_N) | \
                                      PIN_MODE_OUTPUT(GPIOC_GPS_SWITCH) | \
@@ -444,7 +447,7 @@
                                      PIN_ODR_HIGH(GPIOC_UART6_TX) | \
                                      PIN_ODR_HIGH(GPIOC_UART6_RX) | \
                                      PIN_ODR_HIGH(GPIOC_GPS_RESET_N) | \
-                                     PIN_ODR_LOW(GPIOC_GPS_SWITCH) | \
+                                     PIN_ODR_HIGH(GPIOC_GPS_SWITCH) | \
                                      PIN_ODR_HIGH(GPIOC_USART4_TX) | \
                                      PIN_ODR_HIGH(GPIOC_USART4_RX) | \
                                      PIN_ODR_HIGH(GPIOC_PIN12) | \
@@ -530,7 +533,7 @@
                                      PIN_PUPDR_FLOATING(GPIOD_USART3_TX) | \
                                      PIN_PUPDR_PULLUP(GPIOD_USART3_RX) | \
                                      PIN_PUPDR_PULLUP(GPIOD_PIN10) | \
-                                     PIN_PUPDR_PULLUP(GPIOD_USART3_CTS) | \
+                                     PIN_PUPDR_PULLDOWN(GPIOD_USART3_CTS) | \
                                      PIN_PUPDR_FLOATING(GPIOD_USART3_RTS) | \
                                      PIN_PUPDR_FLOATING(GPIOD_XBEE_RESET_N) | \
                                      PIN_PUPDR_FLOATING(GPIOD_BUZZER) | \
@@ -724,6 +727,7 @@
 extern "C" {
 #endif
   void boardInit(void);
+  void reboot_st_bootloader(void);
 #ifdef __cplusplus
 }
 #endif
