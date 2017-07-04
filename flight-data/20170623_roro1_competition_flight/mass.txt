@@ -1,0 +1,12 @@
+liftoff:
+24.794 kg, 1728mm   ( scale 0.1kg resolution showed 25.0kg )
+Iz 78'171'175 gmm2
+Ixy 11'406'745'891 gmm2
+
+burnout:
+20.846 kg, 1601mm
+Iz 74300744 gmm2
+Ixy 9190407291 gmm2
+
+
+CP 1959mm

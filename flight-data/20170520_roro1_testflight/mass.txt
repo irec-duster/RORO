@@ -1,0 +1,31 @@
+Mass including empty motor case:
+16.7kg, CM 1490mm
+Ix  0.056 kg*m2
+Iyz 7.422 kg*m2
+
+Mass liftoff
+18.283 kg, CM 1567 mm
+Ix     57'318'942 gmm2 = 0.0573 kgm2
+Iyz  8670'683'536 gmm2 = 8.6707 kgm2
+
+Mass burnout
+16.975 kg, CM 1502 mm
+Ix     56'895'999 gmm2 = 0.0569 kgm2
+Iyz  7626'496'489 gmm2 = 7.6265 kgm2
+
+motor: AeroTech K1275 (RMS-54/2560)
+
+
+
+
+
+motor masses:
+case empty: 0.518 kg
+case after burnout: 0.753 kg
+case with propellant: 2.061 kg
+propellant: 1.308 kg
+residues: 0.235 kg
+residues + propellant = 1.543 kg
+
+case empty + residues + propellant = case with propellant
+case empty + residues = case after burnout
