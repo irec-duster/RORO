@@ -1,11 +1,12 @@
 \section{Results}
 
-The rocket RORO I was flown twice. The first flight was a test flight in Switzerland and the second flight was the competition flight at Spaceport America Cup.
+The rocket RORO I flew twice. The first flight was a test flight in Switzerland and the second flight was the competition flight at Spaceport America Cup.
 
 On board of the rocket there were an Inertial Measurement Unit (IMU) and a barometer that logged data to an SD card.
 This data has been analyzed for both of the flights.
 
 \subsection{Rocket Test Flight}
+\label{subsection:flightTests}
 
 The test flight was performed in Kaltbrunn, Switzerland to a target apogee of 565m using an Aerotech K1275 motor and a lift-off mass of 18.3 kg. The apogee was limited to 600m due to proximity to buildings.
 
@@ -15,22 +16,22 @@ The rocket flight was successful, to an apogee of 502m, with two anomalies:
     \item The rocket oscillated at a high angle of attack
 \end{itemize}
 
-The main chute opening cause has been identified from th high quality video of the optical tracking done by ETHZ.
+The main chute opening cause has been identified from the high quality video of the optical tracking done by ETHZ.
 In conclusion, the parachute opening at apogee has been caused from the shock of the separated rocket stretching out the shock cord to the drogue parachute, where also the main chute bag was attached.
 This shock pulled the main chute cords out of the bag, which then pulled out the entire main chute.
 
 This design problem has been fixed by securing the main chute cords in the bag until the chute is released.
 
-The second anomaly, the oscillation and high angle of attack, required an analysis of the IMU data as the cause of the high angle of attack could not be identified from video footage.
+The second anomaly, the oscillation and high angle of attack, required an analysis of the IMU data as the cause of the high angle of attack could not be identified simply from video footage.
 
 \subsubsection{IMU Data Analysis}
 
 In the following, the z-axis is the roll axis and points down along the rocket and the x and y-axes are pitch and yaw respectively.
 
-The IMU on board the rocket was am MPU-6000 MEMS 3-axis gyroscope and 3-axis accelerometer from InvenSense.
+The IMU on board the rocket was an MPU-6000 MEMS 3-axis gyroscope and 3-axis accelerometer from InvenSense.
 
 The gyroscope measures angular rate which has to be integrated to obtain the attitude of the rocket.
-To reduce attitude drift due to high zero-rate bias of these MEMS gyroscopes, the bias was estimated by taking the average output while the rocket was on the launch rail from 30 seconds before liftoff to 5 seconds before liftoff.
+To reduce attitude drift due to high zero-rate bias of these MEMS gyroscopes, the bias was estimated by taking the average output while the rocket was on the launch rail from 30 seconds before lift-off to 5 seconds before lift-off.
 This should give a reasonably precise attitude for the approximately 10 seconds to apogee.
 
 The accelerometer bias could not be calibrated on the launch pad, as the precise inclination of the launch-rail was not known.
@@ -102,12 +103,12 @@ The following observations are made:
 \end{itemize}
 
 The first two points validated the aerodynamic model.
-They also showed that there was no torque acting on the rocket other the the expected aerodynamic restoring torques at non-zero angle of attack.
+They also showed that there was no torque acting on the rocket other the expected aerodynamic restoring torques at non-zero angle of attack.
 
 The third point gives an important clue to the origin of the disturbance. For the duration of the motor burn, there was a moment that is not of aerodynamic origin.
 The best explanation is that this moment was caused by a misalignment of the motor thrust with respect to the center of gravity.
 
-A side accelerometer sensitivity to forward acceleration can be ruled out, as the the side acceleration is around zero on the while accelerating on the launch rail.
+A side accelerometer sensitivity to forward acceleration can be ruled out, as the side acceleration is around zero while accelerating on the launch rail.
 The same applies for the gyroscope that is close to zero until leaving the launch rail.
 
 There are several possible causes for the thrust misalignment.
@@ -126,7 +127,6 @@ Careful inspection of the rocket
 \subsection{Rocket Competition Flight}
 
 
-
 \subsection{Glider Test Flights}
 
 TODO picture of glider and big wing
@@ -134,3 +134,4 @@ TODO picture of glider and big wing
 \subsection{Glider Competition Flight}
 
 TODO analysis of the landing site
+

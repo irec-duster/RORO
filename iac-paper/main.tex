@@ -1,6 +1,8 @@
 \documentclass[]{iac}
 \usepackage[strings]{underscore}
 \usepackage{bm} % used for bold math symbols
+\usepackage{enumitem}
+\usepackage{glossaries}
 
 \DeclareMathOperator{\E}{E}
 \DeclareMathOperator{\prob}{p}
@@ -58,7 +60,7 @@ The main objective of the rocket is to achieve an apogee of 10,000 ft exactly. D
 Recovery subsystem is responsible for obtaining 
 a precise apogee and ensuring the deployment of the parachutes. This system consists of 2 parachutes and 2 redundant recovery avionics instruments which are used to estimate the apogee and trigger the separation of the rocket. After the separation occurs at the apogee, both parachutes are ejected from the body of the rocket and one is opened , the so-called drogue, reducing the speed of the rocket to about 30 m/s. The main parachute remains in the bag for the first part of the descend. At the same time the nosecone is also separated from the rocket and the glider is ejected. From this point, the rocket consisting of 3 parts (2 body parts and the nosecone) and the glider descend independently of each other. At the altitude of 457 meters, the second (main) parachute opens, reducing the speed to 6m/s. Throughout the launch, separation and landing phases telemetry information, provided by the custom-designed avionic components placed in the nosecone of the rocket, are being constantly logged and part of them also sent to the ground station.
 
-In the model flown at this year's competition no control mechanisms were in place and also no air brakes were installed meaning once the rocket is launched the trajectory cannot be influenced. This increased the importance of simulation, as the only way to determine the altitude the rocket can obtain with a chosen motor and assuming certain weather conditions.  The trajectory of the rocket was simulated in 3 varying environments, including our own developed simulator.
+In the model flown at this year's competition no control mechanisms were in place and also no air brakes were installed meaning once the rocket is launched the trajectory cannot be influenced. This increased the importance of simulation, as the only way to determine the altitude the rocket can obtain with a chosen motor and assuming certain weather conditions.  The trajectory of the rocket was simulated in 3 varying environments, including our own developed simulator  \cite{sim_hassan}.
 
 % Dalmir, we should cite the simulator of Hassan, here it is the link: https://github.com/irec-duster/RORO/blob/master/simulation/simulator%20docs/IdentificationandControlofaHighPowerRocket-HA.pdf
 
