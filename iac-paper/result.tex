@@ -36,12 +36,10 @@ Therefore the accelerometer was calibrated after the flight for scale and bias b
 The bias for an axis is obtained by taking the mean between the averaged positive one $g$ acceleration and averaged negative one $g$ acceleration.
 The scale for the axis is obtained by taking the half of the difference between the positive and negative one $g$ acceleration.
 
-\begin{equation}
 \begin{align}
     bias_i &= \frac{a^{+g}_i + a^{-g}_i}{2} \\
     scale_i &= \frac{a^{+g}_i - a^{-g}_i}{2g}
 \end{align}
-\end{equation}
 
 
 After sensor calibration, the first step was to integrate the angular rate to obtain the attitude of the rocket.
@@ -85,6 +83,8 @@ There are several possible causes for the thrust misalignment.
     \item The rocket body bent under load which place the CG out of the line of thrust
     \item The rocket motor was aligned, but produced a side-thrust.
 \end{itemize}
+
+
 
 
 
