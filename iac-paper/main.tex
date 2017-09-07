@@ -13,6 +13,13 @@
 \newcommand*\rfrac[2]{{{}^{#1}\!/_{#2}}} % running fraction with slash - requires math mode.
 \newcommand*\T{\mathsf{T}}
 
+\makeglossaries
+
+\input{abbr.tex}
+
+\glsaddall
+
+
 
 \begin{document}
 
@@ -118,6 +125,7 @@ We expect some of these concepts to be further developed and implemented in the 
 
 %Maybe talk about airbrakes, active control, etc.
 
+\printglossary[nonumberlist] 
 
 \bibliographystyle{ieeetr}
 \bibliography{main}
