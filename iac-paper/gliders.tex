@@ -142,7 +142,19 @@ Due to time constraints, this year's glider was not autonomously controlled. Bel
 
 Gliders mounted inside a rocket are very challenging to be designed. 
 Complex navigation instrumentation cannot be mounted on the gliders, due to space and weight constraints. 
-We are thus proposing two solutions, one using RTK GPS and the other one using Ultrawide band beacons.
+We are thus proposing a solution of using GPS and Ultrawide band beacons.
+
+The concept works as following:
+
+\begin{enumerate}
+    \item Phase Ejection: The gliders are ejected from the rocket at apogee
+    \item Phase Find: As the gliders might be spread in many directions, it is important to gather them in order to start the formation flying. For example, the module we propose (DWM1000) has an up to 290 meters communications range
+    \item Phase Formation: Once they are close to each other, the UWB beacons are used. They will measure the distance between each other, however, they will not know the orientation of the formation. For this, we propose to use the barometer.
+    \item Phase Landing: The landing shall be done in a net, to avoid crashing.
+\end{enumerate}
+
+
+IR (Impulse Radio) UWB communication systems are based on the transmission of very short duration pulses, which originate very high bandwidth signals. The short duration of the pulses allows a high level of accuracy in time of arrival estimation and as a result a centimeter-level resolution in distance estimation (ranging).
 
 % \label{subsection:navcontrol}
 
