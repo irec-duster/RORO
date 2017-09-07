@@ -25,6 +25,8 @@ The second anomaly, the oscillation and high angle of attack, required an analys
 
 \subsubsection{IMU Data Analysis}
 
+In the following, the z-axis is the roll axis and points down along the rocket and the x and y-axes are pitch and yaw respectively.
+
 The IMU on board the rocket was am MPU-6000 MEMS 3-axis gyroscope and 3-axis accelerometer from InvenSense.
 
 The gyroscope measures angular rate which has to be integrated to obtain the attitude of the rocket.
@@ -35,7 +37,6 @@ The accelerometer bias could not be calibrated on the launch pad, as the precise
 Therefore the accelerometer was calibrated after the flight for scale and bias by sequentially placing the IMU on each of the six faces up.
 The bias for an axis is obtained by taking the mean between the averaged positive one $g$ acceleration and averaged negative one $g$ acceleration.
 The scale for the axis is obtained by taking the half of the difference between the positive and negative one $g$ acceleration.
-
 \begin{align}
     bias_i &= \frac{a^{+g}_i + a^{-g}_i}{2} \\
     scale_i &= \frac{a^{+g}_i - a^{-g}_i}{2g}
@@ -47,23 +48,57 @@ The attitude throughout the flight was visualized in 3D.
 In the animation the tilting and subsequent oscillation of the rocket was well visible, but the source of the disturbance was not evident.
 
 
-The next step was to correct the calibrated IMU accelerations for centripetal and tangential accelerations due to angular rate and angular acceleration, as the IMU is not placed at the center of mass. This gives us the acceleration at the center of mass.
+The next step was to correct the calibrated IMU accelerations for centripetal and tangential accelerations due to angular rate and angular acceleration, as the IMU is not placed at the center of mass. This gives us the acceleration at the center of mass:
+\begin{equation}
+    \bm{a}_{CM} = \bm{a}_{IMU} - \bm{a}_{tangential} - \bm{a}_{centripedal}
+\end{equation}
+\begin{equation}
+\begin{split}
+    \bm{a}_{tangential} &= \bm{\dot\omega} \times \bm{r}_{IMU} \\
+    \bm{a}_{centripedal} &= - |\bm{\omega}_{tangential}|^2  \bm{r}_{IMU} \\
+    \bm{\omega}_{tangential} &= \bm{\omega} - \frac{\bm{\omega} \cdot \bm{r}_{IMU}}{\bm{r}_{IMU}^2}\bm{r}_{IMU}
+\end{split}
+\end{equation}
+where $\bm{r_{IMU}}$ is the position of the IMU with respect to the center of mass
 
 The center of mass location is obtained from the Solidworks CAD (which was experimentally verified for the lift-off configuration) and is linearly interpolated from lift-off configuration to burn-out configuration for the time of the motor burn. This is good enough, as the motor burn curve is quite constant.
 
 This acceleration at the center of mass was then used to compute the side-forces acting on the rocket using the known mass. Again the mass is interpolated during the burn as for the center of mass.
 
 With the assumption that the side forces are aerodynamic, they should act at the center of pressure, which can be analytically determined.
-This results in a moment which was calculated.
+This results in a moment which was calculated using \ref{eq:m_aero}.
+\begin{equation}
+\label{eq:m_aero}
+\begin{split}
+    M^{aero}_x &= (z_{CP} - z_{CM}) (-F_y) \\
+    M^{aero}_y &= (z_{CP} - z_{CM}) F_x \\
+\end{split}
+\end{equation}
 
 This aerodynamic moment was then compared with the actual moment that was acting on the rocket.
-The actual moment was obtained from the angular rates and the inertia by use of the Euler equations for rigid body dynamics.
+The actual moment was obtained from the angular rates and the inertia by use of the Euler equations for rigid body dynamics. For an equal pitch and yaw inertia these equations are:
+\begin{equation}
+\begin{split}
+    M_x &= I_{xy} \dot\omega_x + (I_z-I_{xy}) \omega_y \omega_z \\
+    M_y &= I_{xy} \dot\omega_y + (I_{xy}-I_z) \omega_z \omega_x \\
+    M_z &= I_{z} \dot\omega_z
+\end{split}
+\end{equation}
 
-The comparison between aerodynamic model based moments and actual moments showed the following.
+
+The comparison between aerodynamic model based moments and actual moments is show in figure \ref{fig:test_flight_graph}.
+\begin{figure}[h!]
+    \centering
+        \includegraphics[width=0.5\textwidth]{img/test_flight_graph.png}
+        \caption{Comparison of predicted aerodynamic moments (M_aero_xy) and actual moments (M_xyz). The duration of the motor burn is clearly visible in the z acceleration.}
+        \label{fig:test_flight_graph}
+ \end{figure}
+
+The following observations are made:
 \begin{itemize}
 \item The moment after burnout and reduction of oscillations to reasonable angles of attack matches well with aerodynamic prediction. This validates our analytic center of pressure determination.
 \item The moment after burnout but at high angles of attack is slightly lower than predicted by the aerodynamic model. This is to be expected, as the model does not include the cylindrical body lift which increases with angle of attack, moving the center of pressure forward. A more forward center of pressure would result in the smaller moments that were seen at high angle of attack.
-\item During the burn there is a permanent, high mismatch between the aerodynamic prediction and the actual moments
+\item During the burn there is a permanent, about 20Nm mismatch between the aerodynamic prediction and the actual moments
 \end{itemize}
 
 The first two points validated the aerodynamic model.
@@ -84,7 +119,7 @@ There are several possible causes for the thrust misalignment.
     \item The rocket motor was aligned, but produced a side-thrust.
 \end{itemize}
 
-
+Careful inspection of the rocket 
 
 
 
