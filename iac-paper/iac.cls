@@ -6,6 +6,7 @@
 \RequirePackage{amstext}
 \RequirePackage{amsfonts}
 \RequirePackage{gensymb}
+
 \LoadClass[twocolumn,letter paper,10pt]{article}
 
 \RequirePackage[margin=1in,top=1.25in,headheight=\baselineskip]{geometry} % page layout
@@ -20,6 +21,7 @@
 \RequirePackage[normalem]{ulem}
 \RequirePackage{etoolbox}
 \RequirePackage{alphalph}
+\RequirePackage{enumitem}% http://ctan.org/pkg/enumitem
 
 \renewcommand{\headrulewidth}{0pt}
 
