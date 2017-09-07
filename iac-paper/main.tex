@@ -13,6 +13,13 @@
 \newcommand*\rfrac[2]{{{}^{#1}\!/_{#2}}} % running fraction with slash - requires math mode.
 \newcommand*\T{\mathsf{T}}
 
+\makeglossaries
+
+\input{abbr.tex}
+
+\glsaddall
+
+
 
 \begin{document}
 
@@ -26,8 +33,22 @@
 
 %\author{Main~Author\\Affiliation, Country, email address\and
 %		Co-Author\\Affiliation, Country, email address}
-\IACauthor{Patrick Spieler}{Swiss Federal Institute of Technology, Lausanne, Switzerland, }
-\IACauthor{Co-Author}{Affiliation, Country, email address}
+\IACauthor{Patrick Spieler}{Swiss Federal Institute of Technology, Lausanne, Switzerland, patrick.spieler@alumni.epfl.ch}
+
+
+\IACauthor{Elena Sorina Lupu, Dalmir Hasic, Michael Spieler, Michael Pellet, Hassan Arif, Cyril Baumann, Emilio Lozano, Quentin Talon}{Swiss Federal Institute of Technology, Lausanne, Switzerland}
+
+\IACauthor{Oliver Kirchhoff, Laurent Jung}{Swiss Federal Institute of Technology, Zurich, Switzerland}
+
+\IACauthor{Stephane Teste}{John Hopkins University, United States of America}
+
+\IACauthor{Christian Cardinaux}{Western Switzerland University of Applied Sciences - HEIG-VD, Switzerland}
+
+\IACauthor{Dr. Anton Ivanov, Prof. Dario Floreano, Dr. Stefano Mintchev}{Swiss Federal Institute of Technology, Lausanne, Switzerland}
+
+
+
+
 
 \abstract{%Rewrite: Dalmir, Sorina
 %NOTE: Many of the structure of paper goes to the end of introduction
@@ -104,6 +125,7 @@ We expect some of these concepts to be further developed and implemented in the 
 
 %Maybe talk about airbrakes, active control, etc.
 
+\printglossary[nonumberlist] 
 
 \bibliographystyle{ieeetr}
 \bibliography{main}
