@@ -39,25 +39,24 @@ The concept of the rocket was well-thought to be easy to integrate and robust, c
 
 The length as well as the diameter of the rocket were chosen in such a way to accommodate the payload which had a dimension constraint imposed by the competition (needed to be Cubesat standard).
 
-Two important factors are important in a rocket: the dynamic stability and the static stability.
+In a rocket design and development two factors have a crucial importance: the dynamic stability and the static stability.
 
-
-Now, the manufacturing of each part of the rocket is discussed.
+Before considering the stability in the following sections, we discuss manufacturing process of each part of the rocket.
 
 
 
 \paragraph{Structure}
 \hfill \break
-The main body of the rocket is a COTS phenolic tube, reinforced with two layers of 245 g/m$^2$ twill weaved carbon fiber. The reinforcement rational was determined using FEA (Finite Element Analysis), and tested during two rocket flights.
+The main body of the rocket is a COTS phenolic tube, reinforced with two layers of 245 g/m$^2$ twill weaved carbon fiber. The reinforcement rational is determined using FEA (Finite Element Analysis), and tested during two rocket flights.
 The structure contains also a coupler tube, that is made out of phenolic tube reinforced inside again with two 245 g/m$^2$ layers carbon fiber.
-The rocket has two structural bulkheads, one in the lower body and one in the upper body to which the parachute cords are attached. The bulkheads were made out of two 15mm plywood plates reinforced with 4 layers of 245 g/m$^2$ carbon fibre on each side.  The bulkheads are the structurally critical elements as they transfer loads from the rocket body to the subsystems. They need to withstand both the accelerations from the launch and the parachute opening shock. 
+The rocket has two structural bulkheads, one in the lower body and one in the upper body to which the parachute cords are attached. The bulkheads are made out of two 15mm plywood plates reinforced with 4 layers of 245 g/m$^2$ carbon fibre on each side.  The bulkheads are the structurally critical elements as they transfer loads from the rocket body to the subsystems. They need to withstand both the accelerations from the launch and the parachute opening shock. 
 The two bulkheads are subject to a peak load of 10kN from the parachute opening shock. An FEM analysis taking into account the  ECSS-E-HB-32-21A revealed that an additional reinforcement of the bulkheads with carbon fibre is required to sustain the loads. The analysis of the bonding to the rocket body reveals sufficient strength to sustain the opening shock.
 
 
 \paragraph{Fins}
 \hfill \break
-    The fins were sized for 1.1 calibers static stability %Reference to static/dynamic stability
-    The fins were manufactured out of wood and carbon fiber, as it can be seen in Figure \ref{f:fins}. Firstly, the wood was cut at CNC (Figure \ref{f:fins} a). The inside of the fins was made out of balsa wood (Figure \ref{f:fins} b), in order to decrease the weight for higher resonance frequencies. Afterwards, on each side of each fin, 3 layers [span, chord, span] of 140 g/m$^2$ unidirectional carbon fiber were applied, to increase stiffness (Figure \ref{f:fins} c). The fins were attached to the motor tube using high temperature epoxy, reinforced with carbon fiber.
+    The fins are sized for 1.1 calibers static stability %Reference to static/dynamic stability
+    and are manufactured out of wood and carbon fiber. The process is shown in Figure \ref{f:fins}. Firstly, the wood is cut at CNC (Figure \ref{f:fins} a). The inside of the fins is made out of balsa wood (Figure \ref{f:fins} b), in order to decrease the weight for higher resonance frequencies. Afterwards, on each side of each fin, 3 layers [span, chord, span] of 140 g/m$^2$ unidirectional carbon fiber are applied, to increase stiffness (Figure \ref{f:fins} c). The fins are attached to the motor tube using high temperature epoxy, reinforced with carbon fiber.
     \begin{figure}[h!]
         \centering
         \includegraphics[width=0.5\textwidth]{img/fins.png}
@@ -68,9 +67,9 @@ The two bulkheads are subject to a peak load of 10kN from the parachute opening 
 
 \paragraph{Motor tube}
 \hfill \break
-The motor tube consists of a Commercial-Off-The-Shelf phenolic tube. The fins were glued with 3M DP760 high-temperature epoxy to the motor tube. The tube was centered to the outer rocket body tube by six 4mm plywood centering rings distributed in equally along the motor tube.
+The motor tube consists of a Commercial-Off-The-Shelf phenolic tube. The fins are glued with 3M DP760 high-temperature epoxy to the motor tube. The tube is centered to the outer rocket body tube by six 4mm plywood centering rings distributed in equally along the motor tube.
 In front of the fins, there is a 12mm CNC-cut plywood ring from which 12 M3 threaded rods connect to the thrust plate. These help holding the motor inside the rocket body during parachute opening shock.
-The entire assembly can be seen in Figure \ref{f:reinforcement} c. The fins were fixed to the outer structure using ribbons of carbon fiber both on the inside and the outside of the tube, as it can be seen in Figure \ref{f:reinforcement} a,b.
+The entire assembly can be seen in Figure \ref{f:reinforcement} c. The fins are fixed to the outer structure using ribbons of carbon fiber both on the inside and the outside of the tube, as it can be seen in Figure \ref{f:reinforcement} a,b.
 
   \begin{figure}[h!]
 \centering
@@ -94,8 +93,8 @@ The motor case, which is a RMS-98/7680 from Aerotech is held by a 98mm retainer 
 
 \paragraph{Payload}
 \hfill \break
-In the lower body of the rocket, there is 1U of payload consisting of 4kg of tungsten and a board with sensors used to track the lower body motion and shocks, referred to as the Logging Electronics. A Gopro and a PCB cameras are also placed to film the parachute deployment and the outside.
-The Active Payload bay, placed in the Upper Body, consists of a 4U plywood box reinforced with glass fibre to withstand the loads. Inside the 4U wood box, a glider is mounted on a rail. Shortly after apogee, the glider will be ejected from the rocket using a spring. A more detailed description of the glider will be detailed in the second part of the article.
+In the lower body of the rocket, there is 1U of payload consisting of 4kg of tungsten and a board with sensors used to track the lower body motion and shocks, referred to as the Logging Electronics. A GoPro and a PCB cameras are also placed to film the parachute deployment and the outside.
+The Active Payload bay, placed in the Upper Body, consists of a 4U plywood box reinforced with glass fibre to withstand the loads. Inside the 4U wood box, a glider is mounted on a rail. Shortly after apogee, the glider is ejected from the rocket using a spring. A more detailed description of the glider is detailed in Section  \ref{section:gliders}.
 
 
 
@@ -112,10 +111,10 @@ During the initial deployment the rocket is separated at the parachute bay and a
 
 \paragraph{Initial Deployment System}
 The initial deployment is achieved by creating a pressure in the parachute bay and thus forcing the two rocket bodies to separate. The pressure is generated by puncturing a 23ml CO2 cartridge by a 0.2 ml black powder charge. The charge forces a puncture piston inside the cartridge seal to release the gas. This system is a COTS solution from Tinder Rocketry Recovery Solutions.
-There are two redundant CO2 deployment systems each connected to two igniters. There are 2 redundant recovery electronic components in charge of triggering the system and each of the two can trigger both systems. Recovery avionics is outlined later in this section.
+There are two redundant CO2 deployment systems each connected to two igniters. 2 redundant recovery electronic components are in charge of triggering the system and each of the two can trigger both systems. Recovery avionics is outlined later in this section.
 
 \paragraph{Main Deployment System}
-The main parachute stowed in the parachute bag below the drogue parachute. The main parachute is held together by a wire which is cut at the programmed altitude. Then the load of the rocket pulls the main parachute out of the parachute bag. The setup is illustrated in Figure \ref{f:recovery_main_deployment}. The wire is cut by a shearing piston which is force through the wire by a 0.1ml black powder charge.Two wire cutters are installed for redundancy, one per recovery electronics.
+The main parachute is stowed in the bag below the drogue parachute. The main parachute is held together by a wire which is cut at the programmed altitude. Then the load of the rocket pulls the main parachute out of the parachute bag. The setup is illustrated in Figure \ref{f:recovery_main_deployment}. The wire is cut by a shearing piston which is forced through the wire by a 0.1ml black powder charge.Two wire cutters are installed for redundancy, one per recovery electronics.
 
 \begin{figure}[h!]
  	\centering
@@ -125,10 +124,10 @@ The main parachute stowed in the parachute bag below the drogue parachute. The m
  \end{figure}
  
  \paragraph{Recovery Avionics}
-The Recovery Avionics is designed for maximal reliability and features several levels of redundancy which is shown in Figure \ref{f:recovery_avionics_schema}. As required by the the competition rules we use two redundant electronics systems, which are two different COTS solutions.
-The primary electronics is the AltimaxG3 from Rocketronics which features barometer and accelerometer sensors to estimate the altitude of the rocket. It uses a Kalman filter to estimate acceleration, speed and altitude of the rocket. This is more robust especially when pressure fluctuations can be expected at high velocity.
+The Recovery Avionics is designed for maximal reliability and features several levels of redundancy which is shown in Figure \ref{f:recovery_avionics_schema}. As required by the the competition rules, two redundant electronic systems are used, both of which are different COTS solutions.
+The primary electronics is the AltimaxG3 from Rocketronics which features barometer and accelerometer sensors to estimate the altitude of the rocket. It uses a Kalman filter to estimate acceleration, speed and altitude of the rocket. This is a more robust solution especially when pressure fluctuations can be expected at a high velocity.
 The backup electronics is the Raven3 from Featherweight Altimeters.
-The primary electronics is programmed to detect the apogee and fire the two CO2 charges one after the other with a delay of 0.5 seconds. Then during descent it monitors air pressure until the main parachute deployment altitude is reached and deploys the wire cutter.
+The primary electronics is programmed to detect the apogee and fire the two CO2 charges one after the other with a delay of 0.5 seconds. Then during descent it monitors air pressure until the main parachute deployment altitude is reached and initiates the deployment by using the wire cutter.
  The backup electronics is programmed as a timer to trigger the initial deployment after the predicted time to apogee from simulations. During descent it also detects the target altitude using a pressure sensor to trigger the main deployment
  
   \begin{figure}[h!]
