@@ -1,4 +1,6 @@
 \documentclass[]{iac}
+\usepackage[strings]{underscore}
+
 
 \DeclareMathOperator{\E}{E}
 \DeclareMathOperator{\prob}{p}
@@ -8,6 +10,7 @@
 \newcommand*{\vectornorm}[1]{\left\|#1\right\|}
 \newcommand*\rfrac[2]{{{}^{#1}\!/_{#2}}} % running fraction with slash - requires math mode.
 \newcommand*\T{\mathsf{T}}
+
 
 \begin{document}
 
@@ -25,52 +28,82 @@
 \IACauthor{Co-Author}{Affiliation, Country, email address}
 
 \abstract{%Rewrite: Dalmir, Sorina
-The Intercollegiate Rocket Competition (IREC) aims to gather students from across the world to design and build a rocket that reaches an altitude of 3km or 10km, carrying a 4kg of payload. As part of this competition, the Team Duster, formed by students from Swiss universities developed a rocket with a payload targeting an apogee of 3km. \\ 
-Firstly, the rocket flying to 3km will be presented, along with its design and manufacturing processes. The rocket then follows a dual-event recovery process. Firstly, the drogue (small) parachute is deployed, reducing the speed of the rocket to about 30 m/s. At the same time the separation of the nosecone occurs thereby releasing the payload. After the rocket descends to an altitude of 457 meters, the second (main) parachute is deployed, reducing the speed to 6m/s. Throughout the launch, separation, and landing phases, we constantly received telemetry (information) provided by the custom-designed avionic components placed in the nosecone of the rocket. To ensure that the deployment occurs at predefined altitudes, the decision was made to use 2 redundant systems for altitude measurement -independent of the avionics placed in the recovery bay. The trajectory of the rocket was simulated in 3 varying environments, including our own developed simulator. The rocket made its first flight towards the end of March 2017 in Switzerland where its flight data was compared with the simulation data. Based on this data, the necessary trajectory corrections were performed in order to improve the competition Flight - which occured in mid-June. \\
-Secondly, an innovative payload that flew in the rocket will also be presented. A fleet of 3 gliders are deployed from the rocket at apogee using a release based on a spring mechanism. Equipped with an autopilot, differential GPS, and control surfaces using servomotors, the gliders autonomously fly in formation. Eventually, they land at a fixed point on the ground. The gliders have a wing span of approximately 200mm and a body length of 100mm. During the flight, the gliders transmit information back to the groundstation and are tracked using custom-made ground station.  Potential video-recording of the flight will be investigated in the future.
-The results of the intermediary flight (end-of-March) as well as the competition flight - both in terms of rocket trajectory and flight of the gliders - is included in the paper, along with further recommendations for a more advanced technology demonstration in the future.}
+%NOTE: Many of the structure of paper goes to the end of introduction
+%The Intercollegiate Rocket Competition (IREC) aims to gather students from across the world to design and build a rocket that reaches an altitude of 3km or 10km, carrying a 4kg of payload. As part of this competition, the Team Duster, formed by students from Swiss universities developed a rocket with a payload targeting an apogee of 3km. \\ 
+%Firstly, the rocket flying to 3km will be presented, along with its design and manufacturing processes. The rocket then follows a dual-event recovery process. Firstly, the drogue (small) parachute is deployed, reducing the speed of the rocket to about 30 m/s. At the same time the separation of the nosecone occurs thereby releasing the payload. After the rocket descends to an altitude of 457 meters, the second (main) parachute is deployed, reducing the speed to 6m/s. Throughout the launch, separation, and landing phases, we constantly received telemetry (information) provided by the custom-designed avionic components placed in the nosecone of the rocket. To ensure that the deployment occurs at predefined altitudes, the decision was made to use 2 redundant systems for altitude measurement -independent of the avionics placed in the recovery bay. The trajectory of the rocket was simulated in 3 varying environments, including our own developed simulator. The rocket made its first flight towards the end of March 2017 in Switzerland where its flight data was compared with the simulation data. Based on this data, the necessary trajectory corrections were performed in order to improve the competition Flight - which occured in mid-June. \\
+%Secondly, an innovative payload that flew in the rocket will also be presented. A fleet of 3 gliders are deployed from the rocket at apogee using a release based on a spring mechanism. Equipped with an autopilot, differential GPS, and control surfaces using servomotors, the gliders autonomously fly in formation. Eventually, they land at a fixed point on the ground. The gliders have. During the flight, the gliders transmit information back to the groundstation and are tracked using custom-made ground station.  Potential video-recording of the flight will be investigated in the future.
+%The results of the intermediary flight (end-of-March) as well as the competition flight - both in terms of rocket trajectory and flight of the gliders - is included in the paper, along with further recommendations for a more advanced technology demonstration in the future.
 
+The Intercollegiate Rocket Competition (IREC) aims to gather students across the world to design and build a rocket that reaches an altitude of 10,000 ft (3 km) or 30,000 ft (9 km), carrying 8.8 lb (4kg) of payload. As a part of this competition, team DUSTER, formed by students from 3 Swiss universities designed and built a rocket with a payload targeting an apogee of 3km. The rocket is launched by using COTS solid motor. It follows a dual-event recovery process with first parachute deployment at apogee and second (main) parachute deployment at 457 meters.
+Inside the rocket a payload of 3,9 kg is placed and that payload consists of a custom built autonomous glider ejected at apogee, which descends to a fixed point on the ground independent of the rocket.   Custom avionics inside the nosecone log and transmit information back to the ground, control the ejection of the nosecone and the payload deployment.
+To estimate the apogee under variety of conditions and motor configurations 3 separate simulators are used with one being developed by the team as a part of this project. One of the major concerns during the development is the stability - both static and dynamic, which influences the design and has large impact on the performance of the rocket.
+The technology behind both the rocket and the payload together with concepts for autonomous fleet of gliders is presented and elaborated on in this paper. Design process and manufacturing, along with tests done and issues faced over the course of the project are also presented along with the solutions and recommendations for the future.
+}
+
+% Dalmir, can you add the abreviations? 
 \maketitle
 %Check for number of pages allowed, if any
 \section{Introduction}
 
-Spaceport America Cup (formerly entitled Intercollegiate Rocket Competition (IREC)) gatheres students all over the world to participate at the biggest rocket challenge. Students are launching solid, liquid, and hybrid rockets to target altitudes of 10,000 feet (3048 meters) and 30,000 feet (9144 meters), carrying 8,8lb (3.9 kg) of payload.
+%Spaceport America Cup (formerly entitled Intercollegiate Rocket Competition (IREC)) gatheres students all over the world to participate at the biggest rocket challenge. Students are launching solid, liquid, and hybrid rockets to target altitudes of 10,000 feet (3048 meters) and 30,000 feet (9144 meters), carrying 8,8lb (3.9 kg) of payload.
 
-Team DUSTER, representing several Swiss universities, entered this contest to build a solid motor rocket flying to an apogee of 10,000 ft (3048 meters). The project received an honourable place 8$^th$, out of 83 teams.
+%Team DUSTER, representing several Swiss universities, entered this contest to build a solid motor rocket flying to an apogee of 10,000 ft (3048 meters). The project received an honourable place 8$^th$, out of 83 teams.
 
-This paper contains the work developed by the team of students during November 2016 and June 2017. The first part of the article discusses the rocket design, manufacturing and flight data. The second part of the article reviews the payload placed inside the rocket. For this year, the team built a glider that was deployed at 10,000 ft and flew back to the ground. For the future, the aim is to develop a fleet of gliders that is deployed from the rocket at apogee and flies in formation back to the ground. As part of this article, the fleet of gliders will be only conceptually discussed.
+%This paper contains the work developed by the team of students between November 2016 and June 2017. The first part of the article discusses the rocket design, manufacturing and flight data. The second part of the article reviews the payload placed inside the rocket. For this year, the team built a glider that was deployed at 10,000 ft and flew back to the ground. For the future, the aim is to develop a fleet of gliders that is deployed from the rocket at apogee and flies in formation back to the ground. As part of this article, the fleet of gliders will be only conceptually discussed.
 
+Spaceport America Cup (formerly entitled Intercollegiate Rocket Competition (IREC)) gathers students from all over the world to participate at one of the biggest rocket competitions in the world. Students are launching solid, liquid, and hybrid rockets to target altitudes of 10,000 feet (3048 meters) and 30,000 feet (9144 meters), carrying 8,8lb (3.9 kg) of payload. The teams are scored according to the flight performance on the competition day, technical implementation, the quality of the report and research done as a part of the project.
+Team DUSTER, representing several Swiss universities, entered this contest to build a solid motor rocket flying to an apogee of 10,000 ft (3048 meters).
+The main objective of the rocket is to achieve an apogee of 10,000 ft exactly. Deviations from this apogee result in point loss in the flight performance category.  The rocket is designed to follow a dual event recovery with 2 separation points - one at the apogee and the other at 457 meters. At the apogee 3 events occur: separation alongside the body of the rocket where the parachutes are ejected, ejection of the nosecone from the rocket and payload separation.
+
+Recovery subsystem is responsible for obtaining 
+a precise apogee and ensuring the deployment of the parachutes. This system consists of 2 parachutes and 2 redundant recovery avionics instruments which are used to estimate the apogee and trigger the separation of the rocket. After the separation occurs at the apogee, both parachutes are ejected from the body of the rocket and one is opened , the so-called drogue, reducing the speed of the rocket to about 30 m/s. The main parachute remains in the bag for the first part of the descend. At the same time the nosecone is also separated from the rocket and the glider is ejected. From this point, the rocket consisting of 3 parts (2 body parts and the nosecone) and the glider descend independently of each other. At the altitude of 457 meters, the second (main) parachute opens, reducing the speed to 6m/s. Throughout the launch, separation and landing phases telemetry information, provided by the custom-designed avionic components placed in the nosecone of the rocket, are being constantly logged and part of them also sent to the ground station.
+
+In the model flown at this year's competition no control mechanisms were in place and also no air brakes were installed meaning once the rocket is launched the trajectory cannot be influenced. This increased the importance of simulation, as the only way to determine the altitude the rocket can obtain with a chosen motor and assuming certain weather conditions.  The trajectory of the rocket was simulated in 3 varying environments, including our own developed simulator.
+
+% Dalmir, we should cite the simulator of Hassan, here it is the link: https://github.com/irec-duster/RORO/blob/master/simulation/simulator%20docs/IdentificationandControlofaHighPowerRocket-HA.pdf
+
+
+The second main component of the project is the payload. The payload is a glider equipped with an autopilot, differential GPS, and control surfaces using servomotors. Its objective is to land at a fixed point on the ground and transmit data from the sensors to the ground station. In this year's model only one glider had been constructed with a wing span of approximately 70 cm. The concept of multiple gliders flying in a formation is presented as well with a possibility of being implemented in the following years.
+The results of the intermediary flight (end-of-March) as well as the competition flight - both in terms of rocket trajectory and flight of the gliders - is included in the paper, along with further recommendations for a more advanced technology demonstration in the future.
+
+The structure of this paper is as follows: in Section 2 the rocket is presented together with 4 main subsystems: structure, avionics, propulsion and recovery. Flight tests together with stability considerations are outlined in Section \ref{subsection:flightTests}.  Section \ref{section:gliders}  covers the design and technology used in a glider and presents a concept of a fleet of gliders. Navigation and control, one of the main challenges in glider design, are elaborated in detail in Section \ref{subsection:navcontrol}. The last part contains the conclusion and the outlook.
 
 
 \section{Rocket}
-
-
-
 
 \input{rocket}
 
 
 \section{Gliders}
+\label{section:gliders}
 
-\subsection{General Overview}
-
-\subsection{Design and Manufacturing of ONE glider-SORINA}
-%Pictures from report here
-
-\subsection{Design and Manufacturing of a fleet of gliders-SORINA}
-%Concept TBD in solidworks 
-
-\subsection{Navigation and Control of the fleet of gliders}
-%Ultrawide beacons 
-%Formation
-%Check for alternative options, instead of GPS
+\input{gliders}
 
 
 \input{result.tex}
 
 \section{Conclusions}
+This paper presented a technology necessary to construct a rocket capable of achieving 10000 ft altitude and land safely on the ground. With the absence of control, the stability of the rocket was guaranteed by the extensive simulations done in 3 different simulators with one being developed by the team for the purpose of this project. The challenges with dynamic stability have also been explored and proper fins sizing done to dampen the oscillations. Throughout the subsystems presented, manufacturing process is also outlined to demonstrate the complete process from the idea through the conceptual design to actual prototype. 
+The dual recovery process employed on the presented model composed of two parachutes and redundant electronics is capable of ensuring a safe landing even in presence of electronic faults. Custom made avionics, placed inside the nosecone of the rocket, provided necessary functionalities to control deployment of the payload and to log external parameters. It is designed to support further improvements such as airbrake or control system, possibly to be implemented in the following years. 
+Second part of the paper presented the autonomous glider constructed and placed inside the rocket as a payload. It has been deployed at the apogee with the goal of controlled landing on a fixed location and sending data to the ground station. Concepts for a fleet of autonomous gliders flying in formation and landing on a predefined position was also presented together with challenges in terms of navigation and control. Throughout the project many tests have been performed on subsystem and system level to ensure compliance with requirements and to validate their functionalities, but due to the conciseness of this paper many results obtained are omitted. 
+
 \section{Outlook}
+The project presented above represents the first iteration and first prototype of both the rocket and the payload. The complete workload from the conceptual design to manufacturing has been done in the span of 7 months. Therefore, many of more advanced concepts which require time and thorough testing could not be implemented on this year's model. Some of those concepts are: implementation of the control system or the more simpler air brake system and the payload modifications to include the fleet of gliders. Even though they weren't implemented, many of these concepts have been researched and prototyped. Concept of the fleet of autonomous gliders has been presented in this paper, but also first iterations of the air brake systems have been developed and tested on one of the smaller models of the rocket. The test of this system was performed in a wind tunnel and subsequently the prototype was launched in Kaltbrunn, Switzerland on May the $20^{th} 2017$. Figure \ref{f:level1_airbrake} shows the smaller, so-called "Level 1" rocket with air brakes in a wind tunnel. 
+
+  \begin{figure}[h!]
+ 	\centering
+        \includegraphics[width=0.45\textwidth]{img/level1.png}
+        \caption{Level 1 Rocket with Air Brakes in HEPIA Wind Tunnel}
+        \label{f:level1_airbrake}
+ \end{figure}
+
+We expect some of these concepts to be further developed and implemented in the following years.
+
+
 %Maybe talk about airbrakes, active control, etc.
 
+
+\bibliographystyle{ieeetr}
+\bibliography{main}
 
 \end{document}
