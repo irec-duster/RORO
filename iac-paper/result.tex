@@ -99,7 +99,7 @@ The following observations are made:
 \begin{itemize}
 \item The moment after burnout and reduction of oscillations to reasonable angles of attack matches well with aerodynamic prediction. This validates our analytic center of pressure determination.
 \item The moment after burnout but at high angles of attack is slightly lower than predicted by the aerodynamic model. This is to be expected, as the model does not include the cylindrical body lift which increases with angle of attack, moving the center of pressure forward. A more forward center of pressure would result in the smaller moments that were seen at high angle of attack.
-\item During the burn there is a permanent, about 20Nm mismatch between the aerodynamic prediction and the actual moments
+\item During the burn there is a permanent, about 20Nm mismatch between the aerodynamic prediction and the actual moments. After burnout this difference vanishes.
 \end{itemize}
 
 The first two points validated the aerodynamic model.
@@ -120,9 +120,22 @@ There are several possible causes for the thrust misalignment.
     \item The rocket motor was aligned, but produced a side-thrust.
 \end{itemize}
 
-Careful inspection of the rocket 
+With the K1275 motor the thrust misalignment which created a torque of 20Nm would correspond to an off-center CG respectively motor centering of 15mm or a motor misalignment of 0.79 degree.
+Careful inspection and measuring of the rocket ruled out all the possible causes except for the last one. Unfortunately we did not keep the nozzle, which is a consumable of the COTS motor assembly. Therefore it is impossible to verify if any asymmetries are visible in the erosion of the nozzle.
 
+\subsubsection{Test Flight Analysis Conclusion}
 
+The high angle of attack during the test flight was caused by a thrust misalignment. The most probable explanation for the thrust misalignment seems to be a defect in the Aerotech K1275 COTS motor.
+
+The reason for the lower apogee than the predicted one is due to the higher drag of the rocket flying at an angle of attack. Therefore it is important to dampen oscillations quickly so that the rocket minimizes the time where it is at a high angle of attack after a disturbance.
+
+As a result of the conclusion of the IMU data analysis we were faced with a design trade-off.
+We wanted to increase the damping of oscillations and at the same time increase the corrective force of the fins, to be able to withstand a potential thrust misalignment of a motor with more thrust that would be used for the competition flight.
+Unfortunately with an increase of corrective force of the fins, the damping ratio decreases, which increases the time to dampen oscillations.
+
+As the exact source of the thrust misalignment could not be identified, we decided to sacrifice some of the damping and increase the corrective force of the fins to the maximum that was within the guidelines of the competition.
+For this, we increased the surface of span of the fins by 30\%. The resulting corrective force for a certain angle of attack was about doubled and the damping ratio went from 0.13 to 0.083.
+We estimated that this would give us enough safety to withstand a similar thrust misalignment angle with the stronger motor used at the competition.
 
 \subsection{Rocket Competition Flight}
 
