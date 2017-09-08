@@ -14,12 +14,12 @@ Inspired by the Prandtl-m project, our team aimed to design and build an autonom
 \centering
 \begin{tabular}{|p{0.9\columnwidth}|}
 \hline
-    The payload shall weight 8.8 lb (3.9 kg). \\ \hline
+    The payload shall weight 8.8 lb (4 kg). \\ \hline
     The payload shall consist of a glider and ballast.  \\ \hline
     The glider shall be deployed at apogee. \\ \hline
     The glider shall deploy its wings passively once ejected from the rocket. \\ \hline
     The glider shall be equipped with an RTK (Real Time Kinematic) GPS used for navigation. \\ \hline
-    The glider shall be equipped with a Commercial-Off-The-Shelve autopilot and a pitot tube \\ \hline
+    The glider shall be equipped with a COTS autopilot and a pitot tube \\ \hline
     The glider's battery life shall be 1.5 hours. \\ \hline
 \end{tabular}
 \caption{Top Level Requirements for the payload}
@@ -88,7 +88,7 @@ The glider was designed in Solidworks. All the components of the glider are enca
 
 
 
-The wings are folded in front, as it can be seen in Figure \ref{f:folding}.The folding mechanism is made using a torsion spring. The keep-unfolded is obtained using magnets. As the force of the springs is higher than the friction force of the glider's wings inside the box, no additional system to keep the wings folded was requested. The wings are placed one on top of each other, a decision taken in order to optimize the space in the cuboid as soon as possible and to add simplicity in design and manufacturing.
+The wings are folded in front, as it can be seen in Figure \ref{f:folding}.The unfolding mechanism is driven by a torsion spring. A set of magnets are used to keep the wings locked in the unfolded position. The force of the ejection springs on the rail is higher than the friction force of the glider's wings inside the box. Therefore no additional system to keep the wings folded was required and the wings were held folded by the walls of the payload box. The wings are placed one on top of each other, a decision taken in order to optimize the space in the cuboid and to add simplicity in design and manufacturing.
 
 \begin{figure}[h!]
     \centering
@@ -98,7 +98,7 @@ The wings are folded in front, as it can be seen in Figure \ref{f:folding}.The f
  \end{figure}
 
 The second important part of the payload is the ejection system - the system that pushes the glider outside the rocket.
-The ejection system is placed in a 4U Cubesat standard cuboid made out of wood and reinforced with glass fiber. The system consists two rails, pulleys, string, spring and one servomotor for locking (Figure \ref{fig:ejection}). The glider is ejected from the rocket by the spring force. The force of the spring is doubled and transmitted to the glider through a strong string. A servomotor keeps the glider in place by injecting a pin into the glider's fuselage block. With this rail-spring system, more gliders can be easily placed in the cuboid in the future.
+The ejection system is placed in a 4U Cubesat standard cuboid made out of wood and reinforced with glass fiber. The system consists two rails, pulleys, string, spring and one servomotor for locking (Figure \ref{fig:ejection}). The glider is ejected from the rocket by with a spring. The elongation of the spring is doubled using a system of pulleys so that the force can be applied over the whole length of the rail. A servomotor keeps the glider in place with a retractable pin that protrudes into the glider's fuselage block. With this rail-spring system, more gliders can be easily placed in the cuboid in the future.
 
 \begin{figure}[h!]
     \centering
@@ -107,7 +107,7 @@ The ejection system is placed in a 4U Cubesat standard cuboid made out of wood a
         \label{fig:ejection}
  \end{figure}
 
-The glider's wings and fuselage were 3d printed very lightly and reinforced with carbon fibre and glass fibre (where GPS or telemetry antennas were placed). The manufacturing of one of the wings can be seen in Figure \ref{fig:manufact}.
+The glider's wings and fuselage were 3d printed with thin walls an little infill to be lightweight and reinforced with carbon fibre and glass fibre (where GPS or telemetry antennas were placed). The manufacturing of one of the wings can be seen in Figure \ref{fig:manufact}.
 
 \begin{figure}[h!]
     \centering
@@ -136,8 +136,8 @@ Due to time constraints, this year's glider was not autonomously controlled. Bel
 
 Gliders mounted inside a rocket are very challenging to be designed. 
 Complex navigation instrumentation cannot be mounted on the gliders, due to space and weight constraints. 
-We are thus proposing a solution of using GPS and Ultrawide band beacons for a formation flight of 3 gliders. Both sensors do not require high space and do not weight much.
-The concept works as following:
+We are thus proposing a solution of using GPS and Ultrawide band beacons for a formation flight of 3 gliders. Both sensors do not require a lot of space and do not weight much.
+The concept is as follows:
 \begin{enumerate}
     \item Ejection Phase: The gliders are ejected from the rocket at apogee
     \item Find Phase: As the gliders might be spread in many directions, it is important to gather them in order to start the formation. For example, the module we propose (DWM1000) has an up to 290 meters communications range. Therefore, for this phase, GPS will be used to determine the position. Once the position is determined for all the 3 gliders, a leader is decided to be the glider closest to the other two. The leader will be thus followed by the other two.
