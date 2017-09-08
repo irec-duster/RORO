@@ -28,7 +28,9 @@ The rocket is divided into 3 main sub-assemblies (Figure \ref{f:rocket_adnoted})
     \item Upper Body - carrying the payload, the parachutes and the recovery electronics
     \item The Lower Body - containing ballast (tungsten), logging avionics and the motor
 \end{enumerate}
-The concept of the rocket was well-thought to be easy to integrate and robust, considering the time constrains. The rocket separates in the middle, between the upper and lower body. This approach is very common in High Power Rocketry (HPR) and is considered a less risky approach.
+The rocket was designed to be robust and simple to manufacture due to the time constraints we had.
+The rocket separates in the middle, between the upper and lower body to release the parachutes. Before separation the two body tubes are connected using a coupler tube.
+This approach is very common in High Power Rocketry (HPR) and was chosen to minimize risk.
 
 \begin{figure}[h!]
 \centering
@@ -38,63 +40,55 @@ The concept of the rocket was well-thought to be easy to integrate and robust, c
 \end{figure}
 
 
-The length as well as the diameter of the rocket were chosen in such a way to accommodate the payload (a glider) and the other subsystems.
+The length as well as the diameter of the rocket were chosen to accommodate the payload which had a dimension constraint imposed by the competition and the other subsystems.
+
 
 Next, the manufacturing of each subsystem of the rocket is discussed.
 
 
 \paragraph{Structure}
 \hfill \break
-The main body of the rocket is a COTS phenolic tube, reinforced with two layers of 245 g/m$^2$ twill weaved carbon fiber. The reinforcement rational is determined using FEA (Finite Element Analysis), and tested during two rocket flights.
-The structure contains also a coupler tube, that is made out of phenolic tube reinforced inside again with two 245 g/m$^2$ layers carbon fiber. The role of the coupler tube is to connect the Lower Body with the Upper Body.
-The rocket has two structural bulkheads, one in the lower body and one in the upper body to which the parachute cords are attached. The bulkheads are made out of two 15 mm plywood plates reinforced with 4 layers of 245 g/m$^2$ carbon fiber on each side.  The bulkheads are the structurally critical elements as they transfer loads from the rocket body to the subsystems. They need to withstand both the accelerations from the launch and the parachute opening shock. 
-The two bulkheads are subject to a peak load of 10kN from the parachute opening shock. An FEM analysis taking into account the  ECSS-E-HB-32-21A \cite{ecss} revealed that an additional reinforcement of the bulkheads with carbon fiber is required to sustain the loads. The analysis of the bonding to the rocket body reveals sufficient strength to sustain the opening shock, findings also validated in practice.
+The main body of the rocket is a COTS phenolic tube, reinforced with two layers of 245 g/m$^2$ twill weave carbon fibre. The reinforcement rational is determined using FEA (Finite Element Analysis), and tested during two rocket flights.
+The structure contains also a coupler tube, that is made out of phenolic tube reinforced inside again with two 245 g/m$^2$ layers carbon fibre.
+The role of the coupler tube is to connect the Lower Body with the Upper Body.
+The rocket has two structural bulkheads, one in the lower body and one in the upper body to which the parachute cords are attached. The bulkheads are made out of two 15mm plywood plates reinforced with 4 layers of 245 g/m$^2$ carbon fibre on each side.  The bulkheads are the structurally critical elements as they transfer loads from the rocket body to the subsystems. They need to withstand both the accelerations from the launch and the parachute opening shock. 
+The two bulkheads are subject to a peak load of 10kN from the parachute opening shock. An FEM analysis taking into account the  ECSS-E-HB-32-21A \cite{ecss} revealed that an additional reinforcement of the bulkheads with carbon fibre is required to sustain the loads. The analysis of the bonding to the rocket body reveals sufficient strength to sustain the opening shock.
 
 % Dalmir, can you city the ECSS? http://www.ecss.nl/wp-content/uploads/handbooks/ecss-e-hb/ECSS-E-HB-32-21A20March2011.pdf
 
-% Dalmir, can you city the ECSS? http://www.ecss.nl/wp-content/uploads/handbooks/ecss-e-hb/ECSS-E-HB-32-21A20March2011.pdf
 
-% todo put the static caliber
-%\paragraph{Fins}
-%\hfill \break
-%    The fins are sized for 1.1 calibers static stability %Reference to static/dynamic stability
- %   and were manufactured out of wood and carbon fiber, as it can be seen in Figure \ref{f:fins}. Firstly, the wood was cut at CNC (Figure \ref{f:fins} a). The inside of the fins was made out of balsa wood (Figure \ref{f:fins} b), in order to decrease the weight for higher resonance frequencies. Afterwards, on each side of each fin, 3 layers [span, chord, span] of 140 g/m$^2$ unidirectional carbon fiber were applied, to increase stiffness (Figure \ref{f:fins} c). The fins were attached to the motor tube using high temperature epoxy, reinforced with carbon fiber.
-
-%    \begin{figure}[h!]
-  %      \centering
-     %   \includegraphics[width=0.5\textwidth]{img/fins.jpg}
-        %\caption{a) Wood at CNC b) Final wood-made fins c) Carbon fiber manufacturing d) Final version of the fins.}
-        %\label{f:fins}
-    %\end{figure}
 \paragraph{Fins}
 \hfill \break
-    The fins are sized for 1.1 calibers static stability %Reference to static/dynamic stability
-    and are manufactured out of wood and carbon fiber. 
-    The process is shown in Figure \ref{f:fins}. Firstly, the wood is cut at CNC (Figure \ref{f:fins} a). The inside of the fins is made out of balsa wood (Figure \ref{f:fins} b), in order to decrease the weight for higher resonance frequencies. Afterwards, on each side of each fin, 3 layers [span, chord, span] of 140 g/m$^2$ unidirectional carbon fiber are applied, to increase stiffness (Figure \ref{f:fins} c). The fins are attached to the motor tube using high temperature epoxy. The attachment points are reinforced with carbon fiber.
+The fins are sized for 1.1 calibres static stability margin before liftoff.
+With the burn of the motor and the corresponding mass loss the static margin increases to about 1.8 calibres.
+After the first test launch and a problem with thrust alignment of the COTS motor described in section \ref{subsection:flightTests} we decided to increase the fin size in order to increase static stability.
+
+The fins are manufactured out of wood and carbon fibre. The process is shown in Figure \ref{f:fins}. Firstly, the wood is cut at CNC (Figure \ref{f:fins} a). The inside of the fins is made out of balsa wood (Figure \ref{f:fins} b), in order to decrease the weight for higher resonance frequencies. Afterwards, on each side of each fin, 3 layers ([span, chord, span] fibre orientation) of 140 g/m$^2$ unidirectional carbon fibre are applied, to increase stiffness (Figure \ref{f:fins} c). The fins are attached to the motor tube using high temperature epoxy, reinforced with carbon fibre.
+
     \begin{figure}[h!]
         \centering
         \includegraphics[width=0.5\textwidth]{img/fins.jpg}
-        \caption{a) Wood at CNC b) Final wood-made fins c) Carbon fiber manufacturing d) Final version of the fins.}
+        \caption{a) Wood at CNC b) Final wood-made fins c) Carbon fibre manufacturing d) Final version of the fins.}
         \label{f:fins}
     \end{figure}
 
 \paragraph{Motor tube}
 \hfill \break
-The motor tube consists of a COTS phenolic tube. The fins are glued with 3M DP760 high-temperature epoxy to the motor tube. The tube is centered to the outer rocket body tube by six 4mm plywood centering rings distributed equally along the motor tube.
+The motor tube consists of a COTS phenolic tube. The fins are glued with 3M DP760 high-temperature epoxy to the motor tube. The tube is centred to the outer rocket body tube by six 4mm plywood centring rings distributed in equally along the motor tube.
 In front of the fins, there is a 12mm CNC-cut plywood ring from which 12 M3 threaded rods connect to the thrust plate. These help holding the motor inside the rocket body during parachute opening shock.
-The entire assembly can be seen in Figure \ref{f:reinforcement} c. The fins are fixed to the outer structure using ribbons of carbon fiber both on the inside and the outside of the tube, as it can be seen in Figure \ref{f:reinforcement} a,b.
+The entire assembly can be seen in Figure \ref{f:reinforcement} c. The fins are fixed to the outer structure using ribbons of carbon fibre both on the inside and the outside of the tube, as it can be seen in Figure \ref{f:reinforcement} a,b.
 
   \begin{figure}[h!]
 \centering
 \includegraphics[width=0.5\textwidth]{img/fins_glue.jpg}
-\caption{a, b) Reinforcement of the fins c)Motor tube assembly, with fins and centering rings}
+\caption{a, b) Reinforcement of the fins c)Motor tube assembly, with fins and centring rings}
 \label{f:reinforcement}
 \end{figure}
 
 
 \paragraph{Motor case}
 \hfill \break
-The motor case, which is a RMS-98/7680 from Aerotech is held by a 98mm retainer from Aeropack on a custom made laser-cut aluminum thrust plate. The thrust-plate pushes directly on the fins which go through the body tube to the motor tube. The thrust-plate is used to attach the motor and to distribute the loads when parachute opens.
+The motor case, which is a RMS-98/7680 from Aerotech is held by a 98mm retainer from Aeropack on a custom made laser-cut aluminium thrust plate. The thrust-plate pushes directly on the fins which go through the body tube to the motor tube. The thrust-plate is used to attach the motor and hold it when parachute opens.
  The retainer \& thrust-plate assembly can be seen in Figure \ref{f:motor_retainer_2}.
 \begin{figure}[h!]
         \centering
