@@ -6,12 +6,12 @@ The rocket, entitled RORO I, is a 8 feet (2.45 meters) rocket propelled by a M-c
 \begin{tabular}{|p{0.9\columnwidth}|}
 \hline
     The rocket shall achieve an apogee of 10,000 ft (3048 meters).  \\ \hline
-    The rocket shall have a static margin between 1 and 2 body-calibres. \\ \hline
-    The rocket shall carry a COTS barometric pressure altimeter with on-board storage as primary data source for altitude reporting.  \\ \hline
+    The rocket shall have be statically stable, but not over-stable. \\ \hline
+    The rocket shall carry a COTS barometric pressure altimeter with on-board storage to record the altitude.  \\ \hline
     The launch vehicle shall follow a "dual-event" recovery. \\ \hline
-    The rocket shall carry a minimum mass of 8.8 lb (4 kg) of payload. \\ \hline
+    The rocket shall carry a minimum mass of 8.8 lb (4 kg) as payload. \\ \hline
     The rocket shall eject its nosecone at apogee. \\ \hline
-    The rocket shall release a glider from the payload section at 10 seconds after apogee. \\ \hline
+    The rocket shall release a glider from the payload section 5 seconds after apogee. \\ \hline
 
 \end{tabular}
 \caption{Top Level Requirements for the rocket}
@@ -23,11 +23,10 @@ The rocket, entitled RORO I, is a 8 feet (2.45 meters) rocket propelled by a M-c
 
 
 The rocket is divided into 3 main sub-assemblies (Figure \ref{f:rocket_adnoted}):
-
 \begin{enumerate}[noitemsep]
-    \item The nosecone - carrying avionics, the locking system for the nosecone and its ejection system
-    \item The upper body - carrying the payload, the parachutes and the recovery electronics
-    \item The lower body - containing logging avionics and the motor
+    \item The nosecone - containing avionics, the locking system for the nosecone and its ejection system
+    \item Upper Body - carrying the payload, the parachutes and the recovery electronics
+    \item The Lower Body - containing ballast (tungsten), logging avionics and the motor
 \end{enumerate}
 The rocket was designed to be robust and simple to manufacture due to the time constraints we had.
 The rocket separates in the middle, between the upper and lower body to release the parachutes. Before separation the two body tubes are connected using a coupler tube.
@@ -43,35 +42,21 @@ This approach is very common in High Power Rocketry (HPR) and was chosen to mini
 
 The length as well as the diameter of the rocket were chosen to accommodate the payload which had a dimension constraint imposed by the competition and the other subsystems.
 
-%Next, the manufacturing of each subsystem of the rocket is discussed.
 
-% Before considering the stability in the following sections, we discuss manufacturing process of each part of the rocket.
-
+Next, the manufacturing of each subsystem of the rocket is discussed.
 
 
 \paragraph{Structure}
 \hfill \break
 The main body of the rocket is a COTS phenolic tube, reinforced with two layers of 245 g/m$^2$ twill weave carbon fibre. The reinforcement rational is determined using FEA (Finite Element Analysis), and tested during two rocket flights.
 The structure contains also a coupler tube, that is made out of phenolic tube reinforced inside again with two 245 g/m$^2$ layers carbon fibre.
+The role of the coupler tube is to connect the Lower Body with the Upper Body.
 The rocket has two structural bulkheads, one in the lower body and one in the upper body to which the parachute cords are attached. The bulkheads are made out of two 15mm plywood plates reinforced with 4 layers of 245 g/m$^2$ carbon fibre on each side.  The bulkheads are the structurally critical elements as they transfer loads from the rocket body to the subsystems. They need to withstand both the accelerations from the launch and the parachute opening shock. 
 The two bulkheads are subject to a peak load of 10kN from the parachute opening shock. An FEM analysis taking into account the  ECSS-E-HB-32-21A \cite{ecss} revealed that an additional reinforcement of the bulkheads with carbon fibre is required to sustain the loads. The analysis of the bonding to the rocket body reveals sufficient strength to sustain the opening shock.
 
 % Dalmir, can you city the ECSS? http://www.ecss.nl/wp-content/uploads/handbooks/ecss-e-hb/ECSS-E-HB-32-21A20March2011.pdf
 
-% Dalmir, can you city the ECSS? http://www.ecss.nl/wp-content/uploads/handbooks/ecss-e-hb/ECSS-E-HB-32-21A20March2011.pdf
 
-% todo put the static caliber
-%\paragraph{Fins}
-%\hfill \break
-%    The fins are sized for 1.1 calibers static stability %Reference to static/dynamic stability
- %   and were manufactured out of wood and carbon fibre, as it can be seen in Figure \ref{f:fins}. Firstly, the wood was cut at CNC (Figure \ref{f:fins} a). The inside of the fins was made out of balsa wood (Figure \ref{f:fins} b), in order to decrease the weight for higher resonance frequencies. Afterwards, on each side of each fin, 3 layers [span, chord, span] of 140 g/m$^2$ unidirectional carbon fibre were applied, to increase stiffness (Figure \ref{f:fins} c). The fins were attached to the motor tube using high temperature epoxy, reinforced with carbon fibre.
-
-%    \begin{figure}[h!]
-  %      \centering
-     %   \includegraphics[width=0.5\textwidth]{img/fins.jpg}
-        %\caption{a) Wood at CNC b) Final wood-made fins c) Carbon fiber manufacturing d) Final version of the fins.}
-        %\label{f:fins}
-    %\end{figure}
 \paragraph{Fins}
 \hfill \break
 The fins are sized for 1.1 calibres static stability margin before liftoff.
@@ -79,6 +64,7 @@ With the burn of the motor and the corresponding mass loss the static margin inc
 After the first test launch and a problem with thrust alignment of the COTS motor described in section \ref{subsection:flightTests} we decided to increase the fin size in order to increase static stability.
 
 The fins are manufactured out of wood and carbon fibre. The process is shown in Figure \ref{f:fins}. Firstly, the wood is cut at CNC (Figure \ref{f:fins} a). The inside of the fins is made out of balsa wood (Figure \ref{f:fins} b), in order to decrease the weight for higher resonance frequencies. Afterwards, on each side of each fin, 3 layers ([span, chord, span] fibre orientation) of 140 g/m$^2$ unidirectional carbon fibre are applied, to increase stiffness (Figure \ref{f:fins} c). The fins are attached to the motor tube using high temperature epoxy, reinforced with carbon fibre.
+
     \begin{figure}[h!]
         \centering
         \includegraphics[width=0.5\textwidth]{img/fins.jpg}
@@ -115,14 +101,14 @@ The motor case, which is a RMS-98/7680 from Aerotech is held by a 98mm retainer 
 \paragraph{Payload}
 \hfill \break
 In the lower body of the rocket, there is 1U of payload 
-consisting of 4kg of tungsten and a board with sensors used to track the lower body motion and shocks, referred to as the Logging Electronics. A Gopro and a PCB cameras are also placed to film the parachute deployment and the outside.
-The Active Payload bay, placed in the Upper Body, consists of a 4U plywood box reinforced with glass fibre to withstand the loads. Inside the 4U wood box, a glider is mounted on a rail. Shortly after apogee, the glider will be ejected from the rocket using a spring. A more detailed description of the glider will be detailed in Section \ref{section:gliders}
+consisting of 4kg of tungsten and a board with sensors used to track the lower body motion and shocks. A Gopro and a small camera are also placed to film the parachute deployment and the exterior.
+The Active Payload bay, placed in the Upper Body, consists of a 4U plywood box reinforced with glass fibre to withstand the loads. Inside the 4U wood box, a glider is mounted on a rail. Shortly after apogee, the glider will be ejected from the rocket using a spring. A  description of the glider will be detailed in Section \ref{section:gliders}.
 
 
 
 
 \subsection{Recovery}
-This subsystem implements a dual-event recovery concept of operations (CONOPS) with an initial deployment event at apogee and a main deployment event at 457m (1500ft) AGL. Figure \ref{f:recovery_conops} illustrates the recovery CONOPS.
+This subsystem implements a dual-event recovery concept of operations (CONOPS) with an initial deployment event at apogee and a main deployment event at 457 m (1500ft) AGL. Figure \ref{f:recovery_conops} illustrates the recovery CONOPS.
 \begin{figure}[h!]
  	\centering
         \includegraphics[width=0.45\textwidth]{img/recovery_conops_schema.png}
@@ -130,41 +116,38 @@ This subsystem implements a dual-event recovery concept of operations (CONOPS) w
         \label{f:recovery_conops}
  \end{figure}
 
-During the initial deployment, the rocket is separated and a drogue parachute is released to stabilize the attitude and reduce descent rate to 23-46 m/s (75-150ft/s).At 457m above ground level (AGL) the main deployment takes place where the main parachute is released from the parachute bag to reduce the rocket's descent rate to less than 9m/s (30ft/s) to prevent excessive damage upon impact. Recovery Avionics system triggers the deployment events when the preprogrammed deployment conditions are met by firing a pyrotechnical charge.
+During the initial deployment, the rocket is separated and a drogue parachute is released to stabilize the attitude and reduce descent rate to 23-46 m/s (75-150ft/s). At 457 meters AGL, the main deployment takes place where the main parachute is released from the parachute bag to reduce the rocket's descent rate to less than 9m/s (30ft/s) to prevent excessive damage upon impact. Recovery Avionics system triggers the deployment events when the preprogrammed deployment conditions are met by firing a pyrotechnical charge.
 
 \paragraph{Initial Deployment System}
 \hfill \break
-The initial deployment is achieved by creating a pressure in the parachute bay and thus forcing the two rocket bodies to separate. The pressure is generated by puncturing a 23ml CO2 cartridge by a 0.2 ml black powder charge. The charge forces a puncture piston inside the cartridge seal to release the gas. This system is a COTS solution from Tinder Rocketry Recovery Solutions.
-There are two redundant CO2 deployment systems each connected to two igniters. 2 redundant recovery electronic components are in charge of triggering the system and each of the two can trigger both systems. Recovery avionics is outlined later in this section.
+The initial deployment is achieved by creating a pressure in the parachute bay and thus forcing the two rocket bodies to separate. The pressure is generated by puncturing a 23 ml CO2 cartridge by a 0.2 ml black powder charge. The charge forces a puncture piston inside the cartridge seal to release the gas. This system is a COTS solution from Tinder Rocketry Recovery Solutions.
+There are two redundant CO2 deployment systems each connected to two igniters. Two redundant recovery electronic components are in charge of triggering the system and each of the two can trigger both systems.
 
 \paragraph{Main Deployment System}
 \hfill \break
-The main parachute is stowed in the bag below the drogue parachute. The main parachute is held together by a wire which is cut at the programmed altitude. Then the load of the rocket pulls the main parachute out of the parachute bag. The setup is illustrated in Figure \ref{f:recovery_main_deployment}. The wire is cut by a shearing piston which is forced through the wire by a 0.1ml black powder charge.Two wire cutters are installed for redundancy, one per recovery electronics.
-
+The main parachute is stowed in the bag below the drogue parachute. The main parachute is held together by a wire which is cut at the programmed altitude. Then the load of the rocket pulls the main parachute out of the parachute bag. The setup is illustrated in Figure \ref{f:recovery_main_deployment}. The wire is cut by a shearing piston which is forced through the wire by a 0.1 ml black powder charge. Two wire cutters are installed for redundancy, one per recovery electronics.
 \begin{figure}[h!]
  	\centering
-        \includegraphics[width=0.45\textwidth]{img/recovery_main_deployment.jpg}
+        \includegraphics[width=0.35\textwidth]{img/recovery_main_deployment.jpg}
         \caption{Main Parachute Deployment}
         \label{f:recovery_main_deployment}
  \end{figure}
-
  \paragraph{Recovery Avionics}
  \hfill \break
 The Recovery Avionics is designed for maximal reliability and features several levels of redundancy which is shown in Figure \ref{f:recovery_avionics_schema}. As required by the the competition rules, two redundant electronic systems are used, both of which are different COTS solutions.
-The primary electronics is the AltimaxG3 from Rocketronics which features barometer and accelerometer sensors to estimate the altitude of the rocket. It uses a Kalman filter to estimate acceleration, speed and altitude of the rocket. This is a more robust solution especially when pressure fluctuations can be expected at a high velocity.
-The backup electronics is the Raven3 from Featherweight Altimeters.
-The primary electronics is programmed to detect the apogee and fire the two CO2 charges one after the other with a delay of 0.5 seconds. Then during descent it monitors air pressure until the main parachute deployment altitude is reached and initiates the deployment by using the wire cutter.
- The backup electronics is programmed as a timer to trigger the initial deployment after the predicted time to apogee from simulations. During descent it also detects the target altitude using a pressure sensor to trigger the main deployment
-
   \begin{figure}[h!]
- 	\centering
+    \centering
         \includegraphics[width=0.5\textwidth]{img/recovery_avionics_schema.png}
         \caption{Recovery Avionics Schema}
         \label{f:recovery_avionics_schema}
  \end{figure}
-  
+The primary electronics is the AltimaxG3 from Rocketronics which features barometer and accelerometer sensors to estimate the altitude of the rocket. It uses a Kalman filter to estimate acceleration, speed and altitude of the rocket. This is a more robust solution especially when pressure fluctuations can be expected at a high velocity.
+The backup electronics is the Raven3 from Featherweight Altimeters.
+The primary electronics is programmed to detect the apogee and fire the two CO2 charges one after the other with a delay of 0.5 seconds. Then during descent it monitors air pressure until the main parachute deployment altitude is reached and initiates the deployment by using the wire cutter.
+The backup electronics is programmed as a timer to trigger the initial deployment after the predicted time to apogee from simulations. During descent it also detects the target altitude using a pressure sensor to trigger the main deployment
 
-\paragraph{Recovery Bay} 
+
+\paragraph{Recovery Bay}
  The recovery structure is made out of laser cut and milled plywood glued together with epoxy. It is screwed onto a circular bulkhead glued into the upper rocket tube. The connection to the parachute bay is made as airtight as possible by sealing holes with glue and using rubber washers.
 Figure \ref{f:recovery_bay} shows the assembled recovery bay.
  \begin{figure}[h!]
@@ -173,10 +156,10 @@ Figure \ref{f:recovery_bay} shows the assembled recovery bay.
         \caption{Recovery Bay}
         \label{f:recovery_bay}
  \end{figure}
- 
- 
+
+
 \subsection{Avionics}
-The avionics consist of 2 PCBs stacked together. The first one, referred to as the \textbf{Interface Board (IB)} shown in Figure \ref{f:avionics_ib}, is equipped with:
+As the rocket body is made of carbon fibre, the only RF transparent part of the rocket is the nosecone (made of fibre glass). Therefore, avionics components were placed there. The avionics consist of 2 PCBs stacked together. The first one, referred to as the \textbf{Interface Board (IB)} shown in Figure \ref{f:avionics_ib}, is equipped with:
 \begin{itemize}[noitemsep]
     \item an absolute pressure sensor for altitude measurement
     \item 2 differential pressure sensors for the Pitot tube
@@ -190,14 +173,12 @@ The avionics consist of 2 PCBs stacked together. The first one, referred to as t
 
 The second PCB, the so called \textbf{Power Board (PB)}  shown in Figure \ref{f:avionics_pb}, is equipped with a voltage regulator that power all the nosecone avionics and up to 6 servo outputs.
 
-All electronic components used for the avionics are automotive graded or better to ensure a proper working of the system under vibration and high temperature. Moreover, all the components were selected to be easily checked under microscope after soldering (e.g. no BGA chip are used as they usually require X-ray inspection).
 The decision to split the avionics into 2 PCBs is made to overcome the limited space available and to avoid issues due to EMC. The buck converter on the PB can potentially generate a lot of EM perturbations, thus the sensitive parts such as the GNSS are placed away from it, namely on the IB.
-As the rocket body is made of carbon fibre, the only RF transparent part of the rocket is the nosecone (made of fibre glass). Therefore, all the electronics components were integrated and placed there.
 
  \begin{figure}[h!]
  	\centering
-        \includegraphics[width=0.45\textwidth]{img/AV_FIG_IB_top.jpg}
-          \includegraphics[width=0.45\textwidth]{img/AV_FIG_IB_bottom.jpg}
+        \includegraphics[width=0.40\textwidth]{img/AV_FIG_IB_top.jpg}
+          \includegraphics[width=0.40\textwidth]{img/AV_FIG_IB_bottom.jpg}
         \caption{Interface Board (IB) Top and Bottom)}
         \label{f:avionics_ib}
  \end{figure}
@@ -205,7 +186,7 @@ As the rocket body is made of carbon fibre, the only RF transparent part of the 
   \begin{figure}[h!]
  	\centering
         \includegraphics[width=0.45\textwidth]{img/AV_FIG_PB_top.jpg}
-          \includegraphics[width=0.45\textwidth]{img/AV_FIG_PB_bottom.jpg}
+          \includegraphics[width=0.40\textwidth]{img/AV_FIG_PB_bottom.jpg}
         \caption{Power Board (PB) Top and Bottom}
         \label{f:avionics_pb}
  \end{figure}
@@ -220,7 +201,7 @@ The GNSS chip is a NEO-M8T of uBlox equipped with a SAW (surface acoustic waves)
 
 \paragraph{Telemetry Downlink}
  \hfill \break
-For the telemetry downlink, a 900MHz XBee (XB9X-DMUS-001 of Digi International) is placed on the IB and connected to a 2.1dBi omni antenna. Second XBee is directly connected to the ground station which uses a high gain Yagi antenna (23dB) that is manually oriented towards the rocked during flight. This configuration ensures a good power margin (45dBm) above the sensitivity level of the receiver when at maximum theoretical distance (5 km). The XBee on the IB is fixed with 2 screws and is easily accessible and replaceable in order to replace it according to the country of operation (868 MHz for CH and 900 MHz for the US). Using XBee at 2.4GHz (which is legal for both CH and US) was not an option as they don't have a sufficient communication range
+For the telemetry downlink, a 900MHz XBee (XB9X-DMUS-001 of Digi International) is placed on the IB and connected to a 2.1dBi omni antenna. Second XBee is directly connected to the ground station which uses a high gain Yagi antenna (23dB) that is manually oriented towards the rocked during flight. This configuration ensures a good power margin (45dBm) above the sensitivity level of the receiver when at maximum theoretical distance (5 km). The XBee on the IB is fixed with 2 screws and is easily accessible and replaceable in order to replace it according to the country of operation (868 MHz for CH and 900 MHz for the US). Using XBee at 2.4GHz (which is legal for both CH and US) was not an option as they do not have a sufficient communication range.
 
 \paragraph{Actuators}
  \hfill \break
@@ -230,9 +211,6 @@ The PB is equipped with 6 servo outputs, each allowing to control a high power s
  \hfill \break
 A high power buck converter from Texas Instrument is implemented on the PB. This device allows to power the avionics with 5 VDC with up to 15 A with 2S to 4S (6V to 17V) LiPo batteries. The PB is also equipped with 2 ideal diodes IC that allow to use 2 batteries in parallel for redundancy. In the case of RORO I, 2 3S, 1800 mAh LiPo are used. 
 
-\paragraph{Software}
- \hfill \break
-The software implemented in the avionics for RORO I mainly integrates the following functionalities: Data logging in the flash memory of the measurements performed by the sensors, detection of the launch of the rocket (with a threshold on the acceleration data from the IMU), sending the data of the GNSS (position) to the ground station via the XBee module, detection of the apogee of the rocket in order to open the nosecone 5 seconds after this event using a servo and switching to the 2nd GNSS antenna after the deployment of the nosecone. Five seconds after the deployment of the nosecone, second servo is trigged which allows the deployment of the payload.
 
 \subsubsection{Mechanical Design and Manufacturing}
 \paragraph{Mechanical Integration of the Avionics in the Nosecone}
