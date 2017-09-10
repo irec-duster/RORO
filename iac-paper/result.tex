@@ -68,7 +68,7 @@ The centre of mass location is obtained from the Solidworks CAD (which was exper
 This acceleration at the centre of mass was then used to compute the side-forces acting on the rocket using the known mass. Again the mass is interpolated during the burn as for the centre of mass.
 
 With the assumption that the side forces are aerodynamic, they should act at the centre of pressure, which can be analytically determined.
-This results in a moment which was calculated using \ref{eq:m_aero}.
+This results in a moment which was calculated using eq. \ref{eq:m_aero}.
 \begin{equation}
 \label{eq:m_aero}
 \begin{split}
@@ -88,11 +88,11 @@ The actual moment was obtained from the angular rates and the inertia by use of 
 \end{equation}
 
 
-The comparison between aerodynamic model based moments and actual moments is show in figure \ref{fig:test_flight_graph}.
+The comparison between aerodynamic model based moments and actual moments is show in Figure \ref{fig:test_flight_graph}.
 \begin{figure}[h!]
     \centering
         \includegraphics[width=0.5\textwidth]{img/test_flight_graph.png}
-        \caption{Comparison of predicted aerodynamic moments (M_aero_xy) and actual moments (M_xyz). The duration of the motor burn is clearly visible in the z acceleration. [accelerations in $m/s^2$, rates in $rad/s$, torques in $Nm$]}
+        \caption{Comparison of predicted aerodynamic moments (M_aero_xy) and actual moments (M_xy). The duration of the motor burn is clearly visible in the z acceleration. [accelerations in $m/s^2$, rates in $rad/s$, torques in $Nm$]}
         \label{fig:test_flight_graph}
  \end{figure}
 
@@ -144,7 +144,7 @@ The second flight of our rocket was at the competition at Spaceport America, New
 The motor used was an Aerotech M2100, liftoff mass was 24.8kg and the predicted apogee was 3032m.
 The flight was successful with a reached apogee of 2738m.
 
-At apogee, the rocket separated and started it's descend on the drogue parachute. A few seconds later, the nosecone deployed and the glider payload was released successfully.
+At apogee, the rocket separated and started its descend on the drogue parachute. A few seconds later, the nosecone deployed and the glider payload was released successfully.
 At an altitude of around 460m the recovery avionics triggered the main parachute opening.
 The main parachute was successfully released from the parachute bag. Unfortunately it did not open as intended because the cords of the main parachute and the drogue parachute were entangled. This led to the top main parachute being pulled down, preventing it from inflating properly.
 Because of this, the touchdown velocity was with 30m/s too high for the rocket to survive undamaged.
@@ -168,11 +168,11 @@ These oscillations are probably the reason for the lower that predicted apogee.
 \begin{figure}[h!]
     \centering
         \includegraphics[width=0.5\textwidth]{img/competition_flight_graph.png}
-        \caption{Comparison of predicted aerodynamic moments (M_aero_xy) and actual moments (M_xyz). Contrary to the test flight, for the competition flight the two curves match which means that there was no thrust misalignment present. [accelerations in $m/s^2$, rates in $rad/s$, torques in $Nm$]}
+        \caption{Comparison of predicted aerodynamic moments (M_aero_xy) and actual moments (M_xy). Contrary to the test flight, for the competition flight the two curves match which means that there was no thrust misalignment present. [accelerations in $m/s^2$, rates in $rad/s$, torques in $Nm$]}
         \label{f:comp_graph}
  \end{figure}
 
-Unlike the test flight there was no thrust misalignment with the competition motor. As can be seen in figure \ref{f:comp_graph}, the aerodynamic and actual moments match, indicating no thrust misalignment.
+Unlike the test flight there was no thrust misalignment with the competition motor. As can be seen in Figure \ref{f:comp_graph}, the aerodynamic and actual moments match, indicating no thrust misalignment.
 In the figure, also the initial oscillations are visible.
 Our initial rocket design had lower than optimum damping and we decreased the damping even further after the test flight in order to maximize robustness against a potential thrust misalignment.
 Therefore the oscillations during the competition flight were only slowly damped.
