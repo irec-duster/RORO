@@ -4,7 +4,7 @@
 The rocket RORO I flew twice. The first flight was a test flight in Switzerland and the second flight was the competition flight at Spaceport America Cup.
 
 On board of the rocket there were an Inertial Measurement Unit (IMU) and a barometer that logged data to an SD card.
-This data has been analyzed for both of the flights.
+This data has been analysed for both of the flights.
 
 \subsection{Rocket Test Flight}
 \label{subsection:flightTests}
@@ -50,7 +50,7 @@ The attitude throughout the flight was visualized in 3D.
 In the animation the tilting and subsequent oscillation of the rocket was well visible, but the source of the disturbance was not evident.
 
 
-The next step was to correct the calibrated IMU accelerations for centripetal and tangential accelerations due to angular rate and angular acceleration, as the IMU is not placed at the center of mass. This gives us the acceleration at the center of mass:
+The next step was to correct the calibrated IMU accelerations for centripetal and tangential accelerations due to angular rate and angular acceleration, as the IMU is not placed at the centre of mass. This gives us the acceleration at the centre of mass:
 \begin{equation}
     \bm{a}_{CM} = \bm{a}_{IMU} - \bm{a}_{tangential} - \bm{a}_{centripedal}
 \end{equation}
@@ -61,13 +61,13 @@ The next step was to correct the calibrated IMU accelerations for centripetal an
     \bm{\omega}_{tangential} &= \bm{\omega} - \frac{\bm{\omega} \cdot \bm{r}_{IMU}}{\bm{r}_{IMU}^2}\bm{r}_{IMU}
 \end{split}
 \end{equation}
-where $\bm{r_{IMU}}$ is the position of the IMU with respect to the center of mass
+where $\bm{r_{IMU}}$ is the position of the IMU with respect to the centre of mass
 
-The center of mass location is obtained from the Solidworks CAD (which was experimentally verified for the lift-off configuration) and is linearly interpolated from lift-off configuration to burn-out configuration for the time of the motor burn. This is good enough, as the motor burn curve is quite constant.
+The centre of mass location is obtained from the Solidworks CAD (which was experimentally verified for the lift-off configuration) and is linearly interpolated from lift-off configuration to burn-out configuration for the time of the motor burn. This is good enough, as the motor burn curve is quite constant.
 
-This acceleration at the center of mass was then used to compute the side-forces acting on the rocket using the known mass. Again the mass is interpolated during the burn as for the center of mass.
+This acceleration at the centre of mass was then used to compute the side-forces acting on the rocket using the known mass. Again the mass is interpolated during the burn as for the centre of mass.
 
-With the assumption that the side forces are aerodynamic, they should act at the center of pressure, which can be analytically determined.
+With the assumption that the side forces are aerodynamic, they should act at the centre of pressure, which can be analytically determined.
 This results in a moment which was calculated using \ref{eq:m_aero}.
 \begin{equation}
 \label{eq:m_aero}
@@ -92,14 +92,14 @@ The comparison between aerodynamic model based moments and actual moments is sho
 \begin{figure}[h!]
     \centering
         \includegraphics[width=0.5\textwidth]{img/test_flight_graph.png}
-        \caption{Comparison of predicted aerodynamic moments (M_aero_xy) and actual moments (M_xyz). The duration of the motor burn is clearly visible in the z acceleration.}
+        \caption{Comparison of predicted aerodynamic moments (M_aero_xy) and actual moments (M_xyz). The duration of the motor burn is clearly visible in the z acceleration. [accelerations in $m/s^2$, rates in $rad/s$, torques in $Nm$]}
         \label{fig:test_flight_graph}
  \end{figure}
 
 The following observations are made:
 \begin{itemize}
-\item The moment after burnout and reduction of oscillations to reasonable angles of attack matches well with aerodynamic prediction. This validates our analytic center of pressure determination.
-\item The moment after burnout but at high angles of attack is slightly lower than predicted by the aerodynamic model. This is to be expected, as the model does not include the cylindrical body lift which increases with angle of attack, moving the center of pressure forward. A more forward center of pressure would result in the smaller moments that were seen at high angle of attack.
+\item The moment after burnout and reduction of oscillations to reasonable angles of attack matches well with aerodynamic prediction. This validates our analytic centre of pressure determination.
+\item The moment after burnout but at high angles of attack is slightly lower than predicted by the aerodynamic model. This is to be expected, as the model does not include the cylindrical body lift which increases with angle of attack, moving the centre of pressure forward. A more forward centre of pressure would result in the smaller moments that were seen at high angle of attack.
 \item During the burn there is a permanent, about 20Nm mismatch between the aerodynamic prediction and the actual moments. After burnout this difference vanishes.
 \end{itemize}
 
@@ -107,21 +107,21 @@ The first two points validated the aerodynamic model.
 They also showed that there was no torque acting on the rocket other the expected aerodynamic restoring torques at non-zero angle of attack.
 
 The third point gives an important clue to the origin of the disturbance. For the duration of the motor burn, there was a moment that is not of aerodynamic origin.
-The best explanation is that this moment was caused by a misalignment of the motor thrust with respect to the center of gravity.
+The best explanation is that this moment was caused by a misalignment of the motor thrust with respect to the centre of gravity.
 
 A side accelerometer sensitivity to forward acceleration can be ruled out, as the side acceleration is around zero while accelerating on the launch rail.
-The same applies for the gyroscope that is close to zero until leaving the launch rail.
+The same applies for the gyroscope that is close to zero until the rocket leaves the launch rail.
 
 There are several possible causes for the thrust misalignment.
 \begin{itemize}
-    \item The center of gravity is not centered in the rocket
-    \item The rocket motor is not centered in the rocket
+    \item The centre of gravity is not centred in the rocket
+    \item The rocket motor is not centred in the rocket
     \item The rocket motor was not aligned with the rocket body
     \item The rocket body bent under load which place the CG out of the line of thrust
     \item The rocket motor was aligned, but produced a side-thrust.
 \end{itemize}
 
-With the K1275 motor the thrust misalignment which created a torque of 20Nm would correspond to an off-center CG respectively motor centering of 15mm or a motor misalignment of 0.79 degree.
+With the K1275 motor the thrust misalignment which created a torque of 20Nm would correspond to an off-centre CG or off-centre motor mount of 15mm or a motor misalignment of 0.79 degree.
 Careful inspection and measuring of the rocket ruled out all the above mentioned possible causes except for the last one. Unfortunately we did not keep the nozzle, which is a consumable of the COTS motor assembly. Therefore it is impossible to check if any asymmetries are visible in the erosion of the nozzle.
 
 \subsubsection{Test Flight Analysis Conclusion}
@@ -135,10 +135,60 @@ We wanted to increase the damping of oscillations and at the same time increase 
 Unfortunately with an increase of corrective force of the fins, the damping ratio decreases, which increases the time to dampen oscillations.
 
 As the exact source of the thrust misalignment could not be identified, we decided to sacrifice some of the damping and increase the corrective force of the fins to the maximum that was within the guidelines of the competition.
-For this, we increased the surface of span of the fins by 30\%. The resulting corrective force for a certain angle of attack was about doubled and the damping ratio went from 0.13 to 0.083.
+For this, we increased the span of the fins by 30\%. The resulting corrective force for a certain angle of attack was about doubled and the damping ratio went from 0.13 to 0.083.
 We estimated that this would give us enough safety to withstand a similar thrust misalignment angle with the stronger motor used at the competition.
 
 \subsection{Rocket Competition Flight}
+
+The second flight of our rocket was at the competition at Spaceport America, New Mexico.
+The motor used was an Aerotech M2100, liftoff mass was 24.8kg and the predicted apogee was 3032m.
+The flight was successful with a reached apogee of 2738m.
+
+At apogee, the rocket separated and started it's descend on the drogue parachute. A few seconds later, the nosecone deployed and the glider payload was released successfully.
+At an altitude of around 460m the recovery avionics triggered the main parachute opening.
+The main parachute was successfully released from the parachute bag. Unfortunately it did not open as intended because the cords of the main parachute and the drogue parachute were entangled. This led to the top main parachute being pulled down, preventing it from inflating properly.
+Because of this, the touchdown velocity was with 30m/s too high for the rocket to survive undamaged.
+
+\begin{figure}[h!]
+    \centering
+        \includegraphics[width=0.5\textwidth]{img/landing_site.jpg}
+        \caption{Landing site of the rocket}
+        \label{fig:landing_site}
+ \end{figure}
+
+From the analysis of the landing site (see figure \ref{fig:landing_site}), especially the way the two parachute lines were entangled, we determined that the most likely cause of the entanglement was wrong packing of the parachute and shock cords.
+The hypothesis is that the drogue parachute was put in the parachute bay too loose and during handling of the rocket the the parachute moved around the shock cords of main parachute.
+
+From the log files of the two recovery avionics we discovered that the primary recovery electronics did not detect the apogee and stopped working around four seconds after the drogue opening.
+The backup recovery electronics, which has a timer for the time-to-apogee and barometer for the main chute deployment worked without issues.
+
+In terms of rocket flight performance the competition flight was satisfactory although there were some initial oscillations during the propulsive flight phase.
+These oscillations are probably the reason for the lower that predicted apogee.
+
+\begin{figure}[h!]
+    \centering
+        \includegraphics[width=0.5\textwidth]{img/competition_flight_graph.png}
+        \caption{Comparison of predicted aerodynamic moments (M_aero_xy) and actual moments (M_xyz). Contrary to the test flight, for the competition flight the two curves match which means that there was no thrust misalignment present. [accelerations in $m/s^2$, rates in $rad/s$, torques in $Nm$]}
+        \label{f:comp_graph}
+ \end{figure}
+
+Unlike the test flight there was no thrust misalignment with the competition motor. As can be seen in figure \ref{f:comp_graph}, the aerodynamic and actual moments match, indicating no thrust misalignment.
+In the figure, also the initial oscillations are visible.
+Our initial rocket design had lower than optimum damping and we decreased the damping even further after the test flight in order to maximize robustness against a potential thrust misalignment.
+Therefore the oscillations during the competition flight were only slowly damped.
+
+For the source the disturbance that caused the oscillations we don't have clear evidence, but we suspect that the launch rail that guides the rocket for the first 5.5m could be an important factor.
+The launch rail we used was one that was provided by the competition organizers.
+It has a very thin construction and was bending slightly under the load of the rocket resting on it. (see Figure \ref{f:roro_launch_pic})
+The video of our camera next to the launch pad shows that the rail flexed slightly towards the rocket as the rocket lifts off the pad and no longer hangs on the rail.
+It is unsure if that would be sufficient to cause the oscillation of the rocket but we recommend to use a more stiff launch guide for the next year's rocket.
+
+\begin{figure}[h!]
+    \centering
+        \includegraphics[width=0.5\textwidth]{img/roro_takeoff.jpg}
+        \caption{Picture of the rocket taking off}
+        \label{f:roro_launch_pic}
+ \end{figure}
 
 
 \subsection{Glider Test Flights}
@@ -147,9 +197,9 @@ The glider's flight was tested before the competition. However, the dropping alt
 
 The setup for testing the glider (Figure \ref{f:prot2}) was the following:
 \begin{itemize}
-    \item A bigger plane which wing load can be as high as the glider's weight was bought
+    \item A bigger plane with enough payload capacity to carry the glider was used
     \item The glider (Figure \ref{f:prot2}) was attached to the big plane using a string.
-    \item The glider was deployed when desired, using a servomotor system.
+    \item The glider was deployed when desired, using a servomotor system that released the string.
     \item Two RC pilots were used, one to fly the big plane and one to fly the glider.
 \end{itemize}
 
@@ -164,13 +214,13 @@ The setup for testing the glider (Figure \ref{f:prot2}) was the following:
 \begin{figure}[h!]
     \centering
         \includegraphics[width=0.5\textwidth]{img/prototype2.jpg}
-        \caption{The big plane - glider system}
+        \caption{The big plane carrying the glider for drop tests}
         \label{f:prot2}
  \end{figure}
 
 \subsection{Glider Competition Flight}
 
-The glider was deployed at apogee, as planned. From the crash wreckage (Figure \ref{f:crash}), we can see that the glider deployed its wings. As it had no autonomous control, when ejected from the rocket, it did not pitch up. Therefore, it can be assumed that it spiraled down until it crashed on the ground. The Pitot tube was seen to stick in the ground, meaning a forward flight. One of the wings was half-damaged, while the other one is a good condition. The fuselage was fully destroyed. 
+The glider was deployed at apogee, as planned. From the crash wreckage (Figure \ref{f:crash}), we can see that the glider deployed its wings. As it had no autonomous control, when ejected from the rocket, it did not pitch up or stabilize its roll. Therefore, it can be assumed that it spiraled down until it crashed on the ground. The Pitot tube was found sticking in the ground, indicating a forward flight (Figure \ref{f:pitot_in_sand}). Therefore the deployment system must have worked as intended, as the glider would not have flown forward in the folded configuration due to mass distribution. One of the wings was half-damaged, while the other one is a good condition. The fuselage was fully destroyed.
 
 
 \begin{figure}[h!]
@@ -178,4 +228,11 @@ The glider was deployed at apogee, as planned. From the crash wreckage (Figure \
         \includegraphics[width=0.5\textwidth]{img/crash.jpg}
         \caption{The glider wreckage}
         \label{f:crash}
+ \end{figure}
+
+\begin{figure}[h!]
+    \centering
+        \includegraphics[width=0.5\textwidth]{img/pitot-tube-sticking-in-sand.jpg}
+        \caption{Pitot tube sticking in the ground which is evidence of the successful deployment}
+        \label{f:pitot_in_sand}
  \end{figure}
